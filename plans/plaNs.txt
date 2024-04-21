@@ -1,0 +1,15 @@
+1. Company name
+2. Feature Option
+	.maps
+	.project/team management(if team is created within projects.. hr management feature should be enabled..)
+		-editable, labels
+		-project creation input fields(categories(ek hoga toh common, usse zyada hoga toh options)) jo jo project banate wakt chahiye vo lelo yaha
+		-pre-defined hardcoded stages, 
+			.requirements,design,cust_approval,development,testing,complete, (after completion project and switch to maintain/complete stage)
+			**user view**
+				if this feature not setuped.. a message displaying "ask admin to setup this feature".
+	.human resource management
+		
+	
+	
+	
