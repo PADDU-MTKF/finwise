@@ -1,7 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extraStyle %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock  %}
+
 
 {% block mainContent %}
-login
+
+    {% for msg in messages %}  
+        <div class="message-box-alert" id="messageBox">
+        <p class="message-text">{{msg}}</p>
+        </div>
+    {% endfor %}
+
+    <div class="hide">
+        <form action="{% url 'home' %}" method="post" >
+            {% csrf_token %}
+            <input type="text" name="username" >
+            <input type="password" name="password" >
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+{% endblock  %}
+
+
+
+{% block extraScript %}
+
+{% if not messages %}
+    <script src="{% static 'js/checkLogin.js' %}"></script>
+{% else %}
+    <script>document.querySelector('.hide').classList.remove('hide');</script>
+{% endif %}
+
+
 {% endblock  %}
