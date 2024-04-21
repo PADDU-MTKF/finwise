@@ -2,5 +2,19 @@
 {% load static %}
 
 {% block mainContent %}
-admin home
+<form action="{% url 'temp' %}" method="post">
+    <label for="button1">Button 1:</label>
+        <input type="button" id="button1" name="button1" value="Button 1">
+        <br><br>
+        
+        <label for="button2">Button 2:</label>
+        <input type="button" id="button2" name="button2" value="Button 2">
+        <br><br>
+
+        <label for="button3">Button 3:</label>
+        <input type="button" id="button3" name="button3" value="Button 3">
+        <br><br>
+
+        <input type="submit" value="Submit">   
+</form>
 {% endblock  %}
