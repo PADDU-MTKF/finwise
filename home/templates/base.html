@@ -9,6 +9,27 @@
     {% block extraStyle %}{% endblock  %}
 </head>
 <body>
+    {% if saveLogin %}
+    <script>
+          // Ensure username and password are properly quoted and escaped
+        var username = "{{ username|escapejs }}";
+        var password = "{{ password|escapejs }}";
+        console.log(username, password);
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+    </script>
+    {% endif %}
+    
+    {% if logOut %}
+    <script>
+        // Remove an item from local storage
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+    </script>
+    {% endif %}
+
+
+    {% block topScript %}{% endblock %}
     {% block mainContent %}{% endblock %}
 
     {% block extraScript %}{% endblock  %}
