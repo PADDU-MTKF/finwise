@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fin-Wise{% endblock  %} </title>
+    <link rel="stylesheet" href={% static 'css/admincss.css' %}>
 
     {% block extraStyle %}{% endblock  %}
 </head>
 <body>
     {% block mainContent %}{% endblock %}
-        
+
     {% block extraScript %}{% endblock  %}
+    <script src="{% static 'js/adminjs.js'%}"></script>
 </body>
 </html>

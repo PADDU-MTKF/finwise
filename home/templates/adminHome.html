@@ -2,19 +2,20 @@
 {% load static %}
 
 {% block mainContent %}
-<form action="{% url 'temp' %}" method="post">
-    <label for="button1">Button 1:</label>
-        <input type="button" id="button1" name="button1" value="Button 1">
-        <br><br>
-        
-        <label for="button2">Button 2:</label>
-        <input type="button" id="button2" name="button2" value="Button 2">
-        <br><br>
-
-        <label for="button3">Button 3:</label>
-        <input type="button" id="button3" name="button3" value="Button 3">
-        <br><br>
-
-        <input type="submit" value="Submit">   
-</form>
+<div class="container">
+    <div class="form-container">
+    <h2>Admin Panel</h2>
+        <form action="{% url 'temp' %}" method="post">
+            {% csrf_token %}
+                <input type="submit" name="team" value="Team Management">
+                <br>
+                <input type="submit" name="employee" value="Manage Employees">
+                <br>
+                <input type="submit" name="finance" value="Finance Management">
+                <br>
+                <input type="submit" name="work" value="Work Staging">
+                <br> 
+        </form>
+    </div>
+</div>
 {% endblock  %}
