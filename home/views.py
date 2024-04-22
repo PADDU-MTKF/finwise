@@ -4,18 +4,16 @@ from django.contrib import messages
 from . import data as db
 from appwrite.query import Query
 
+ADMIN_DEFAULT_PAGE="team"
+USER_DEFAULT_PAGE="home"
 
-ADMIN_ENDPOINTS={"home":"adminHome.html","temp":"temp.html"}
+ADMIN_ENDPOINTS={"project":"adminProject.html",
+                 "team":"adminTeam.html",
+                 "finance":"adminFinance.html",
+                 }
+
 USER_ENDPOINTS={"home":"userHome.html"}
-def temp(request):
-    if request.method=="POST":
-        if 'team' in request.POST:
-            return redirect('team_view')
-        if 'finance' in request.POST:
-            return redirect('finance_view')
-        if 'work' in request.POST:
-            return redirect('work_view')
-    return render(request, 'adminHome.html')
+
 
 
 
@@ -36,7 +34,7 @@ def login(request):
 
         # Querying the database for user details
         user_det, _ = db.getDocument(os.getenv('DB_ID'), os.getenv('LOGIN_ID'), [
-                                      Query.equal("username", [username]), Query.equal("password", [pswd])])
+                                      Query.equal("userName", [username]), Query.equal("password", [pswd])])
 
         if user_det:
             # Setting user data for rendering templates
@@ -45,17 +43,17 @@ def login(request):
             data['saveLogin'] = True
 
             # Redirecting to admin or user home page based on user role
-            if user_det[0]['isadmin']:
+            if user_det[0]['isAdmin']:
                 try:
                     return render(request, ADMIN_ENDPOINTS[page], data)
                 except:
-                    return render(request, ADMIN_ENDPOINTS["home"], data)
+                    return render(request, ADMIN_ENDPOINTS[ADMIN_DEFAULT_PAGE], data)
                     
             else:
                 try:
                     return render(request, USER_ENDPOINTS[page], data)
                 except:
-                    return render(request, USER_ENDPOINTS["home"], data)
+                    return render(request, USER_ENDPOINTS[USER_DEFAULT_PAGE], data)
                 
 
         # If login fails, display error message and redirect to login page
@@ -68,16 +66,27 @@ def login(request):
 
 
 
-def team_view(request):
-    # Your logic for team management view
-    return render(request, 'adminteam.html')
+def project(request):
+    if request.method == 'POST':
+        return render(request, 'adminProject.html')
+        
+    data={"page":"project"}
+    return render(request, 'login.html',data)
 
 
-def finance_view(request):
-    # Your logic for finance management view
-    return render(request, 'adminfinance.html')
+def team(request):
+    if request.method == 'POST':
+        return render(request, 'adminTeam.html')
+    
+    data={"page":"team"}
+    return render(request, 'login.html',data)
 
 
-def work_view(request):
-    # Your logic for work staging view
-    return render(request, 'adminwork.html')
+def finance(request):
+    if request.method == 'POST':
+        return render(request, 'adminFinance.html')
+    
+    data={"page":"finance"}
+    return render(request, 'login.html',data)
+
+
