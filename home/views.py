@@ -1,5 +1,8 @@
-from django.shortcuts import render,HttpResponse
+import os
+from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
+from . import data as db
+from appwrite.query import Query
 
 
 # Create your views here.
@@ -14,18 +17,29 @@ def logout(request):
 def login(request):
     if request.method == 'POST':
         data={}
-        if(request.POST.get('username')==USERNAME and request.POST.get('password')==PASSWORD):
+        username=request.POST.get("username")
+        pswd=request.POST.get("password")
+        page=request.POST.get("page")
+        
+        userdet,_=db.getDocument(os.getenv('DB_ID'),os.getenv('LOGIN_ID'),[Query.equal("username", [username]), Query.equal("password", [pswd])])
+        
+        if userdet:
             data['username'] = request.POST.get('username')
             data['password'] = request.POST.get('password')
             data['saveLogin']=True
-            return render(request, 'adminHome.html',data)
-        
-        else:
-            messages.error(request, 'Login Failed ! Please Check your credentials...')
-            return render(request, 'login.html')
             
+    
+            if userdet[0]['isadmin']:
+                return render(request, 'adminHome.html',data)
+
+            return render(request, 'userHome.html',data)
+        
+        messages.error(request, 'Login Failed ! Please Check your credentials...')
+        return redirect('login')
+        
         
         
     
     # data={"username":"admin", "password":"admin"}
     return render(request, 'login.html')
+

@@ -8,11 +8,7 @@
 
 {% block mainContent %}
 
-    {% for msg in messages %}  
-        <div class="message-box-alert" id="messageBox">
-        <p class="message-text">{{msg}}</p>
-        </div>
-    {% endfor %}
+    
 
     <div class="hide">
         <form action="{% url 'home' %}" method="post" >

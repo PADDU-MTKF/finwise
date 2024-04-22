@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fin-Wise{% endblock  %} </title>
 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
     {% block extraStyle %}{% endblock  %}
 </head>
+
 <body>
     {% if saveLogin %}
     <script>
@@ -30,8 +33,17 @@
 
 
     {% block topScript %}{% endblock %}
+
+    {% for msg in messages %}  
+        <div class="message-box-alert" id="messageBox">
+        <p class="message-text">{{msg}}</p>
+        </div>
+    {% endfor %}
+
+
     {% block mainContent %}{% endblock %}
 
+    <script src="{% static 'js/msgBox.js' %}"></script>
     {% block extraScript %}{% endblock  %}
 </body>
 </html>
