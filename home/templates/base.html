@@ -40,6 +40,10 @@
         </div>
     {% endfor %}
 
+    {% block nav %}
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    {% endblock %}
+
 
     {% block mainContent %}{% endblock %}
 
