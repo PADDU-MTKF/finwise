@@ -66,11 +66,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-def temp(request):
-    data={"page":"temp"}
-    return render(request, 'login.html', data)
-    
-
 
 
 def team_view(request):
