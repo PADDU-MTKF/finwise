@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fin-Wise{% endblock  %} </title>
+    <link rel="stylesheet" href={% static 'css/admincss.css' %}>
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
@@ -49,5 +50,6 @@
 
     <script src="{% static 'js/msgBox.js' %}"></script>
     {% block extraScript %}{% endblock  %}
+    <script src="{% static 'js/adminjs.js'%}"></script>
 </body>
 </html>

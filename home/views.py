@@ -1,5 +1,5 @@
 import os
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, redirect
 from django.contrib import messages
 from . import data as db
 from appwrite.query import Query
@@ -7,6 +7,17 @@ from appwrite.query import Query
 
 ADMIN_ENDPOINTS={"home":"adminHome.html","temp":"temp.html"}
 USER_ENDPOINTS={"home":"userHome.html"}
+def temp(request):
+    if request.method=="POST":
+        if 'team' in request.POST:
+            return redirect('team_view')
+        if 'finance' in request.POST:
+            return redirect('finance_view')
+        if 'work' in request.POST:
+            return redirect('work_view')
+    return render(request, 'adminHome.html')
+
+
 
 # function to handle user logout
 def logout(request):
@@ -60,3 +71,18 @@ def temp(request):
     return render(request, 'login.html', data)
     
 
+
+
+def team_view(request):
+    # Your logic for team management view
+    return render(request, 'adminteam.html')
+
+
+def finance_view(request):
+    # Your logic for finance management view
+    return render(request, 'adminfinance.html')
+
+
+def work_view(request):
+    # Your logic for work staging view
+    return render(request, 'adminwork.html')

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block mainContent %}
+<div class="org-container">
+    <h2 class="org-header">Employee Management Interface</h2>
+
+    <div class="org-controls">
+          
+      <button class="org-btn">Add Team Member</button>
+      <button class="org-btn">Edit Team Member</button>
+      <button class="org-btn">Add Partner</button>
+      <button class="org-btn">Edit Partner</button>
+
+    </div>
+
+
+
+    {% comment %} <div class="form-style-2">
+        <div class="form-style-2-heading">Provide Employee information</div>
+        <form action="{% static "" %}" method="post">
+        {% csrf_token %}
+
+        <label for="field1"><span>Name <span class="required">*</span></span><input type="text" class="input-field" name="empname" value=""  required/></label>
+        <label for="field2"><span>Employee Id <span class="required">*</span></span><input type="text" class="input-field" name="empid" value="" required/></label>
+        <label for="field2"><span>Password <span class="required">*</span></span><input type="text" class="input-field" name="emppass" value="" required/></label>
+        <label for="tel_no"><span>Phone No. <span class="required">*</span></span><input type="tel" class="input-field" name="tel_no" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Format: 123-456-7890" required /></label>
+        <label for="field2"><span>Date Of Birth <span ></span></span><input type="date" class="input-field" name="empdob" value="" /></label>
+
+        {% comment %} <label for="field4"><span>Regarding</span><select name="field4" class="select-field">
+        <option value="General Question">General</option>
+        <option value="Advertise">Advertisement</option>
+        <option value="Partnership">Partnership</option>
+        </select></label> 
+        <label for="field5"><span>Skills <span class="required">*</span></span><textarea name="field5" class="textarea-field"></textarea></label>
+        {% comment %} <label for="field5"><span>Skills <span class="required">*</span></span><textarea name="field5" class="textarea-field"></textarea></label> {% endcomment %}
+        
+        {% comment %} <label><span> </span><input type="submit" value="Save" /></label>
+        </form>
+    </div> {% endcomment %} 
+</div>
+
+{% endblock  %}
