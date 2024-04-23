@@ -42,10 +42,12 @@
     {% endfor %}
 
     {% block nav %}
-    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
-    <a href="{% url 'project' %}" class="logout-button">Project</a>
-    <a href="{% url 'team' %}" class="logout-button">Team</a>
-    <a href="{% url 'finance' %}" class="logout-button">Finance</a>
+    <div class="nav">
+        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+        <a href="{% url 'project' %}" class="logout-button">Project</a>
+        <a href="{% url 'team' %}" class="logout-button active">Team</a>
+        <a href="{% url 'finance' %}" class="logout-button">Finance</a>
+    </div>
     {% endblock %}
 
 
@@ -53,6 +55,6 @@
 
     <script src="{% static 'js/msgBox.js' %}"></script>
     {% block extraScript %}{% endblock  %}
-    <script src="{% static 'js/adminjs.js'%}"></script>
+    
 </body>
 </html>

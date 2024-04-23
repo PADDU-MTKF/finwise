@@ -85,7 +85,8 @@ def deleteDocument(db_id,collection_id,document_id):
     try:
         databases.delete_document(db_id, collection_id,document_id)
         return True
-    except:
+    except Exception as e:
+        print("Error deleting document : ",e)
         return False
 
 
@@ -93,7 +94,8 @@ def addDocument(db_id,collection_id,data):
     try:
         databases.create_document(db_id,collection_id, ID.unique(), data)
         return True
-    except:
+    except Exception as e:
+        print("Error adding document : ",e)
         return False
     
 # deleteDocument("65e2d807b75e8ade83aa","65e2fd824f5c44283c76","65e5756c9255fd882005")

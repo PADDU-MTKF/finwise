@@ -1,0 +1,99 @@
+.box {
+    width: 80%;
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 1px 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+ .box:hover{
+    background-color: #fffdfdb7;
+ }
+
+
+.hide{
+   display: none !important;
+}
+ .popup {
+   display: none;
+   position: fixed;
+   width: 80%;
+   max-width: 800px;
+   max-height: 440px;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   background-color: #ffffff;
+   padding: 1px 10px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+   overflow: auto; /* or overflow: scroll; */
+   -ms-overflow-style: none;  /* IE and Edge */
+   scrollbar-width: none;  /* Firefox */
+ }
+
+ 
+ .popup::-webkit-scrollbar {
+   display: none;  /* Chrome, Safari, and Opera */
+ }
+ 
+ .popup form {
+   padding: 10px;
+ }
+ 
+ .popup form label{
+   display: block;
+   margin-bottom: 10px;
+   margin-left: 40px;
+   width: 50%;
+ }
+ .popup form input,
+ .popup form textarea {
+   display: block;
+   margin-bottom: 10px;
+   margin-left: 40px;
+   width: 50%;
+   border-radius: 5px;
+   background-color: #f1f1f1;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+   height: 3em;
+   border:none
+ }
+ 
+ input[type="checkbox" i] {
+   width: auto !important;
+   height: auto !important;
+ }
+ .popup form button {
+   display: inline-block;
+   padding: 10px 20px;
+   margin-left: 40px;
+   background-color: #007bff;
+   color: #fff;
+   text-decoration: none;
+   border: none;
+   border-radius: 5px;
+   width: 10em;
+ }
+ 
+ .add_float {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 36px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.add_float:hover {
+ background-color: #0069d9;
+}

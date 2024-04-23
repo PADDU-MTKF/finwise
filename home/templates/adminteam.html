@@ -1,7 +1,74 @@
 {% extends "base.html" %}
 {% load static %}
 
-
+{% block extraStyle %}
+    <link rel="stylesheet" href="{% static "css/adminTeam.css" %}">
+{% endblock  %}
 {% block mainContent %}
-admin Team page
+
+<center><h1>Team Management</h1></center><br>
+
+<div class="popup" id="popup">
+    <form method="post" action="{% url 'team'%}">
+        {% csrf_token %}
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" disabled>
+
+        <label for="userName">User Name</label>
+        <input type="text" id="userName" name="userName" disabled>
+
+        <label for="jobTitle">Job Title</label>
+        <input type="text" id="jobTitle" name="jobTitle" disabled>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="number" id="phoneNumber" name="phoneNumber" disabled>
+        
+        <label for="isPercent">Is Percent</label>
+        <input type="checkbox" id="isPercent" name="isPercent" disabled>
+
+        <label for="pay">Pay</label>
+        <input type="number" id="pay" name="pay" disabled>
+
+        <input type="hidden" id="ID" name="docID" value="">
+    
+        <button type="submit" name="delete"  onclick="return confirmDelete()">Delete</button>
+        <button id="editCancelButton">Edit</button>
+        <button type="submit" id="saveButton" name="add" class="hide">Save</button>
+
+    </form>
+  </div>
+  
+    {% if data %}
+        {% for member in data %}
+        <div class="box" id="{{member.id}}">
+            <h2>{{member.name}}</h2>
+            <p>{{member.userName}} | {{member.jobTitle}}</p>
+
+            <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
+            <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
+            <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
+            <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
+            <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
+            <input type="hidden" id="payHidden_{{member.id}}" value="{{member.pay}}">
+            <input type="hidden" id="IDHidden_{{member.id}}" value="{{member.id}}">
+
+
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="box">
+        <h2>No Team Members</h2>
+        <p>Add Members to manage your team</p>
+    </div>
+    {% endif %}
+
+    
+    <button id="add_float" class="add_float">+</button>
+    
+{% endblock  %}
+
+
+{% block extraScript %}
+<script src="{% static 'js/adminTeam.js'%}"></script>
 {% endblock  %}
