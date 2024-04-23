@@ -5,7 +5,9 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-
+body{
+  font-family: "Roboto", sans-serif;
+}
 /* Style for the message box */
 .message-box-alert {
     width: 100%;
