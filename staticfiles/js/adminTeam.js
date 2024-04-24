@@ -25,6 +25,8 @@ document.querySelectorAll('.box').forEach(function(box) {
         document.getElementById('saveButton').name="edit";
         document.getElementById('saveButton').textContent="Save";
         document.querySelector('#popup [name="delete"]').classList.remove('hide');
+        togglePayLabelAndValidation();
+
 
     });
   });
@@ -65,6 +67,39 @@ document.querySelectorAll('.box').forEach(function(box) {
     }
   }
 
+  function checkPassword() {
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password != confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+    }
+    return true;
+}
+
+function togglePayLabelAndValidation() {
+  var isPercentCheckbox = document.getElementById("isPercent");
+  var payLabel = document.getElementById("payLabel");
+  var payInput = document.getElementById("pay");
+
+  if (isPercentCheckbox.checked) {
+      payLabel.innerText = "Pay in Percentage:";
+      payInput.placeholder = "Enter percentage (0.1 - 100)";
+      payInput.removeAttribute("max");
+      payInput.removeAttribute("step");
+      payInput.setAttribute("min", "0.1");
+      payInput.setAttribute("max", "100");
+      payInput.setAttribute("step", "0.1");
+  } else {
+      payLabel.innerText = "Pay in Amount:";
+      payInput.placeholder = "Enter amount";
+      payInput.removeAttribute("min");
+      payInput.removeAttribute("max");
+      payInput.removeAttribute("step");
+  }
+}
+
 
   document.getElementById('add_float').addEventListener('click', function() {
     var saveButton = document.getElementById('saveButton');
@@ -96,6 +131,7 @@ document.querySelectorAll('.box').forEach(function(box) {
     // Change the text of the save button to "Add" or "Save" based on current visibility
     saveButton.name="add";
     saveButton.textContent = (popup.style.display === 'none') ? 'Save' : 'Add';
+    togglePayLabelAndValidation();
   
    
   });

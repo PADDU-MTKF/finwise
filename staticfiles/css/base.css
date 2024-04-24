@@ -5,6 +5,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+body{
+  background-color: #050020;
+  color: #fff;
+}
 
 /* Style for the message box */
 .message-box-alert {
@@ -41,7 +45,7 @@ button {
 }
 
 .logout-button:hover {
-    background-color: #d7d7d7;
+  background-color: #5d8efd;
 }
 
 .active{
@@ -56,8 +60,9 @@ button {
   gap: 10px;
   justify-content: center;
   width: fit-content;
-  background-color: #f1f1f1;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);;
+  background-color: #9cbaff;
+  border: 1px solid #6392ff;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);; */
   /* border-top: 1px solid #ccc; */
   padding: 10px 10px;
   margin-bottom: 20px;
