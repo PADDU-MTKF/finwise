@@ -6,10 +6,8 @@ button {
 }
 
 body{
-  background-color: #050020;
-  color: #fff;
+  font-family: "Roboto", sans-serif;
 }
-
 /* Style for the message box */
 .message-box-alert {
     width: 100%;
