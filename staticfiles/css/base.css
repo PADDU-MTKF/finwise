@@ -1,4 +1,11 @@
 
+:root {
+  --main-background: #fdfdfd; /* Grey */
+  --accent-orange: #ff8137; /* orange */
+  --accent-black: #111214; /* Black */
+  --accent-t-orange: #ff803740; /* Black */
+}
+
 div,
 a,
 button {
@@ -7,6 +14,8 @@ button {
 
 body{
   font-family: "Roboto", sans-serif;
+  background-color: var(--main-background);
+
 }
 /* Style for the message box */
 .message-box-alert {
