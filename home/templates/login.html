@@ -3,15 +3,7 @@
 
 {% block extraStyle %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
-<style>
-    body{
-    background: url("{% static "resources/login.png" %}")
-    no-repeat;
-    background-color: transparent;
-    background-size: cover;
-    height: 100vh;
-}
-</style>
+
 {% endblock  %}
 
 {% block nav %}{% endblock %}
@@ -22,6 +14,9 @@
 
     <div class="hide">
         <div class="login-page">
+            <div class="avatar">
+                <img src="{% static "resources/login.png" %}" alt="">
+            </div>
             <div class="form">
               <h2>Login</h2>
               <form action="{% url 'home' %}" method="post">
