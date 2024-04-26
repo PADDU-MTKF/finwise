@@ -1,9 +1,10 @@
 
 :root {
-  --main-background: #fdfdfd; /* Grey */
+  --main-background: #1a1a32; /* Grey */
   --accent-orange: #ff8137; /* orange */
+  --accent-orange-d: #f55a00d3; /* orange */
   --accent-black: #111214; /* Black */
-  --accent-t-orange: #ff803740; /* Black */
+  --accent-orange-t: #ff803740; /* Black */
 }
 
 div,
@@ -12,9 +13,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+
 body{
   font-family: "Roboto", sans-serif;
-  background-color: var(--main-background);
+  background: var(--main-background);
 
 }
 /* Style for the message box */
@@ -41,38 +43,120 @@ body{
   }
 
 
-  .logout-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #f1f1f1;
-    color: #000000;
-    border: ipx solid #6a6a6a;
+  .bottom-nav {
+    position: fixed;
+    bottom: 40px; /* Distance from bottom */
+    left: 50%; /* Centering the navbar horizontally */
+    transform: translateX(-50%); /* Precise horizontal centering */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     background-color: rgba(255, 255, 255, 0.298);
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding: 10px 30px; /* Padding around the links */
+    z-index: 1000; /* Ensures it's above other content */
+}
+
+.bottom-nav .nav-link {
+    color: rgb(255, 255, 255);
     text-decoration: none;
-    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: transform 0.3s ease, background-color 0.2s; /* Smooth transform and background color transitions */
+    display: inline-block; /* Allows transformation */
 }
 
-.logout-button:hover {
-  background-color: #5d8efd;
+.bottom-nav .nav-link:hover, .bottom-nav .nav-link.active {
+    border-bottom: 2px solid #007bff;
+  
+    transform: translateY(-5px) scale(1.05); /* Moves link up and scales slightly */
+   
+    /* color: white; */
+
 }
 
-.active{
-  background-color: #d7d7d7;
+
+
+/* Global Background Start*/
+.bouncing-blob {
+  
+  width: 32vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  will-change: transform;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transform-origin: left top;
+  opacity: 0.1;
 }
-.nav {
+
+.bouncing-blob--blue {
+  background: #4783c7;
+}
+
+.bouncing-blob--white {
+  background: #9ad3f2;
+  z-index: 2;
+  width: 15vw;
+}
+
+.bouncing-blob--purple {
+  background: #8286ff;
+}
+
+.bouncing-blob--pink {
+  background: #e289cd50;
+}
+
+.bouncing-blobs-container {
   position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  width: fit-content;
-  background-color: #9cbaff;
-  border: 1px solid #6392ff;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);; */
-  /* border-top: 1px solid #ccc; */
-  padding: 10px 10px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  z-index: 1000;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
+
+.bouncing-blobs-glass {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  pointer-events: none;
+}
+
+.bouncing-blobs {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+@keyframes mouse-move {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+
+  12.5%,
+  37.5% {
+    transform: translateY(18px);
+  }
+
+  25% {
+    transform: translateY(-18px);
+  }
+}
+/* Global Background End*/
+

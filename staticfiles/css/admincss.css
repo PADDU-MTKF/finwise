@@ -1,21 +1,21 @@
 /* Style for form container */
-.form-container {
+/* .form-container {
     max-width: 300px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: center; /* Center align the content */
-}
+    text-align: center; Center align the content */
+/* } */
 
 /* Style for labels */
-label {
+/* label {
     display: block;
     margin-bottom: 10px;
-}
+} */
 
 /* Style for input buttons */
-input[type="button"], input[type="submit"] {
+/* input[type="button"], input[type="submit"] {
     padding: 10px 20px;
     margin-bottom: 10px;
     border: none;
@@ -23,12 +23,12 @@ input[type="button"], input[type="submit"] {
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
-}
+} */
 
 /* Style for input buttons on hover */
-input[type="button"]:hover, input[type="submit"]:hover {
-    background-color: #0056b3;
-}
+/* input[type="button"]:hover, input[type="submit"]:hover {
+    background-color: #0056b3; */
+/* } */
 
 /* admin team page start */
 
@@ -36,7 +36,7 @@ input[type="button"]:hover, input[type="submit"]:hover {
 
 /* toggle button start  */
 
-.android-toggle {
+/* .android-toggle {
     position: relative;
     display: inline-block;
     width: 60px;
@@ -75,11 +75,11 @@ input[type="button"]:hover, input[type="submit"]:hover {
   
   .android-toggle input:checked + .android-toggle-track .android-toggle-thumb {
     transform: translateX(26px);
-  }
+  } */
   
 /* toggle button end  */
 
-.org-container {
+/* .org-container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -206,6 +206,6 @@ input[type="button"]:hover, input[type="submit"]:hover {
     .form-style-2 input[type=button]:hover{
         background: #EA7B00;
         color: #fff;
-    }
+    } */
 
 /* admin team page end */

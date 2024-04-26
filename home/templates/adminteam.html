@@ -6,7 +6,64 @@
 {% endblock  %}
 {% block mainContent %}
 
-<center><h1>Team Management</h1></center><br>
+<center>
+
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Team Management</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="{% static "resources/search.png" %}" alt="">
+            </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th> Location <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> Job Title <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Role <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Pay <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if data %}
+                    {% for member in data %}
+                    <tr>
+                        <td> {{forloop.counter}} </td>
+                        <td> {{member.name}}</td>
+                        <td> {{member.jobTitle}} </td>
+                        <td>
+                            {% if member.isPercent %}
+                                <p class="status partner">Partner</p>
+                            {% else %}
+                                <p class="status employee">Employee</p>
+                            {% endif %}
+                        </td>
+                        <td> <strong>{{member.pay}}</strong></td>
+                        <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
+                        <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
+                        <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
+                        <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
+                        <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
+                        <input type="hidden" id="payHidden_{{member.id}}" value="{{member.pay}}">
+                        <input type="hidden" id="IDHidden_{{member.id}}" value="{{member.id}}">
+                    </tr>
+                        {% endfor %}
+                    {% else %}
+                    <div class="box">
+                        <h2>No Team Members</h2>
+                        <p>Add Members to manage your team</p>
+                    </div>
+                {% endif %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</center>
+
 
 <div class="popup" id="popup">
     <form method="post" action="{% url 'team'%}">
@@ -46,7 +103,7 @@
     </form>
   </div>
   
-    {% if data %}
+    {% comment %} {% if data %}
         {% for member in data %}
         <div class="box" id="{{member.id}}">
             <h2>{{member.name}}</h2>
@@ -68,7 +125,7 @@
         <h2>No Team Members</h2>
         <p>Add Members to manage your team</p>
     </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     
     <button id="add_float" class="add_float">+</button>

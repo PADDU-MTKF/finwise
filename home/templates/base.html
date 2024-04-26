@@ -5,14 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fin-Wise{% endblock  %} </title>
-    <link rel="stylesheet" href={% static 'css/admincss.css' %}>
-
+    {% comment %} <link rel="stylesheet" href={% static 'css/admincss.css' %}> {% endcomment %}
+    {% comment %} to be deleted when confirmed {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/teamtable.css" %}">
+
 
     {% block extraStyle %}{% endblock  %}
 </head>
 
+
+<style></style>
+
+
 <body>
+    <div class="bouncing-blobs-container master-font">
+        <div class="bouncing-blobs-glass"></div>
+        <div class="bouncing-blobs">
+          <div class="bouncing-blob bouncing-blob--blue"></div>
+          <div class="bouncing-blob bouncing-blob--blue"></div>
+          <div class="bouncing-blob bouncing-blob--blue"></div>
+          <div class="bouncing-blob bouncing-blob--white"></div>
+          <div class="bouncing-blob bouncing-blob--purple"></div>
+          <div class="bouncing-blob bouncing-blob--purple"></div>
+          <div class="bouncing-blob bouncing-blob--pink"></div>
+        </div>
+    </div>
     {% if saveLogin %}
     <script>
           // Ensure username and password are properly quoted and escaped
@@ -42,11 +60,11 @@
     {% endfor %}
 
     {% block nav %}
-    <div class="nav">
-        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
-        <a href="{% url 'project' %}" class="logout-button">Project</a>
-        <a href="{% url 'team' %}" class="logout-button active">Team</a>
-        <a href="{% url 'finance' %}" class="logout-button">Finance</a>
+    <div class="bottom-nav">
+        <a href="{% url "team" %}" class="nav-link">Team</a>
+        <a href="{% url "project" %}" class="nav-link">Project</a>
+        <a href="{% url "finance" %}" class="nav-link">Finance</a>
+        <a href="{% url "logout" %}" class="nav-link"  onclick="return confirmLogOut()">Logout</a>
     </div>
     {% endblock %}
 
@@ -54,6 +72,7 @@
     {% block mainContent %}{% endblock %}
 
     <script src="{% static 'js/msgBox.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
     {% block extraScript %}{% endblock  %}
     
 </body>
