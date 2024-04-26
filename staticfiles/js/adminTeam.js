@@ -5,6 +5,7 @@ document.querySelectorAll('.box').forEach(function(box) {
         var boxId=box.id;
         var name = document.getElementById('nameHidden_'+boxId).value;
         var userName = document.getElementById('userNameHidden_'+boxId).value;
+        var password = document.getElementById('passwordHidden_'+boxId).value;
         var jobTitle = document.getElementById('jobTitleHidden_'+boxId).value;
         var phoneNumber = document.getElementById('phoneNumberHidden_'+boxId).value;
         var isPercent = document.getElementById('isPercentHidden_'+boxId).value;
@@ -14,6 +15,8 @@ document.querySelectorAll('.box').forEach(function(box) {
         // Populate form fields in the popup with the retrieved data
         document.getElementById('name').value = name;
         document.getElementById('userName').value = userName;
+        document.getElementById('password').value = password;
+        document.getElementById('confirmPassword').value = password;
         document.getElementById('jobTitle').value = jobTitle;
         document.getElementById('phoneNumber').value = phoneNumber;
         document.getElementById('isPercent').checked = isPercent === 'True'; // Convert string to boolean
@@ -120,6 +123,9 @@ function togglePayLabelAndValidation() {
 
     document.getElementById('name').value = "";
         document.getElementById('userName').value = "";
+        document.getElementById('password').value = "";
+        document.getElementById('confirmPassword').value = "";
+        
         document.getElementById('jobTitle').value = "";
         document.getElementById('phoneNumber').value = "";
         document.getElementById('isPercent').checked = false; // Convert string to boolean

@@ -46,6 +46,7 @@
                         <td> <strong>{{member.pay}}</strong></td>
                         <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
                         <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
+                        <input type="hidden" id="passwordHidden_{{member.id}}" value="{{member.password}}">
                         <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
                         <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
                         <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
@@ -98,9 +99,9 @@
 
         <input type="hidden" id="ID" name="docID" value="">
     
-        <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
-        <button id="editCancelButton" type="button" onclick="toggleEdit()">Edit</button>
         <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
+        <button id="editCancelButton" type="button" onclick="toggleEdit()">Edit</button>
+        <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
     </form>
   </div>
   

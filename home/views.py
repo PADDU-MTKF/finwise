@@ -4,6 +4,7 @@ from django.contrib import messages
 from . import data as db
 from appwrite.query import Query
 
+MASTER_ADMIN_USERNAME="admin"
 ADMIN_DEFAULT_PAGE="team"
 USER_DEFAULT_PAGE="home"
 
@@ -14,7 +15,7 @@ ADMIN_ENDPOINTS={"project":"adminProject.html",
 
 USER_ENDPOINTS={"home":"userHome.html"}
 
-COLLECTION={"login":os.getenv('LOGIN_ID'),
+COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "team":os.getenv('EMPDETAILS_ID')
             }
 
@@ -25,7 +26,8 @@ COLLECTION={"login":os.getenv('LOGIN_ID'),
 def getPageData(page):
     latest_data = {}
     try:
-        latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+        latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
+                                      Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
     except Exception as e:
         print(f"Error getting Latest Data : {e}")
     
@@ -105,33 +107,57 @@ def team(request):
         
         if "add" in request.POST:
             # check for integer and try also make sure sum of all percent pay is <100
-            print(request.POST.get('isPercent'))
+            print(type(request.POST.get('phoneNumber')))
             newData={"userName":request.POST.get('userName'),
                      "name":request.POST.get('name'),
                      "jobTitle":request.POST.get('jobTitle'),
-                     "phoneNumber":request.POST.get('phoneNumber'),
+                     "phoneNumber":int(request.POST.get('phoneNumber')),
                      "isPercent":True if request.POST.get('isPercent')=="on" else False,
-                     "pay":request.POST.get('pay')}
+                     "pay":int(request.POST.get('pay')),
+                     "password":request.POST.get('password'),
+                     "isAdmin":False}
+          
             
-            db.addDocument(os.getenv("DB_ID"),COLLECTION["team"],newData)
-            #add data to database
-            pass
+            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["team"],newData)
+            
+            if res:
+                 messages.success(request, 'User Created Sucessfuly')
+            else:
+                messages.error(request,"Somthing Went Wrong Try Again...")
+                
+            
         
         elif "edit" in request.POST:
             # check for integer and try also make sure sum of all percent pay is <100
             updateData={"userName":request.POST.get('userName'),
                      "name":request.POST.get('name'),
                      "jobTitle":request.POST.get('jobTitle'),
-                     "phoneNumber":request.POST.get('phoneNumber'),
+                     "phoneNumber":int(request.POST.get('phoneNumber')),
                      "isPercent":True if request.POST.get('isPercent')=="on" else False,
-                     "pay":request.POST.get('pay')}
+                     "pay":int(request.POST.get('pay')),
+                     "password":request.POST.get('password'),
+                     "isAdmin":False}
             
-            db.updateDocument(os.getenv("DB_ID"),COLLECTION["team"],request.POST.get('docID'),updateData)
+            res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["team"],request.POST.get('docID'),updateData)
+            
+            if res:
+                 messages.success(request, 'Data Edited Sucessfuly')
+            else:
+                messages.error(request,"Somthing Went Wrong Try Again...")
+                
+            
             #edit data to database
             pass
         
         elif "delete" in request.POST:
-            db.deleteDocument(os.getenv("DB_ID"),COLLECTION["team"],request.POST.get('docID'))
+            
+            res=db.deleteDocument(os.getenv("DB_ID"),COLLECTION["team"],request.POST.get('docID'))
+            
+            if res:
+                 messages.success(request, 'Data Deleted Sucessfuly')
+            else:
+                messages.error(request,"Somthing Went Wrong Try Again...")
+                
             #delete data from database
             pass
         else:

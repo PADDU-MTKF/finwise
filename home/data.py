@@ -104,6 +104,8 @@ def updateDocument(db_id,collection_id,document_id,data):
     try:
         databases.update_document(db_id, collection_id, document_id,data)
         return True
-    except:
+    except Exception as e:
+        print("Error Editing document : ",e)
+        
         return False
 
