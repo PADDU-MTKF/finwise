@@ -3,6 +3,8 @@ from django.shortcuts import render, HttpResponse, redirect, redirect
 from django.contrib import messages
 from . import data as db
 from appwrite.query import Query
+from django.core.cache import cache
+
 
 MASTER_ADMIN_USERNAME="admin"
 ADMIN_DEFAULT_PAGE="team"
@@ -22,12 +24,15 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
 
 
 
-
-def getPageData(page):
+def getPageData(page,refresh=False):
     latest_data = {}
     try:
-        latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
+        latest_data=cache.get(page) if not refresh else None
+        if latest_data is None:
+            latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
                                       Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
+            cache.set(page,latest_data)
+            
     except Exception as e:
         print(f"Error getting Latest Data : {e}")
     
@@ -165,7 +170,7 @@ def team(request):
             return render(request, 'login.html',data)
         
 
-        latest_data=getPageData("team")
+        latest_data=getPageData("team",refresh=True)
         return render(request, ADMIN_ENDPOINTS['team'],{"data":latest_data})
     
     data={"page":"team"}
