@@ -60,6 +60,8 @@ body{
 
 .bottom-nav .nav-link {
     color: rgb(255, 255, 255);
+    background: none;
+    border: none;
     text-decoration: none;
     padding: 10px 15px;
     font-size: 16px;
@@ -67,14 +69,18 @@ body{
     display: inline-block; /* Allows transformation */
 }
 
-.bottom-nav .nav-link:hover, .bottom-nav .nav-link.active {
-    border-bottom: 2px solid #007bff;
-  
-    transform: translateY(-5px) scale(1.05); /* Moves link up and scales slightly */
-   
-    /* color: white; */
 
+
+.nav-link:hover{
+  border-bottom: 2px solid #007bff;
+  
+  transform: translateY(-5px) scale(1.05); /* Moves link up and scales slightly */
+ 
 }
+
+.active{
+  color:red !important;
+} 
 
 
 

@@ -61,10 +61,10 @@
 
     {% block nav %}
     <div class="bottom-nav">
-        <a href="{% url "team" %}" class="nav-link">Team</a>
-        <a href="{% url "project" %}" class="nav-link">Project</a>
-        <a href="{% url "finance" %}" class="nav-link">Finance</a>
-        <a href="{% url "logout" %}" class="nav-link"  onclick="return confirmLogOut()">Logout</a>
+        <button class="nav-link {% block activeTeam %}{% endblock %}" onclick="navigateToUrl('{% url "team" %}')">Team</button>
+        <button class="nav-link {% block activeProject %}{% endblock %}" onclick="navigateToUrl('{% url "project" %}')">Project</button>
+        <button class="nav-link {% block activeFinance %}{% endblock %}" onclick="navigateToUrl('{% url "finance" %}')">Finance</button>
+        <button class="nav-link" onclick="confirmLogOut()">Logout</button>
     </div>
     {% endblock %}
 

@@ -72,9 +72,14 @@ function confirmLogOut() {
 
     // If user confirms, proceed with form submission
     if (result) {
-      return true;
+      navigateToUrl("logout");
     } else {
       // If user cancels, prevent the form submission
       return false;
     }
   }
+
+
+  function navigateToUrl(url) {
+    window.location.href = url;
+}
