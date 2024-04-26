@@ -32,6 +32,7 @@ def getPageData(page,refresh=False):
             latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
                                       Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
             cache.set(page,latest_data)
+            print("cacheed:",page)
             
     except Exception as e:
         print(f"Error getting Latest Data : {e}")
