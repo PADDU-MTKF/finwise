@@ -32,7 +32,7 @@
                 <tbody>
                 {% if data %}
                     {% for member in data %}
-                    <tr>
+                    <tr class="box" id="{{member.id}}">
                         <td> {{forloop.counter}} </td>
                         <td> {{member.name}}</td>
                         <td> {{member.jobTitle}} </td>
@@ -98,7 +98,7 @@
 
         <input type="hidden" id="ID" name="docID" value="">
     
-        <button type="button" name="delete" onclick="return confirmDelete()">Delete</button>
+        <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
         <button id="editCancelButton" type="button" onclick="toggleEdit()">Edit</button>
         <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
     </form>

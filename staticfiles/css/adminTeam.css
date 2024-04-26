@@ -1,6 +1,6 @@
 
 
-.box {
+/* .box {
     width: 80%;
     max-width: 750px;
     margin: 20px auto;
@@ -9,15 +9,15 @@
     border: 2px solid #98ff50;
     border-radius: 10px;
     box-shadow: 10px var(--accent-orange-t);
-  }
+  } */
   
 body{
   font-family: "Roboto", sans-serif;
   overflow-y: hidden;
 }
- .box:hover{
+ /* .box:hover{
     background-color: #ff5a08;
- }
+ } */
 
 
 .hide{
