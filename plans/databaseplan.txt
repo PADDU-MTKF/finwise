@@ -1,0 +1,7 @@
+project_settings(label,ask_value,ask_advance,all_users_same_or_not)
+
+projects(projectID[auto generated],name,value,advance,deadline,description,creator,isComplete)
+
+project_workers(projectID,username,name,deadline,isComplete)
+
+project_stages(projectID,current_stage,all_stage[])

@@ -8,14 +8,14 @@ from django.core.cache import cache
 
 MASTER_ADMIN_USERNAME="admin"
 ADMIN_DEFAULT_PAGE="team"
-USER_DEFAULT_PAGE="home"
+USER_DEFAULT_PAGE="team"
 
 ADMIN_ENDPOINTS={"project":"adminProject.html",
                  "team":"adminTeam.html",
                  "finance":"adminFinance.html",
                  }
 
-USER_ENDPOINTS={"home":"userHome.html"}
+USER_ENDPOINTS={"team":"userHome.html"}
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "team":os.getenv('EMPDETAILS_ID')
@@ -76,6 +76,7 @@ def login(request):
                     
             else:
                 latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
+                print(latest_data)
                 data["data"]=latest_data
                 
                 try:

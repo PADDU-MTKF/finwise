@@ -1,6 +1,68 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extraStyle %}
+    <link rel="stylesheet" href="{% static "css/adminTeam.css" %}">
+{% endblock  %}
+{% block activeTeam %}active{% endblock %}
 {% block mainContent %}
-user home
+
+<center>
+
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Team Overview</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="{% static "resources/search.png" %}" alt="">
+            </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Sl.No. <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th> Location <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> Job Title <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Role <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Phone Number <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if data %}
+                    {% for member in data %}
+                    <tr class="box" id="{{member.id}}">
+                        <td> {{forloop.counter}} </td>
+                        <td> {{member.name}}</td>
+                        <td> {{member.jobTitle}} </td>
+                        <td>
+                            {% if member.isPercent %}
+                                <p class="status partner">Partner</p>
+                            {% else %}
+                                <p class="status employee">Employee</p>
+                            {% endif %}
+                        </td>
+                        <td> <strong>{{member.phoneNumber}}</strong></td>
+                        
+                    </tr>
+                        {% endfor %}
+                    {% else %}
+                    <div class="box">
+                        <h2>No Team Members</h2>
+                        <p>Add Members to manage your team</p>
+                    </div>
+                {% endif %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</center>
+  
+    
+{% endblock  %}
+
+
+{% block extraScript %}
+<script src="{% static 'js/userTeam.js'%}"></script>
 {% endblock  %}
