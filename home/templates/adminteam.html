@@ -17,6 +17,7 @@
                 <img src="{% static "resources/search.png" %}" alt="">
             </div>
         </section>
+        {% if data %}
         <section class="table__body">
             <table>
                 <thead>
@@ -30,7 +31,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% if data %}
                     {% for member in data %}
                     <tr class="box" id="{{member.id}}">
                         <td> {{forloop.counter}} </td>
@@ -55,10 +55,14 @@
                     </tr>
                         {% endfor %}
                     {% else %}
-                    <div class="box">
-                        <h2>No Team Members</h2>
-                        <p>Add Members to manage your team</p>
-                    </div>
+                    <tr>
+                        <td colspan="5">
+                            <div class="nodata">
+                                <h2>No Team Members</h2>
+                                <p>Add Members to manage your team</p>
+                            </div>
+                        </td>
+                    </tr>
                 {% endif %}
                 </tbody>
             </table>
