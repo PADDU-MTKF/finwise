@@ -1,7 +1,118 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block extraStyle %}
+    <link rel="stylesheet" href="{% static "css/adminproject.css" %}">
+{% endblock  %}
 {% block activeProject %}active{% endblock %}
 {% block mainContent %}
-admin Project page
+<center>
+
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Project List</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="{% static "resources/search.png" %}" alt="">
+            </div>
+        </section>
+        {% comment %} {% if data %} {% endcomment %}
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Sl.No. <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <!-- <th> Location <span class="icon-arrow">&UpArrow;</span></th> -->
+                        <th> Deadline <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Creator <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                {% comment %} <tbody>
+                    {% for member in data %}
+                    <tr class="box" id="{{member.id}}">
+                        <td> {{forloop.counter}} </td>
+                        <td> {{member.name}}</td>
+                        <td> {{member.jobTitle}} </td>
+                        <td>
+                            {% if member.isPercent %}
+                                <p class="status partner">Partner</p>
+                            {% else %}
+                                <p class="status employee">Employee</p>
+                            {% endif %}
+                        </td>
+                        <td> <strong>{{member.pay}}</strong></td>
+                        <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
+                        <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
+                        <input type="hidden" id="passwordHidden_{{member.id}}" value="{{member.password}}">
+                        <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
+                        <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
+                        <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
+                        <input type="hidden" id="payHidden_{{member.id}}" value="{{member.pay}}">
+                        <input type="hidden" id="IDHidden_{{member.id}}" value="{{member.id}}">
+                    </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">
+                            <div class="nodata">
+                                <h2>No Projects initiated</h2>
+                                <p>Add Projects to manage</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody> {% endcomment %}
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td>Zinzu Chan Lee</td>
+        
+                        <td> 17 Dec, 2022 </td>
+                        <td> <strong> $128.90 </strong></td>
+                        <td>
+                            <p class="status activate">Active</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 2 </td>
+                        <td>Jeet Saru </td>
+                        
+                        <td> 27 Aug, 2023 </td>
+                        <td> <strong>$5350.50</strong> </td>
+                        <td>
+                            <p class="status complete">Complete</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 3</td>
+                        <td>Sonal Gharti </td>
+        
+                        <td> 14 Mar, 2023 </td>
+                        <td> <strong>$210.40</strong> </td>
+                        <td>
+                            <p class="status cancelled">Cancelled</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 4</td>
+                        <td>Alson GC </td>
+                        
+                        <td> 25 May, 2023 </td>
+                        <td> <strong>$149.70</strong> </td>
+                        <td>
+                            <p class="status activate">Active</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</center>
+
+<button id="add_float" class="add_float">⚙️</button>
+{% endblock  %}
+
+{% block extraScript %}
+<script src="{% static 'js/base.js'%}"></script>
 {% endblock  %}

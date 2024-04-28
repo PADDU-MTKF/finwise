@@ -79,7 +79,7 @@ body{
 }
 
 .active{
-  color:red !important;
+  color:rgb(0, 255, 204) !important;
 } 
 
 
@@ -100,21 +100,21 @@ body{
 }
 
 .bouncing-blob--blue {
-  background: #4783c7;
+  background: #ff0000;
 }
 
 .bouncing-blob--white {
-  background: #9ad3f2;
+  background: #ff1919;
   z-index: 2;
   width: 15vw;
 }
 
 .bouncing-blob--purple {
-  background: #8286ff;
+  background: #990000;
 }
 
 .bouncing-blob--pink {
-  background: #e289cd50;
+  background: #ff4040;
 }
 
 .bouncing-blobs-container {
