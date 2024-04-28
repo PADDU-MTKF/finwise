@@ -47,8 +47,10 @@ document.querySelectorAll('.box').forEach(function(box) {
     editCancelButton.textContent = editMode ? 'Cancel' : 'Edit';
 
     if (!editMode) {
+
+      closeForm();
         
-        document.getElementById('popup').style.display = 'none';
+        // document.getElementById('popup').style.display = 'none';
     }
     
     document.getElementById('saveButton').classList.remove('hide');
@@ -107,9 +109,13 @@ function togglePayLabelAndValidation() {
   document.getElementById('add_float').addEventListener('click', function() {
     var saveButton = document.getElementById('saveButton');
     var deleteButton = document.querySelector('#popup [name="delete"]');
+
+
+    const formPopup = document.getElementById('popup');
+    formPopup.style.display = 'block';
   
     // visibility of the popup
-    document.getElementById('popup').style.display = 'block';
+    formPopup.style.animation = 'zoomIn 0.3s forwards';
     document.getElementById('saveButton').classList.remove('hide');
     deleteButton.classList.add('hide');
     document.getElementById('editCancelButton').textContent ='Cancel'
@@ -120,6 +126,7 @@ function togglePayLabelAndValidation() {
       input.disabled = false;
     });
 
+   
 
     document.getElementById('name').value = "";
         document.getElementById('userName').value = "";
@@ -145,6 +152,13 @@ function togglePayLabelAndValidation() {
 
 
 
+  function closeForm() {
+    const formPopup = document.getElementById('popup');
+    formPopup.style.animation = 'zoomOut 0.3s forwards'; // Apply zoom-out animation
+    setTimeout(() => {
+        formPopup.style.display = 'none';
+    }, 300); // Delay hiding the form to allow animation to complete
+}
 
 
 
