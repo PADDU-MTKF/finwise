@@ -118,7 +118,7 @@ function togglePayLabelAndValidation() {
     formPopup.style.animation = 'zoomIn 0.3s forwards';
     document.getElementById('saveButton').classList.remove('hide');
     deleteButton.classList.add('hide');
-    document.getElementById('editCancelButton').textContent ='Cancel'
+    document.getElementById('editCancelButton').textContent ='Edit'
 
     var inputs = document.querySelectorAll('#popup input, #popup textarea');
     
@@ -164,9 +164,12 @@ function togglePayLabelAndValidation() {
 
 
 
+function nextStep(currentStepId, nextStepId) {
+  document.getElementById(currentStepId).style.display = "none";
+  document.getElementById(nextStepId).style.display = "block";
+}
 
-
-
-
-
-
+function previousStep(currentStepId, previousStepId) {
+  document.getElementById(currentStepId).style.display = "none";
+  document.getElementById(previousStepId).style.display = "block";
+}

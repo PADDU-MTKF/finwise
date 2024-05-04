@@ -15,14 +15,13 @@
                 <img src="{% static "resources/search.png" %}" alt="">
             </div>
         </section>
-        {% comment %} {% if data %} {% endcomment %}
+        {% if data %}
         <section class="table__body">
             <table>
                 <thead>
                     <tr>
                         <th> Sl.No. <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Name <span class="icon-arrow">&UpArrow;</span></th>
-                        <!-- <th> Location <span class="icon-arrow">&UpArrow;</span></th> -->
                         <th> Deadline <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Creator <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
@@ -64,46 +63,32 @@
                 {% endif %}
                 </tbody> {% endcomment %}
                 <tbody>
+                    {% for project in data %}
                     <tr>
-                        <td> 1 </td>
-                        <td>Zinzu Chan Lee</td>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{project.name}}</td>
         
-                        <td> 17 Dec, 2022 </td>
-                        <td> <strong> $128.90 </strong></td>
+                        <td>{{project.deadLine}}</td>
+                        <td> <strong>{{project.creator}}</strong></td>
                         <td>
-                            <p class="status activate">Active</p>
+                            {% if member.isComplete %}
+                                <p class="status active">Active</p>
+                            {% else %}
+                                <p class="status complete">Complete</p>
+                            {% endif %}
                         </td>
                     </tr>
+                    {% endfor %}
+                    {% else %}
                     <tr>
-                        <td> 2 </td>
-                        <td>Jeet Saru </td>
-                        
-                        <td> 27 Aug, 2023 </td>
-                        <td> <strong>$5350.50</strong> </td>
-                        <td>
-                            <p class="status complete">Complete</p>
+                        <td colspan="5">
+                            <div class="nodata">
+                                <h2>No Projects initiated</h2>
+                                <p>Add Projects to manage</p>
+                            </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td> 3</td>
-                        <td>Sonal Gharti </td>
-        
-                        <td> 14 Mar, 2023 </td>
-                        <td> <strong>$210.40</strong> </td>
-                        <td>
-                            <p class="status cancelled">Cancelled</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 4</td>
-                        <td>Alson GC </td>
-                        
-                        <td> 25 May, 2023 </td>
-                        <td> <strong>$149.70</strong> </td>
-                        <td>
-                            <p class="status activate">Active</p>
-                        </td>
-                    </tr>
+                {% endif %}
                 </tbody>
             </table>
         </section>

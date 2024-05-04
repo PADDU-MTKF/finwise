@@ -18,7 +18,8 @@ ADMIN_ENDPOINTS={"project":"adminProject.html",
 USER_ENDPOINTS={"team":"userHome.html"}
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
-            "team":os.getenv('EMPDETAILS_ID')
+            "team":os.getenv('EMPDETAILS_ID'),
+            "project":os.getenv('PROJECTS_ID')
             }
 
 
@@ -29,8 +30,9 @@ def getPageData(page,refresh=False):
     try:
         latest_data=cache.get(page) if not refresh else None
         if latest_data is None:
-            latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
-                                      Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
+            latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+            # latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
+            #                           Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
             cache.set(page,latest_data)
             print("cacheed:",page)
             
