@@ -75,8 +75,13 @@
 <!-- Close button (X) -->
 <button type="button" id="closeButton" onclick="closeForm()">X</button>
 
+
 <form method="post" action="{% url 'team'%}">
     {% csrf_token %}
+    <button id="editCancelButton" type="button">Edit</button>
+    <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
+    <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
+
     <!-- Step 1 -->
     <div id="step1">
         <label for="name">Name</label>
@@ -91,7 +96,11 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" name="confirmPassword" disabled required>
         
+        
         <button type="button" onclick="nextStep('step1', 'step2')">Next</button>
+        
+
+        
     </div>
     
     <!-- Step 2 -->
@@ -104,6 +113,8 @@
         
         <button type="button" onclick="previousStep('step2', 'step1')">Back</button>
         <button type="button" onclick="nextStep('step2', 'step3')">Next</button>
+      
+
     </div>
     
     <!-- Step 3 -->
@@ -119,9 +130,8 @@
         <input type="hidden" id="ID" name="docID" value="">
     
         <button type="button" onclick="previousStep('step3', 'step2')">Back</button>
-        <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
-        <button id="editCancelButton" type="button">Cancel</button>
-        <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
+       
+       
     </div>
 </form>
   </div>
