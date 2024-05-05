@@ -46,14 +46,14 @@ document.querySelectorAll('.box').forEach(function(box) {
     
     editCancelButton.textContent = editMode ? 'Cancel' : 'Edit';
 
-    if (!editMode) {
+    // if (!editMode) {
 
-      closeForm();
+    //   closeForm();
         
-        // document.getElementById('popup').style.display = 'none';
-    }
+    //     // document.getElementById('popup').style.display = 'none';
+    // }
     
-    document.getElementById('saveButton').classList.remove('hide');
+    document.getElementById('saveButton').classList.toggle('hide');
 
 
   });
