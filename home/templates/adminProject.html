@@ -27,41 +27,6 @@
                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
                     </tr>
                 </thead>
-                {% comment %} <tbody>
-                    {% for member in data %}
-                    <tr class="box" id="{{member.id}}">
-                        <td> {{forloop.counter}} </td>
-                        <td> {{member.name}}</td>
-                        <td> {{member.jobTitle}} </td>
-                        <td>
-                            {% if member.isPercent %}
-                                <p class="status partner">Partner</p>
-                            {% else %}
-                                <p class="status employee">Employee</p>
-                            {% endif %}
-                        </td>
-                        <td> <strong>{{member.pay}}</strong></td>
-                        <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
-                        <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
-                        <input type="hidden" id="passwordHidden_{{member.id}}" value="{{member.password}}">
-                        <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
-                        <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
-                        <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
-                        <input type="hidden" id="payHidden_{{member.id}}" value="{{member.pay}}">
-                        <input type="hidden" id="IDHidden_{{member.id}}" value="{{member.id}}">
-                    </tr>
-                        {% endfor %}
-                    {% else %}
-                    <tr>
-                        <td colspan="5">
-                            <div class="nodata">
-                                <h2>No Projects initiated</h2>
-                                <p>Add Projects to manage</p>
-                            </div>
-                        </td>
-                    </tr>
-                {% endif %}
-                </tbody> {% endcomment %}
                 <tbody>
                     {% for project in data %}
                     <tr>
@@ -71,8 +36,8 @@
                         <td>{{project.deadLine}}</td>
                         <td> <strong>{{project.creator}}</strong></td>
                         <td>
-                            {% if member.isComplete %}
-                                <p class="status active">Active</p>
+                            {% if project.isComplete %}
+                                <p class="status activate">Active</p>
                             {% else %}
                                 <p class="status complete">Complete</p>
                             {% endif %}
@@ -94,7 +59,6 @@
         </section>
     </main>
 </center>
-
 <button id="add_float" class="add_float">⚙️</button>
 {% endblock  %}
 

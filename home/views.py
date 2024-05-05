@@ -12,7 +12,7 @@ USER_DEFAULT_PAGE="team"
 
 ADMIN_ENDPOINTS={"project":"adminProject.html",
                  "team":"adminTeam.html",
-                 "finance":"adminFinance.html",
+                 "analysis":"adminAnalysis.html",
                  }
 
 USER_ENDPOINTS={"team":"userHome.html"}
@@ -181,11 +181,11 @@ def team(request):
     return render(request, 'login.html',data)
 
 
-def finance(request):
+def analysis(request):
     if request.method == 'POST':
-        return render(request, 'adminFinance.html')
+        return render(request, 'adminAnalysis.html')
     
-    data={"page":"finance"}
+    data={"page":"analysis"}
     return render(request, 'login.html',data)
 
 
