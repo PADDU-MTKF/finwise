@@ -166,3 +166,6 @@ body{
 }
 /* Global Background End*/
 
+.blur{
+  filter: blur(10px);
+}

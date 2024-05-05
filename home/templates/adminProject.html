@@ -5,6 +5,8 @@
 {% endblock  %}
 {% block activeProject %}active{% endblock %}
 {% block mainContent %}
+
+<div class="popblur">
 <center>
 
     <main class="table" id="customers_table">
@@ -59,9 +61,49 @@
         </section>
     </main>
 </center>
-<button id="add_float" class="add_float">⚙️</button>
+</div>
+
+
+<div class="popup hide" id="popup">
+    <!-- Close button (X) -->
+    <button type="button" id="closeButton" class="cls" onclick="closeForm()">x</button>
+    
+    
+        <form method="post" action="{% url 'project'%}">
+        {% csrf_token %}
+    
+        <!-- Step 1 -->
+        <div id="step1">
+            <label for="name">Set Title</label>
+            <input type="text" id="name" name="name" required>
+    
+            <label for="isPercent">Ask Value?</label>
+            <label>Yes</label>
+            <input type="checkbox" id="isPercent" name="isPercent">
+            
+            <label for="isPercent">Multiple Level Users?</label>
+            <label>Yes</label>
+            <input type="checkbox" id="isPercent" name="isPercent">
+
+            <button type="submit" id="saveButton" class="bxbtn" name="save">Save</button>
+        </div>
+        
+        </form>
+      </div>
+      {% if data %}
+        {% for settings in data %}
+            <input type="hidden" id="titleHidden_{{member.id}}" value="{{settings.title}}">
+            <input type="hidden" id="askValueHidden_{{member.id}}" value="{{settings.askValue}}">
+            <input type="hidden" id="userLevelsHidden_{{member.id}}" value="{{settings.userLevels}}">
+        </div>
+        {% endfor %}
+    {% endif %}
+
+<button id="set_float" class="set_float">⚙️</button>
 {% endblock  %}
 
 {% block extraScript %}
+<script src="{% static 'js/adminProject.js'%}"></script>
+{% comment %} <script src="{% static 'js/adminTeam.js'%}"></script> {% endcomment %}
 <script src="{% static 'js/base.js'%}"></script>
 {% endblock  %}

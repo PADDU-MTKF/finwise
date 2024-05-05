@@ -24,18 +24,19 @@ body {
 }
 
 .popup {
-  display: none;
+  /* display: none; */
   position: fixed;
   width: 80%;
   max-width: 800px;
   max-height: 440px;
+  padding: 30px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ffffff;
-  padding: 1px 10px;
+  background-color: #5a5a5a67;
+  /* padding: 1px 10px; */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   overflow: auto;
   /* or overflow: scroll; */
   -ms-overflow-style: none;
@@ -43,22 +44,26 @@ body {
   scrollbar-width: none;
   /* Firefox */
 }
-
+.cls{
+  margin-left: 10px;
+}
 
 .popup::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari, and Opera */
 }
 
-.popup form {
-  padding: 10px;
-}
+/* .popup form { */
+  /* padding: 30px; */
+  /* border: 10px solid rgba(135, 207, 235, 0.397); */
+/* } */
 
 .popup form label {
   display: block;
   margin-bottom: 10px;
   margin-left: 40px;
   width: 50%;
+  color: #ebebeb;
 }
 
 .popup form input,
@@ -68,10 +73,11 @@ body {
   margin-left: 40px;
   width: 50%;
   border-radius: 5px;
-  background-color: #f1f1f1;
+  background-color: #ffffffc2;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   height: 3em;
-  border: none
+  border: none;
+  padding-left: 15px;
 }
 
 input[type="checkbox" i] {
@@ -79,16 +85,51 @@ input[type="checkbox" i] {
   height: auto !important;
 }
 
-.popup form button {
+.bxbtn {
   display: inline-block;
   padding: 10px 20px;
   margin-left: 40px;
-  background-color: #007bff;
+  margin-top: 20px;
+  background-color: #bdbdbd8c;
   color: #fff;
   text-decoration: none;
   border: none;
   border-radius: 5px;
   width: 10em;
+  border: 2px solid #fff;
+}
+
+.editbtn{
+  height: 15px;
+  background: none;
+  border: none;
+}
+
+/* .editbtn img[alt="Edit"]{
+  color: black;
+} */
+.editbtn img[alt="Cancel"]{
+  filter: invert(.5);
+}
+.svbtn{
+  height: 15px;
+  background: none;
+  border: none;
+}
+.dlbtn{
+  height: 15px;
+  background: none;
+  border: none;
+}
+.popuptray{
+  display: flex;
+  flex-direction: row;
+  float: inline-end;
+  gap: 15px;
+  background-color: #ececec8f;
+  padding: 12px;
+  border-radius: 5px;
+  border: 3px solid #fff;
 }
 
 .add_float {
@@ -123,9 +164,10 @@ input[type="checkbox" i] {
 }
 
 #closeButton {
+  float: right;
   background: none;
   border: none;
-  color: black;
+  color: rgb(255, 255, 255);
   font-size: 25px;
   cursor: pointer;
   padding: 5px;
@@ -133,8 +175,7 @@ input[type="checkbox" i] {
   transition: all .2s linear;
 }
 #closeButton:hover{
-  background-color: red;
-  color: white;
+  color: red;
 }
 
 @keyframes zoomIn {

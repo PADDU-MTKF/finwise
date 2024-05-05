@@ -1,9 +1,8 @@
 document.querySelectorAll('.box').forEach(function(box) {
     box.addEventListener('click', function() {
-
          // Get data from hidden input fields
         var boxId=box.id;
-        var name = document.getElementById('nameHidden_'+boxId).value;
+        var title = document.getElementById('nameHidden_'+boxId).value;
         var userName = document.getElementById('userNameHidden_'+boxId).value;
         var password = document.getElementById('passwordHidden_'+boxId).value;
         var jobTitle = document.getElementById('jobTitleHidden_'+boxId).value;
@@ -23,28 +22,32 @@ document.querySelectorAll('.box').forEach(function(box) {
         document.getElementById('pay').value = pay;
         document.getElementById('ID').value = Id;
 
-        document.getElementById('popup').style.display = 'block';
+        document.getElementById('popup').classList.remove('hide');
         document.getElementById('saveButton').classList.add('hide');
         document.getElementById('saveButton').name="edit";
-        document.getElementById('saveButton').textContent="Save";
+        // document.getElementById('saveButton').textContent="Save";
         document.querySelector('#popup [name="delete"]').classList.remove('hide');
+        document.querySelector('.popblur').classList.add('blur');
+
         togglePayLabelAndValidation();
-
-
     });
   });
 
   document.querySelector('#editCancelButton').addEventListener('click', function(event) {
     event.preventDefault();
     var editCancelButton = document.getElementById('editCancelButton');
-    var editMode = editCancelButton.textContent === 'Edit';
+    var editMode = editCancelButton.querySelector('img[alt="Edit"]') !== null;
     var inputs = document.querySelectorAll('#popup input, #popup textarea');
     
     inputs.forEach(function(input) {
       input.disabled = !editMode;
     });
+
+
+    var editImage = this.querySelector('img');
+    // editImage.alt = 'Cancel';
     
-    editCancelButton.textContent = editMode ? 'Cancel' : 'Edit';
+    // editCancelButton.textContent = editMode ? 'Cancel' : 'Edit';
 
     // if (!editMode) {
 
@@ -52,6 +55,11 @@ document.querySelectorAll('.box').forEach(function(box) {
         
     //     // document.getElementById('popup').style.display = 'none';
     // }
+    if (editImage.alt === 'Cancel') {
+      editImage.alt = 'Edit'; // Replace 'New Alt Text' with your desired alt text
+  } else {
+      editImage.alt = 'Cancel'; // Replace 'Original Alt Text' with the original alt text
+  }
     
     document.getElementById('saveButton').classList.toggle('hide');
 
@@ -112,13 +120,16 @@ function togglePayLabelAndValidation() {
 
 
     const formPopup = document.getElementById('popup');
-    formPopup.style.display = 'block';
+    formPopup.classList.remove('hide');
+    document.querySelector('.popblur').classList.add('blur');
+
   
     // visibility of the popup
-    formPopup.style.animation = 'zoomIn 0.3s forwards';
+    // formPopup.style.animation = 'zoomIn 0.3s forwards';
     document.getElementById('saveButton').classList.remove('hide');
+    
     deleteButton.classList.add('hide');
-    document.getElementById('editCancelButton').textContent ='Edit'
+    document.getElementById('editCancelButton')
 
     var inputs = document.querySelectorAll('#popup input, #popup textarea');
     
@@ -154,10 +165,14 @@ function togglePayLabelAndValidation() {
 
   function closeForm() {
     const formPopup = document.getElementById('popup');
-    formPopup.style.animation = 'zoomOut 0.3s forwards'; // Apply zoom-out animation
-    setTimeout(() => {
-        formPopup.style.display = 'none';
-    }, 300); // Delay hiding the form to allow animation to complete
+    // formPopup.style.animation = 'zoomOut 0.3s forwards'; // Apply zoom-out animation
+    // formPopup.style.display = 'none';
+    formPopup.classList.add('hide');
+    document.querySelector('.popblur').classList.remove('blur');
+    
+    // setTimeout(() => {
+
+    // }, 300); // Delay hiding the form to allow animation to complete
 }
 
 

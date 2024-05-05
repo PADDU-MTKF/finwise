@@ -19,7 +19,7 @@ USER_ENDPOINTS={"team":"userHome.html"}
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "team":os.getenv('EMPDETAILS_ID'),
-            "project":os.getenv('PROJECTS_ID')
+            "project":os.getenv('PROJECTS_ID','PROJECTSETTINGS_ID')
             }
 
 

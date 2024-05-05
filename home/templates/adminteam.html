@@ -7,6 +7,7 @@
 {% block activeTeam %}active{% endblock %}
 {% block mainContent %}
 
+<div class="popblur">
 <center>
 
     <main class="table" id="customers_table">
@@ -69,18 +70,21 @@
         </section>
     </main>
 </center>
+</div>
 
 
-<div class="popup" id="popup">
+<div class="popup hide" id="popup">
 <!-- Close button (X) -->
-<button type="button" id="closeButton" onclick="closeForm()">X</button>
+<button type="button" id="closeButton" class="cls" onclick="closeForm()">x</button>
 
 
 <form method="post" action="{% url 'team'%}">
     {% csrf_token %}
-    <button id="editCancelButton" type="button">Edit</button>
-    <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
-    <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
+    <div class="popuptray">
+        <button type="submit" name="delete" class="dlbtn" onclick="return confirmDelete()"><img src="{% static "resources/delete.png" %}" height="20px" alt=""></button>
+        <button type="submit" id="saveButton" class="svbtn" name="add" class="hide" onclick="return checkPassword()"><img src="{% static "resources/save.png" %}" height="20px" alt=""></button>
+        <button id="editCancelButton" class="editbtn" type="button"><img src="{% static "resources/edit.png" %}" height="20px" alt="Edit"></button>
+    </div>
 
     <!-- Step 1 -->
     <div id="step1">
@@ -97,7 +101,7 @@
         <input type="password" id="confirmPassword" name="confirmPassword" disabled required>
         
         
-        <button type="button" onclick="nextStep('step1', 'step2')">Next</button>
+        <button type="button" class="bxbtn" onclick="nextStep('step1', 'step2')">Next</button>
         
 
         
@@ -111,8 +115,8 @@
         <label for="phoneNumber">Phone Number</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" disabled pattern="[0-9]{10}" placeholder="Enter a 10 digit Number" required>
         
-        <button type="button" onclick="previousStep('step2', 'step1')">Back</button>
-        <button type="button" onclick="nextStep('step2', 'step3')">Next</button>
+        <button type="button" class="bxbtn" onclick="previousStep('step2', 'step1')">Back</button>
+        <button type="button" class="bxbtn" onclick="nextStep('step2', 'step3')">Next</button>
       
 
     </div>
@@ -129,7 +133,7 @@
 
         <input type="hidden" id="ID" name="docID" value="">
     
-        <button type="button" onclick="previousStep('step3', 'step2')">Back</button>
+        <button type="button" class="bxbtn" onclick="previousStep('step3', 'step2')">Back</button>
        
        
     </div>
