@@ -72,9 +72,13 @@
 
 
 <div class="popup" id="popup">
-    <form method="post" action="{% url 'team'%}">
-        {% csrf_token %}
+<!-- Close button (X) -->
+<button type="button" id="closeButton" onclick="closeForm()">X</button>
 
+<form method="post" action="{% url 'team'%}">
+    {% csrf_token %}
+    <!-- Step 1 -->
+    <div id="step1">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" disabled required>
 
@@ -86,13 +90,24 @@
 
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" name="confirmPassword" disabled required>
-
+        
+        <button type="button" onclick="nextStep('step1', 'step2')">Next</button>
+    </div>
+    
+    <!-- Step 2 -->
+    <div id="step2" style="display: none;">
         <label for="jobTitle">Job Title</label>
         <input type="text" id="jobTitle" name="jobTitle" disabled required>
 
         <label for="phoneNumber">Phone Number</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" disabled pattern="[0-9]{10}" placeholder="Enter a 10 digit Number" required>
         
+        <button type="button" onclick="previousStep('step2', 'step1')">Back</button>
+        <button type="button" onclick="nextStep('step2', 'step3')">Next</button>
+    </div>
+    
+    <!-- Step 3 -->
+    <div id="step3" style="display: none;">
         <label for="isPercent">Is the user a Partner?</label>
         <label>Yes</label>
         <input type="checkbox" id="isPercent" name="isPercent" onchange="togglePayLabelAndValidation()" disabled>
@@ -103,10 +118,12 @@
 
         <input type="hidden" id="ID" name="docID" value="">
     
+        <button type="button" onclick="previousStep('step3', 'step2')">Back</button>
         <button type="submit" id="saveButton" name="add" class="hide" onclick="return checkPassword()">Save</button>
-        <button id="editCancelButton" type="button">Edit</button>
+        <button id="editCancelButton" type="button">Cancel</button>
         <button type="submit" name="delete" onclick="return confirmDelete()">Delete</button>
-    </form>
+    </div>
+</form>
   </div>
   
     {% comment %} {% if data %}
