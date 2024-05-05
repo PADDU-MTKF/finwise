@@ -1,4 +1,4 @@
-project_settings(label,ask_value,ask_advance,all_users_same_or_not)
+project_settings(label,ask_value,all_users_same_or_not)
 
 projects(projectID[auto generated],name,value,advance,deadline,description,creator,isComplete)
 
