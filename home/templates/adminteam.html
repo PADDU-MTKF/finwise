@@ -81,8 +81,8 @@
 <form method="post" action="{% url 'team'%}">
     {% csrf_token %}
     <div class="popuptray">
-        <button type="submit" name="delete" class="dlbtn" onclick="return confirmDelete()"><img src="{% static "resources/delete.png" %}" height="20px" alt=""></button>
         <button type="submit" id="saveButton" class="svbtn" name="add" class="hide" onclick="return checkPassword()"><img src="{% static "resources/save.png" %}" height="20px" alt=""></button>
+        <button type="submit" name="delete" class="dlbtn" onclick="return confirmDelete()"><img src="{% static "resources/delete.png" %}" height="20px" alt=""></button>
         <button id="editCancelButton" class="editbtn" type="button"><img src="{% static "resources/edit.png" %}" height="20px" alt="Edit"></button>
     </div>
 

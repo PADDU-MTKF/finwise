@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extraStyle %}
+    <link rel="stylesheet" href="{% static "css/projectList.css" %}">
+{% endblock  %}
+{% block activeProject %}active{% endblock %}
+{% block mainContent %}
+<div class="popblur">
+    <center>
+    
+        <main class="table" id="customers_table">
+            <section class="table__header">
+                <h1>{{project_setting.0.title}}</h1>
+                <div class="input-group">
+                    <input type="search" placeholder="Search Data...">
+                    <img src="{% static "resources/search.png" %}" alt="">
+                </div>
+            </section>
+            {% if data %}
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Sl.No. <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Deadline <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Creator <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in data %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{project.name}}</td>
+            
+                            <td>{{project.deadLine}}</td>
+                            <td> <strong>{{project.creator}}</strong></td>
+                            <td>
+                                {% if project.isComplete %}
+                                    <p class="status activate">Active</p>
+                                {% else %}
+                                    <p class="status complete">Complete</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="nodata">
+                                    <h2>No Projects initiated</h2>
+                                    <p>Add Projects to manage</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </center>
+    </div>
+{% endblock  %}

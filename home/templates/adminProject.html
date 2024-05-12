@@ -11,7 +11,7 @@
 
     <main class="table" id="customers_table">
         <section class="table__header">
-            <h1>Project List</h1>
+            <h1>{{project_setting.0.title}}</h1>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="{% static "resources/search.png" %}" alt="">
@@ -72,32 +72,23 @@
         <form method="post" action="{% url 'project'%}">
         {% csrf_token %}
     
-        <!-- Step 1 -->
-        <div id="step1">
+      
             <label for="name">Set Title</label>
-            <input type="text" id="name" name="name" required>
-    
+            <input type="text" id="name" name="title" value="{{project_setting.0.title}}" required>
+
             <label for="isPercent">Ask Value?</label>
             <label>Yes</label>
-            <input type="checkbox" id="isPercent" name="isPercent">
+            <input type="checkbox" id="isPercent" name="askValue" {% if project_setting.0.askValue %}checked{% endif %}>
             
             <label for="isPercent">Multiple Level Users?</label>
             <label>Yes</label>
-            <input type="checkbox" id="isPercent" name="isPercent">
+            <input type="checkbox" id="isPercent" name="userLevels" {% if project_setting.0.userLevels %}checked{% endif %}>
 
             <button type="submit" id="saveButton" class="bxbtn" name="save">Save</button>
-        </div>
+        
         
         </form>
-      </div>
-      {% if data %}
-        {% for settings in data %}
-            <input type="hidden" id="titleHidden_{{member.id}}" value="{{settings.title}}">
-            <input type="hidden" id="askValueHidden_{{member.id}}" value="{{settings.askValue}}">
-            <input type="hidden" id="userLevelsHidden_{{member.id}}" value="{{settings.userLevels}}">
-        </div>
-        {% endfor %}
-    {% endif %}
+</div>
 
 <button id="set_float" class="set_float">⚙️</button>
 {% endblock  %}

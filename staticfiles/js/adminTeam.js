@@ -2,7 +2,7 @@ document.querySelectorAll('.box').forEach(function(box) {
     box.addEventListener('click', function() {
          // Get data from hidden input fields
         var boxId=box.id;
-        var title = document.getElementById('nameHidden_'+boxId).value;
+        var name = document.getElementById('nameHidden_'+boxId).value;
         var userName = document.getElementById('userNameHidden_'+boxId).value;
         var password = document.getElementById('passwordHidden_'+boxId).value;
         var jobTitle = document.getElementById('jobTitleHidden_'+boxId).value;

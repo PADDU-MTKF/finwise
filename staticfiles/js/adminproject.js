@@ -34,8 +34,6 @@ document.querySelectorAll('.box').forEach(function(box) {
 }
 
 document.getElementById('set_float').addEventListener('click', function() {
-  var saveButton = document.getElementById('saveButton');
-  var deleteButton = document.querySelector('#popup [name="delete"]');
 
 
   const formPopup = document.getElementById('popup');
@@ -47,8 +45,6 @@ document.getElementById('set_float').addEventListener('click', function() {
   // formPopup.style.animation = 'zoomIn 0.3s forwards';
   document.getElementById('saveButton').classList.remove('hide');
   
-  deleteButton.classList.add('hide');
-  document.getElementById('editCancelButton')
 
   var inputs = document.querySelectorAll('#popup input, #popup textarea');
   
@@ -57,24 +53,5 @@ document.getElementById('set_float').addEventListener('click', function() {
   });
 
  
-
-  document.getElementById('name').value = "";
-      document.getElementById('userName').value = "";
-      document.getElementById('password').value = "";
-      document.getElementById('confirmPassword').value = "";
-      
-      document.getElementById('jobTitle').value = "";
-      document.getElementById('phoneNumber').value = "";
-      document.getElementById('isPercent').checked = false; // Convert string to boolean
-      document.getElementById('pay').value = "";
-      document.getElementById('ID').value = "";
-
-
-
-  // Change the text of the save button to "Add" or "Save" based on current visibility
-  saveButton.name="add";
-  saveButton.textContent = (popup.style.display === 'none') ? 'Save' : 'Add';
-  togglePayLabelAndValidation();
-
  
 });

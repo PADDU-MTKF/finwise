@@ -15,14 +15,17 @@ ADMIN_ENDPOINTS={"project":"adminProject.html",
                  "analysis":"adminAnalysis.html",
                  }
 
-USER_ENDPOINTS={"team":"userHome.html"}
+USER_ENDPOINTS={"team":"userTeam.html",
+                "project":"userProject.html",
+                }
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "team":os.getenv('EMPDETAILS_ID'),
-            "project":os.getenv('PROJECTS_ID','PROJECTSETTINGS_ID')
+            "project":os.getenv('PROJECTS_ID'),
+            "project_setting":os.getenv('PROJECT_SETTINGS_ID')
             }
 
-
+MULTI_DATA={"project":["project","project_setting"]}
 
 
 def getPageData(page,refresh=False):
@@ -30,11 +33,15 @@ def getPageData(page,refresh=False):
     try:
         latest_data=cache.get(page) if not refresh else None
         if latest_data is None:
-            latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
-            # latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
-            #                           Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
+            try:
+                latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
+                                        Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
+            except:
+                latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+                
+            # print(latest_data)
             cache.set(page,latest_data)
-            print("cacheed:",page)
+            # print("cacheed:",page)
             
     except Exception as e:
         print(f"Error getting Latest Data : {e}")
@@ -68,8 +75,14 @@ def login(request):
 
             # Redirecting to admin or user home page based on user role
             if user_det[0]['isAdmin']:
-                latest_data=getPageData(page if page is not "" else ADMIN_DEFAULT_PAGE)
-                data["data"]=latest_data
+                if page in MULTI_DATA:
+                    for each in MULTI_DATA[page]:
+                        data["data" if page == each else each]=getPageData(each)
+                else:
+                    latest_data=getPageData(page if page is not "" else ADMIN_DEFAULT_PAGE)
+                    data["data"]=latest_data
+                
+                # print(data)
                 
                 try:
                     return render(request, ADMIN_ENDPOINTS[page], data)
@@ -78,7 +91,7 @@ def login(request):
                     
             else:
                 latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
-                print(latest_data)
+                # print(latest_data)
                 data["data"]=latest_data
                 
                 try:
@@ -99,7 +112,26 @@ def login(request):
 
 def project(request):
     if request.method == 'POST':
-        return render(request, 'adminProject.html')
+        page="project"
+        latest_data={}
+        if "save" in request.POST:
+            updateData={"title":request.POST.get('title'),
+                     "askValue":True if request.POST.get('askValue')=="on" else False,
+                     "userLevels":True if request.POST.get('userLevels')=="on" else False
+                    }
+            
+            res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project_setting"],os.getenv("PROJECT_SETTINGS_DOC_ID"),updateData)
+            
+            if res:
+                messages.success(request, 'Settings Edited Sucessfuly')
+            else:
+                messages.error(request,"Somthing Went Wrong Try Again...")
+                
+                
+            for each in MULTI_DATA[page]:
+                latest_data["data" if page == each else each]=getPageData(each,True)
+                    
+            return render(request, ADMIN_ENDPOINTS[page],latest_data)
         
     data={"page":"project"}
     return render(request, 'login.html',data)
@@ -116,7 +148,7 @@ def team(request):
         
         if "add" in request.POST:
             # check for integer and try also make sure sum of all percent pay is <100
-            print(type(request.POST.get('phoneNumber')))
+            # print(type(request.POST.get('phoneNumber')))
             newData={"userName":request.POST.get('userName'),
                      "name":request.POST.get('name'),
                      "jobTitle":request.POST.get('jobTitle'),
