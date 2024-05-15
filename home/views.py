@@ -17,6 +17,7 @@ ADMIN_ENDPOINTS={"project":"adminProject.html",
 
 USER_ENDPOINTS={"team":"userTeam.html",
                 "project":"userProject.html",
+                "details":"userTimeline.html"
                 }
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
@@ -114,7 +115,7 @@ def project(request):
     if request.method == 'POST':
         page="project"
         latest_data={}
-        if "save" in request.POST:
+        if "adminSave" in request.POST:
             updateData={"title":request.POST.get('title'),
                      "askValue":True if request.POST.get('askValue')=="on" else False,
                      "userLevels":True if request.POST.get('userLevels')=="on" else False
@@ -132,6 +133,20 @@ def project(request):
                 latest_data["data" if page == each else each]=getPageData(each,True)
                     
             return render(request, ADMIN_ENDPOINTS[page],latest_data)
+        if "userProSave" in request.POST:
+            newData={
+                "name":request.POST.get("name"),
+                "date":request.POST.get("date"),
+                "description":request.POST.get("description")
+            }
+
+            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["PROJECTS_ID"],newData)
+
+            if res:
+                 messages.success(request, 'Project Created Sucessfuly')
+            else:
+                messages.error(request,"Somthing Went Wrong Try Again...")
+
         
     data={"page":"project"}
     return render(request, 'login.html',data)
@@ -221,3 +236,10 @@ def analysis(request):
     return render(request, 'login.html',data)
 
 
+def details(request):
+    if request.method == 'POST':
+        print(request.POST.get("proid"))
+        return render(request, 'userTimeline.html')
+    
+    data={"page":"details"}
+    return render(request, 'login.html',data)

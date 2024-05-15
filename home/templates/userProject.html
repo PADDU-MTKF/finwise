@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extraStyle %}
-    <link rel="stylesheet" href="{% static "css/projectList.css" %}">
+    <link rel="stylesheet" href="{% static "css/userProject.css" %}">
 {% endblock  %}
 {% block activeProject %}active{% endblock %}
 {% block mainContent %}
@@ -30,10 +30,12 @@
                     </thead>
                     <tbody>
                         {% for project in data %}
-                        <tr>
+                        <tr onclick="submitForm('{{project.id}}')">
+                            <form id="form_{{project.id}}" action="{% url "details" %}" method="post">
+                            {% csrf_token %}
                             <td>{{forloop.counter}}</td>
                             <td>{{project.name}}</td>
-            
+                            <input type="hidden" name="proid" value="{{project.id}}">
                             <td>{{project.deadLine}}</td>
                             <td> <strong>{{project.creator}}</strong></td>
                             <td>
@@ -43,6 +45,7 @@
                                     <p class="status complete">Complete</p>
                                 {% endif %}
                             </td>
+                        </form>
                         </tr>
                         {% endfor %}
                         {% else %}
@@ -61,4 +64,80 @@
         </main>
     </center>
     </div>
+    <button id="add_float" class="add_float">+</button>
+    <div class="popup hide" id="popup">
+        <!-- Close button (X) -->
+        <button type="button" id="closeButton" class="cls" onclick="closeForm()">x</button>
+        
+        
+            <form method="post" action="{% url 'project'%}">
+            {% csrf_token %}
+        
+          
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="date">Set Deadline</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="date">Description</label>
+                <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter Project Details" required></textarea>
+
+    
+                {% comment %} <label for="isPercent">Ask Value?</label>
+                <label>Yes</label>
+                <input type="checkbox" id="isPercent" name="askValue" {% if project_setting.0.askValue %}checked{% endif %}>
+                
+                <label for="isPercent">Multiple Level Users?</label>
+                <label>Yes</label>
+                <input type="checkbox" id="isPercent" name="userLevels" {% if project_setting.0.userLevels %}checked{% endif %}> {% endcomment %}
+    
+                <button type="submit" id="saveButton" class="bxbtn" name="userProSave">Save</button>
+            
+            
+            </form>
+    </div>
+{% endblock  %}
+{% block extraScript %}
+<script>
+    function submitForm(projectId) {
+        document.getElementById('form_' + projectId).submit();
+    }
+
+
+    document.getElementById('add_float').addEventListener('click', function() {
+
+
+        const formPopup = document.getElementById('popup');
+        formPopup.classList.remove('hide');
+        document.querySelector('.popblur').classList.add('blur');
+      
+      
+        // visibility of the popup
+        // formPopup.style.animation = 'zoomIn 0.3s forwards';
+        document.getElementById('saveButton').classList.remove('hide');
+        
+      
+        var inputs = document.querySelectorAll('#popup input, #popup textarea');
+        
+        inputs.forEach(function(input) {
+          input.disabled = false;
+        });
+      
+       
+       
+      });
+
+      function closeForm() {
+        const formPopup = document.getElementById('popup');
+        // formPopup.style.animation = 'zoomOut 0.3s forwards'; // Apply zoom-out animation
+        // formPopup.style.display = 'none';
+        formPopup.classList.add('hide');
+        document.querySelector('.popblur').classList.remove('blur');
+        
+        // setTimeout(() => {
+    
+        // }, 300); // Delay hiding the form to allow animation to complete
+    }
+</script>
 {% endblock  %}
