@@ -15,6 +15,10 @@ body {
     align-items: center;
 }
 
+main.table{
+  margin: 0 !important;
+}
+
 .projectContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

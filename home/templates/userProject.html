@@ -32,19 +32,24 @@
                         {% for project in data %}
                         <tr onclick="submitForm('{{project.id}}')">
                             <form id="form_{{project.id}}" action="{% url "details" %}" method="post">
-                            {% csrf_token %}
-                            <td>{{forloop.counter}}</td>
-                            <td>{{project.name}}</td>
-                            <input type="hidden" name="proid" value="{{project.id}}">
-                            <td>{{project.deadLine}}</td>
-                            <td> <strong>{{project.creator}}</strong></td>
-                            <td>
-                                {% if project.isComplete %}
-                                    <p class="status activate">Active</p>
-                                {% else %}
-                                    <p class="status complete">Complete</p>
-                                {% endif %}
-                            </td>
+                                {% csrf_token %}
+                                <td>{{forloop.counter}}</td>
+                                <td>{{project.name}}</td>
+                                <input type="hidden" name="proid" value="{{project.id}}">
+                                <input type="hidden" name="pname" value="{{project.name}}">
+                                <input type="hidden" name="pdead" value="{{project.deadLine}}">
+                                <input type="hidden" name="pdes" value="{{project.description}}">
+                                <input type="hidden" name="pcreator" value="{{project.creator}}">
+                                <input type="hidden" name="pcomp" value="{{project.isComplete}}">
+                                <td>{{project.deadLine}}</td>
+                                <td> <strong>{{project.creator}}</strong></td>
+                                <td>
+                                    {% if not project.isComplete %}
+                                        <p class="status activate">Active</p>
+                                    {% else %}
+                                        <p class="status complete">Complete</p>
+                                    {% endif %}
+                                </td>
                         </form>
                         </tr>
                         {% endfor %}
@@ -77,20 +82,21 @@
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
 
+                {% if project_setting.0.askValue %}
+                    <label for="value">Value</label>
+                    <input type="text" id="value" name="value" required>
+                {% endif %}
+                
+                
                 <label for="date">Set Deadline</label>
                 <input type="date" id="date" name="date" required>
-
+                
                 <label for="date">Description</label>
                 <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter Project Details" required></textarea>
 
-    
-                {% comment %} <label for="isPercent">Ask Value?</label>
-                <label>Yes</label>
-                <input type="checkbox" id="isPercent" name="askValue" {% if project_setting.0.askValue %}checked{% endif %}>
                 
-                <label for="isPercent">Multiple Level Users?</label>
-                <label>Yes</label>
-                <input type="checkbox" id="isPercent" name="userLevels" {% if project_setting.0.userLevels %}checked{% endif %}> {% endcomment %}
+                <input type="hidden" id="creator" name="creator" value="">
+
     
                 <button type="submit" id="saveButton" class="bxbtn" name="userProSave">Save</button>
             
@@ -139,5 +145,9 @@
     
         // }, 300); // Delay hiding the form to allow animation to complete
     }
+
+
+    const uname=localStorage.getItem("username");
+    document.getElementById("creator").value=uname;
 </script>
 {% endblock  %}

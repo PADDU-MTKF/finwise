@@ -27,21 +27,34 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             }
 
 MULTI_DATA={"project":["project","project_setting"]}
+USERS_PAGE={'project':'creator','analytics':'username'}
 
-
-def getPageData(page,refresh=False):
+def getPageData(page,refresh=False,query = None,username=""):
     latest_data = {}
     try:
-        latest_data=cache.get(page) if not refresh else None
+        latest_data=cache.get(page+username) if not refresh else None
         if latest_data is None:
             try:
-                latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,[
-                                        Query.not_equal("userName", [MASTER_ADMIN_USERNAME])])
-            except:
-                latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+                # Initialize the base query list
+                base_query = [Query.not_equal("userName", [MASTER_ADMIN_USERNAME])]
+                # Extend the base query list with the additional query if it's not None
+                if query is not None:
+                    base_query.extend(query)
+
+                # print(f"1 {page}",base_query)
+
+                latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,base_query)
+            except Exception as e:
+                # print("2",e)
+                # print("3",query)
+                try:
+                    latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page],query)
+                except:
+                    latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+
                 
             # print(latest_data)
-            cache.set(page,latest_data)
+            cache.set(page+username,latest_data)
             # print("cacheed:",page)
             
     except Exception as e:
@@ -83,7 +96,7 @@ def login(request):
                     latest_data=getPageData(page if page is not "" else ADMIN_DEFAULT_PAGE)
                     data["data"]=latest_data
                 
-                # print(data)
+                data["page"]=page if page is not "" else ADMIN_DEFAULT_PAGE
                 
                 try:
                     return render(request, ADMIN_ENDPOINTS[page], data)
@@ -91,9 +104,27 @@ def login(request):
                     return render(request, ADMIN_ENDPOINTS[ADMIN_DEFAULT_PAGE], data)
                     
             else:
-                latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
-                # print(latest_data)
-                data["data"]=latest_data
+                
+                if page in MULTI_DATA:
+                    for each in MULTI_DATA[page]:
+                        try:
+                            data["data" if page == each else each]=getPageData(each,query=[
+                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE else None,username=username)
+                        except:
+                             data["data" if page == each else each]=getPageData(each)
+
+                else:
+
+                    try:
+                        latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE,query=[
+                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE else None,username=username)
+                    except:
+                        latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
+
+                    data["data"]=latest_data
+
+
+                data["page"]=page if page is not "" else ADMIN_DEFAULT_PAGE
                 
                 try:
                     return render(request, USER_ENDPOINTS[page], data)
@@ -131,21 +162,35 @@ def project(request):
                 
             for each in MULTI_DATA[page]:
                 latest_data["data" if page == each else each]=getPageData(each,True)
+            
+            latest_data['page']=page
                     
             return render(request, ADMIN_ENDPOINTS[page],latest_data)
+        
         if "userProSave" in request.POST:
             newData={
                 "name":request.POST.get("name"),
-                "date":request.POST.get("date"),
-                "description":request.POST.get("description")
+                "value":int(request.POST.get("value")) if request.POST.get("value") is not None else 0,
+                "deadLine":str(request.POST.get("date")),
+                "description":request.POST.get("description"),
+                "creator":request.POST.get("creator"),
+                "isComplete":False
             }
 
-            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["PROJECTS_ID"],newData)
+            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["project"],newData)
 
             if res:
                  messages.success(request, 'Project Created Sucessfuly')
             else:
                 messages.error(request,"Somthing Went Wrong Try Again...")
+
+            
+            for each in MULTI_DATA[page]:
+                latest_data["data" if page == each else each]=getPageData(each,True,query=[
+                                      Query.equal("creator", [request.POST.get("creator")])],username=request.POST.get("creator"))
+
+            latest_data['page']=page   
+            return render(request, USER_ENDPOINTS[page],latest_data)
 
         
     data={"page":"project"}
@@ -222,7 +267,7 @@ def team(request):
         
 
         latest_data=getPageData("team",refresh=True)
-        return render(request, ADMIN_ENDPOINTS['team'],{"data":latest_data})
+        return render(request, ADMIN_ENDPOINTS['team'],{"data":latest_data,"page":"team"})
     
     data={"page":"team"}
     return render(request, 'login.html',data)
@@ -238,8 +283,14 @@ def analysis(request):
 
 def details(request):
     if request.method == 'POST':
-        print(request.POST.get("proid"))
-        return render(request, 'userTimeline.html')
+        project_details={"proid":request.POST.get("proid"),
+              "pname":request.POST.get("pname"),
+              "pdead":request.POST.get("pdead"),
+              "pdes":request.POST.get("pdes"),
+              "pcreator":request.POST.get("pcreator"),
+              "pcomp":request.POST.get("pcomp")}
+        # print(request.POST.get("proid"))
+        return render(request, 'userTimeline.html',{"page":"details","project_details":project_details})
     
     data={"page":"details"}
     return render(request, 'login.html',data)

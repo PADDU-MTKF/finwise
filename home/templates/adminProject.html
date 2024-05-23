@@ -31,19 +31,22 @@
                 </thead>
                 <tbody>
                     {% for project in data %}
-                    <tr>
+                    <tr onclick="submitForm('{{project.id}}')">
+                        <form id="form_{{project.id}}" action="{% url "details" %}" method="post">
+                        {% csrf_token %}
                         <td>{{forloop.counter}}</td>
                         <td>{{project.name}}</td>
-        
+                        <input type="hidden" name="proid" value="{{project.id}}">
                         <td>{{project.deadLine}}</td>
                         <td> <strong>{{project.creator}}</strong></td>
                         <td>
-                            {% if project.isComplete %}
+                            {% if not project.isComplete %}
                                 <p class="status activate">Active</p>
                             {% else %}
                                 <p class="status complete">Complete</p>
                             {% endif %}
                         </td>
+                    </form>
                     </tr>
                     {% endfor %}
                     {% else %}
@@ -94,6 +97,11 @@
 {% endblock  %}
 
 {% block extraScript %}
+<script>
+    function submitForm(projectId) {
+        document.getElementById('form_' + projectId).submit();
+    }
+</script>
 <script src="{% static 'js/adminProject.js'%}"></script>
 {% comment %} <script src="{% static 'js/adminTeam.js'%}"></script> {% endcomment %}
 <script src="{% static 'js/base.js'%}"></script>
