@@ -1,10 +1,105 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 {% block extraStyle %}
-    <link rel="stylesheet" href="{% static "css/projectList.css" %}">
-{% endblock  %}
-{% block activeProject %}active{% endblock %}
+<link rel="stylesheet" href="{% static 'css/projectList.css' %}" />
+<link rel="stylesheet" href="{% static 'css/userStage.css' %}" />
+{% endblock %}
+{% block activeProject %}
+active
+{% endblock %}
 
 {% block mainContent %}
-{{project_details}}
-{% endblock  %}
+<div class="navigation-buttons">
+    <button id="prev-button">Previous</button>
+    <button id="next-button">Next</button>
+</div>
+<div class="tools">
+    <button class="button" onclick="openForm()">+</button>
+    <button id="button" class="button">-</button>
+</div>
+<div class="tool">
+    <button class="button" onclick="openForm()">+</button>
+    <button id="button" class="button">*</button>
+</div>
+
+<button class="button1" onclick="toggleTools()">💦</button>
+
+<div id="overlay" onclick="closeForm()"></div>
+
+<div class="aside">
+    <aside>
+        <div class="container">
+            <h1>Project Timeline</h1>
+        
+            <div id="timeline">
+                <div id="timeline-line"></div>
+            </div>
+        </div>
+    </aside>
+    <div class="aside-2">
+        <aside>
+    
+        </aside>
+        <aside>
+            <div class="infobox">
+                <h2>ⓘ</h2>
+                <ul>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                </ul>
+            </div>
+            <div class="infobox">
+                <h2>ⓘ</h2>
+                <ul>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                    <li>Lorem ipsum dolor sit.</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+   
+</div>
+
+
+<div class="container" id="formPopup">
+    <h2>Add Milestone</h2>
+    <form id="addMilestoneForm">
+        <input type="date" id="date-input" required />
+        <input type="text" id="title-input" placeholder="Enter title" required />
+        <textarea id="description-input" placeholder="Enter description" required></textarea>
+        <button type="button" id="add-button">Add</button>
+        <button type="button" onclick="closeForm()">Cancel</button>
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block extraScript %}
+<script src="{% static 'js/userStage.js'%}"></script>
+<script src="{% static 'js/base.js'%}"></script>
+{% endblock %}
