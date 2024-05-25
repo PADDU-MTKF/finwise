@@ -154,19 +154,35 @@ function addTimelineCard(entry) {
 
 
 
+// Function to adjust the height of the textarea
+function adjustHeight(textarea) {
+    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = textarea.scrollHeight+8 + 'px' ; // Set new height based on scroll height
+}
+
+// Initialize the textarea height on page load and on input
+document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('prodes');
+    adjustHeight(textarea);
+    textarea.addEventListener('input', function() {
+        adjustHeight(textarea);
+    });
+});
+
+
 
 
 
 // infobox div dropdown when hoverd
 
 let infobox = document.querySelector(".infobox");
-let h1 = document.querySelector(".infobox h2");
+// let h1 = document.querySelector(".infobox h2");
 
 
-infobox.addEventListener("mouseover", () => {
-    h1.textContent = "Info box";
-})
+// infobox.addEventListener("mouseover", () => {
+//     h1.textContent = "Info box";
+// })
 
-infobox.addEventListener("mouseout", () => {
-    h1.textContent = "ⓘ";
+infobox.addEventListener("mouseleave", () => {
+    infobox.scrollTop = 0;
 })

@@ -168,26 +168,52 @@
         display: inline-block;
     }
 
+    .protitle{
+        position: absolute;
+        margin: 5px 10px;
+    }
+
+    .prodestext {
+        width: 100%; /* Adjust width as needed */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        overflow: hidden; /* Hide the scrollbar */
+        resize: none; /* Prevent manual resizing by the user */
+        margin: 6px;
+        color: #c5c5c5;
+        background:#ef00ff12;
+    }
+
     .infobox {
-        padding: 6px;
+        /* max-width: 30em;
+        min-width: 30em; */
+        width: 100%;
+        padding: 12px 45px;
         border-radius: 12px;
-        background-color: #ffffff52;
+        background-color: #ffffff15;
         /* display: block; */
         /* width: 20em; */
-        width: 2.9em;
+        /* width: 2.9em; */
         /* float: right; */
-        margin: 0 4em;
         color: #c5c5c5;
-        height: 2.9em;
-        overflow: hidden;
+        height: 4em;
+        overflow: auto;
         text-align: center;
         cursor: pointer;
         transition: all .2s linear;
         position: fixed;
-        right: 0;
+        right: 4%;
         top: 4em;
+        
 
 
+    }
+    .infobox::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar width */
+        height: 0; /* Remove scrollbar height */
+    }
+
+    .prodetail{
+        text-align: left;
     }
 
     .infobox:nth-child(1) {
@@ -197,10 +223,14 @@
 
 
     .infobox:hover {
-        height: 24em;
-        width: 18em;
+        height: 25em;
+        /* width: 18em; */
         /* top: 8em; */
+        overflow-y: auto;
+        scrollbar-width: thin; /* For Firefox */
+        scrollbar-color: transparent transparent; /* For Firefox */
     }
+
 
     .infobox li {
         list-style-position: inside;
@@ -513,7 +543,7 @@ button:hover {
     display: flex;
     flex-direction: row;
     /* justify-content: space-around; */
-    gap: 4em;
+    gap: 1em;
     align-items: center;
     
 }
@@ -528,8 +558,7 @@ aside:nth-child(1){
     width: 50%;
     padding: 1em 0;
     height: 84vh;
-
-
+    margin:4%;
 }
 .aside-2{
     display: flex;

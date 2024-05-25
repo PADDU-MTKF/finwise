@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap');
 
 :root {
   --main-background: #1a1a32; /* Grey */
@@ -5,6 +6,11 @@
   --accent-orange-d: #f55a00d3; /* orange */
   --accent-black: #111214; /* Black */
   --accent-orange-t: #ff803740; /* Black */
+}
+
+*{
+  font-family: "Teko", sans-serif;
+  font-optical-sizing: auto;
 }
 
 div,
@@ -15,7 +21,7 @@ button {
 
 
 body{
-  font-family: "Roboto", sans-serif;
+
   background: var(--main-background);
 
 }
@@ -100,21 +106,21 @@ body{
 }
 
 .bouncing-blob--blue {
-  background: #ff0000;
+  background: #00bbff;
 }
 
 .bouncing-blob--white {
-  background: #ff1919;
+  background: #1971ff;
   z-index: 2;
   width: 15vw;
 }
 
 .bouncing-blob--purple {
-  background: #990000;
+  background: #00fff7;
 }
 
 .bouncing-blob--pink {
-  background: #ff4040;
+  background: #00d2d9;
 }
 
 .bouncing-blobs-container {
@@ -168,4 +174,14 @@ body{
 
 .blur{
   filter: blur(10px);
+}
+
+
+.transparent{
+  background: none !important;
+  border: none !important;
+  outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
 }

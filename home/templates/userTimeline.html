@@ -9,10 +9,7 @@ active
 {% endblock %}
 
 {% block mainContent %}
-<div class="navigation-buttons">
-    <button id="prev-button">Previous</button>
-    <button id="next-button">Next</button>
-</div>
+
 <div class="tools">
     <button class="button" onclick="openForm()">+</button>
     <button id="button" class="button">-</button>
@@ -26,62 +23,43 @@ active
 
 <div id="overlay" onclick="closeForm()"></div>
 
+<h2 class="protitle">Project Title here</h2>
+
 <div class="aside">
     <aside>
         <div class="container">
             <h1>Project Timeline</h1>
-        
             <div id="timeline">
                 <div id="timeline-line"></div>
+                <div class="navigation-buttons">
+                    <button id="prev-button">Previous</button>
+                    <button id="next-button">Next</button>
+                </div>
             </div>
         </div>
+        <div class="infobox container infoactive">
+            <h2>Project Information</h2>
+            <br>
+            <form action="" method="post">
+                <div class="prodetail">
+                    <h3>Description</h3>
+                    <textarea class="prodestext transparent" name="prodes" id="prodes" readonly>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae fugiat alias iusto pariatur numquam laudantium id totam qui soluta maiores.</textarea>
+                    <h3>DeadLine</h3>
+                    <input type="date" class="prodestext transparent" name="prodead" value="2069-09-06" readonly>
+                    <h2 style="text-align: center;">Client Details</h2>
+                    <h3>Name</h3>
+                    <input type="text" class="prodestext transparent" name="cname" value="45454545">
+                    <h3>Contact </h3>
+                    <input type="text" class="prodestext transparent" name="cphone" value="45454545">
+                    <h3>Place </h3>
+                    <input type="text" class="prodestext transparent" name="cplace" value="45454545">
+                </div>           
+            </form>
+        </div> 
     </aside>
-    <div class="aside-2">
-        <aside>
-    
-        </aside>
-        <aside>
-            <div class="infobox">
-                <h2>ⓘ</h2>
-                <ul>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                </ul>
-            </div>
-            <div class="infobox">
-                <h2>ⓘ</h2>
-                <ul>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                    <li>Lorem ipsum dolor sit.</li>
-                </ul>
-            </div>
-        </aside>
-    </div>
-   
+
+
+            
 </div>
 
 
