@@ -294,3 +294,7 @@ def details(request):
     
     data={"page":"details"}
     return render(request, 'login.html',data)
+
+def mobile(request):
+    # Your view logic here
+    return render(request, 'mobile.html')

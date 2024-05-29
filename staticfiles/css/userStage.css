@@ -200,7 +200,7 @@
         text-align: center;
         cursor: pointer;
         transition: all .2s linear;
-        position: fixed;
+        position: absolute;
         right: 4%;
         top: 4em;
         
@@ -229,8 +229,14 @@
         overflow-y: auto;
         scrollbar-width: thin; /* For Firefox */
         scrollbar-color: transparent transparent; /* For Firefox */
-    }
 
+        
+    }
+.infobox:hover hr{
+    height: 1px;
+    margin-top: 1em;
+    background: white;
+}
 
     .infobox li {
         list-style-position: inside;
@@ -473,7 +479,7 @@ button[type="button"]:last-of-type {
 button:hover {
     background-color: #0056b3;
     /* Darker shade on hover for the add button */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
     /* Shadow effect for depth */
 }
 

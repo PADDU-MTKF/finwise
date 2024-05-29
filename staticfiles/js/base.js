@@ -137,3 +137,33 @@ function sortTable(column, sort_asc) {
 }
 
 
+        // Define the mobile breakpoint
+        const mobileBreakpoint = 900;
+
+        // Create a media query list
+        const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
+
+        // Define the task to perform when the breakpoint is hit
+        function handleMobileBreakpoint(event) {
+            const helloWorldMessage = document.getElementById('helloWorldMessage');
+            const bodyChildren = Array.from(document.body.children).filter(el => el.id !== 'helloWorldMessage');
+
+            if (event.matches) {
+                // The viewport width is 768px or less
+                console.log('Mobile breakpoint hit');
+                // Hide all elements except the Hello World message
+
+                window.location.href = "/mobile";
+
+            } else {
+                // The viewport width is greater than 768px
+               
+            }
+        }
+
+        // Add a listener to the media query list
+        mediaQueryList.addListener(handleMobileBreakpoint);
+
+        // Initial check
+        handleMobileBreakpoint(mediaQueryList);
+

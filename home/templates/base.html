@@ -68,8 +68,9 @@
     </div>
     {% endblock %}
 
-
-    {% block mainContent %}{% endblock %}
+    <div class="parent" style="max-width: 1600px;margin: auto;position: relative;">
+        {% block mainContent %}{% endblock %}        
+    </div>
 
     <script>
         window.history.replaceState('Object', 'Title', '{{page}}');

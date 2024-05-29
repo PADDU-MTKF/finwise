@@ -185,4 +185,5 @@ let infobox = document.querySelector(".infobox");
 
 infobox.addEventListener("mouseleave", () => {
     infobox.scrollTop = 0;
+    // document.querySelector("hr").style.display="none";
 })
