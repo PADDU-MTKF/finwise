@@ -96,6 +96,35 @@ document.getElementById('add-button').addEventListener('click', function () {
         document.getElementById('title-input').value = '';
         document.getElementById('description-input').value = '';
         closeForm()
+
+        // background data transfer using ajax
+
+
+        // Function to get CSRF token from meta tag
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+        const csrftoken = getCSRFToken();
+
+
+
+
+        const formData = {
+            projectId: "100",
+            timeline: localStorage.getItem("timelineData")
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/mobile', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert('data sent successfully... ');
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+
     } else {
         alert('Please fill in all fields.');
     }
@@ -157,14 +186,14 @@ function addTimelineCard(entry) {
 // Function to adjust the height of the textarea
 function adjustHeight(textarea) {
     textarea.style.height = 'auto'; // Reset height
-    textarea.style.height = textarea.scrollHeight+8 + 'px' ; // Set new height based on scroll height
+    textarea.style.height = textarea.scrollHeight + 8 + 'px'; // Set new height based on scroll height
 }
 
 // Initialize the textarea height on page load and on input
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var textarea = document.getElementById('prodes');
     adjustHeight(textarea);
-    textarea.addEventListener('input', function() {
+    textarea.addEventListener('input', function () {
         adjustHeight(textarea);
     });
 });

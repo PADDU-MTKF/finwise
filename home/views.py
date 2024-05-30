@@ -4,6 +4,9 @@ from django.contrib import messages
 from . import data as db
 from appwrite.query import Query
 from django.core.cache import cache
+import json 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 MASTER_ADMIN_USERNAME="admin"
@@ -297,4 +300,20 @@ def details(request):
 
 def mobile(request):
     # Your view logic here
-    return render(request, 'mobile.html')
+    # return render(request, 'mobile.html')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            project_id = data.get('projectId')
+            timeline = data.get('timeline')
+            
+            # Process the data here
+            print(f"Project ID: {project_id}")
+            print(f"Timeline: {timeline}")
+            
+
+            # Respond with a success message
+            return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
