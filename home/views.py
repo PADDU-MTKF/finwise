@@ -291,9 +291,14 @@ def details(request):
               "pdead":request.POST.get("pdead"),
               "pdes":request.POST.get("pdes"),
               "pcreator":request.POST.get("pcreator"),
-              "pcomp":request.POST.get("pcomp")}
+              "pcomp":request.POST.get("pcomp"),
+              
+              "clientName":request.POST.get("clientName"),
+              "clientNum":request.POST.get("clientNum"),
+              "clientPlace":request.POST.get("clientPlace"),
+              }
         # print(request.POST.get("proid"))
-        return render(request, 'userTimeline.html',{"page":"details","project_details":project_details})
+        return render(request, USER_ENDPOINTS["details"],{"page":"details","project_details":project_details})
     
     data={"page":"details"}
     return render(request, 'login.html',data)
