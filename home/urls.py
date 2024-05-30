@@ -11,5 +11,5 @@ urlpatterns = [
     path('login', views.login,name="login"),
     path('logout', views.logout,name="logout"),
     path('details', views.details,name="details"),
-    path('mobile', views.mobile,name="mobile"),
+    path('saveStage', views.saveStage,name="saveStage"),
 ]

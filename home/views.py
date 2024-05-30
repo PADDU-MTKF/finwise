@@ -312,7 +312,7 @@ def details(request):
     data={"page":"details"}
     return render(request, 'login.html',data)
 
-def mobile(request):
+def saveStage(request):
     # Your view logic here
     # return render(request, 'mobile.html')
     if request.method == 'POST':
