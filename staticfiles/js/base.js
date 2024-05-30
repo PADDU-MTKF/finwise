@@ -137,8 +137,9 @@ function sortTable(column, sort_asc) {
 }
 
 
+
         // Define the mobile breakpoint
-        const mobileBreakpoint = 900;
+        const mobileBreakpoint = 768;
 
         // Create a media query list
         const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
@@ -152,18 +153,20 @@ function sortTable(column, sort_asc) {
                 // The viewport width is 768px or less
                 console.log('Mobile breakpoint hit');
                 // Hide all elements except the Hello World message
+                
+                localStorage.setItem('previousEndpoint', window.location.href);
 
                 window.location.href = "/mobile";
 
             } else {
-                // The viewport width is greater than 768px
+              const previousEndpoint = localStorage.getItem('previousEndpoint');
+              
+              if (previousEndpoint) {
+                // You can use the previous endpoint as needed
+                console.log('Previous endpoint:', previousEndpoint);
+
+                window.location.href = previousEndpoint;
                
             }
         }
-
-        // Add a listener to the media query list
-        mediaQueryList.addListener(handleMobileBreakpoint);
-
-        // Initial check
-        handleMobileBreakpoint(mediaQueryList);
-
+}
