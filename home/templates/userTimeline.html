@@ -74,6 +74,9 @@
 {% endblock %}
 
 {% block extraScript %}
+<script>
+  let proid = "{{project_details.proid}}";
+</script>
   <script src="{% static 'js/userStage.js' %}"></script>
   <script src="{% static 'js/base.js' %}"></script>
 {% endblock %}

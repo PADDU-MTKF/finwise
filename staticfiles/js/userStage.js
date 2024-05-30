@@ -107,10 +107,10 @@ document.getElementById('add-button').addEventListener('click', function () {
         const csrftoken = getCSRFToken();
 
 
-
+        console.log("Aaaya");
 
         const formData = {
-            projectId: "100",
+            projectId: proid,
             timeline: localStorage.getItem("timelineData")
         };
 

@@ -26,10 +26,14 @@ USER_ENDPOINTS={"team":"userTeam.html",
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "team":os.getenv('EMPDETAILS_ID'),
             "project":os.getenv('PROJECTS_ID'),
-            "project_setting":os.getenv('PROJECT_SETTINGS_ID')
+            "project_setting":os.getenv('PROJECT_SETTINGS_ID'),
+            "project_stages":os.getenv('PROJECT_STAGES'),
+            "project_messages":os.getenv('PROJECT_MESSAGES'),
+
             }
 
-MULTI_DATA={"project":["project","project_setting"]}
+MULTI_DATA={"project":["project","project_setting"],
+            "details":["project_messages","project_stages"]}
 USERS_PAGE={'project':'creator','analytics':'username'}
 
 def getPageData(page,refresh=False,query = None,username=""):
@@ -141,7 +145,6 @@ def login(request):
 
     # If request method is not POST, render login page
     return render(request, 'login.html')
-
 
 
 
@@ -297,6 +300,12 @@ def details(request):
               "clientNum":request.POST.get("clientNum"),
               "clientPlace":request.POST.get("clientPlace"),
               }
+        latest_data={"project_details":project_details}
+        for each in MULTI_DATA['details']:
+                latest_data[each]=getPageData(each,False,query=[
+                                    Query.equal("projectId", [request.POST.get("proid")])])
+
+    
         # print(request.POST.get("proid"))
         return render(request, USER_ENDPOINTS["details"],{"page":"details","project_details":project_details})
     
