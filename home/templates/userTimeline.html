@@ -25,7 +25,11 @@
 
   <div id="overlay" onclick="closeForm()"></div>
 
-<h2 class="protitle">{{project_details.pname}} {{project_details.pcreator}} {{project_details.pcomp}}</h2>
+<h2 class="protitle">{{project_details.pname}} Project
+                      {{project_messages.message}}
+                     {% comment %} {{project_details.pcreator}}  {% endcomment %}
+                     {% comment %} {{project_details.pcomp}} {% endcomment %}
+</h2>
 
   <div class="aside">
     <aside>
@@ -57,9 +61,37 @@
                     <input type="text" class="prodestext transparent" name="cplace" value="45454545">
                 </div>           
             </form>
+
         </div> 
-    </aside>
-  </div>
+      </aside>
+    </div>
+    {% comment %} <div class="chatbox-container">
+      <div class="chatbox">
+          <div class="chatbox-messages" id="chatboxMessages"></div>
+              <!-- Django template loop to display messages -->
+             {% for message in messages %}
+                  <div class="message">{{ message.content }}</div>
+              {% endfor %}
+          <div class="chatbox-input">
+              <input type="text" id="chatInput" placeholder="Type a message...">
+              <button onclick="sendMessage()">Send</button>
+          </div>
+      </div>
+  </div> {% endcomment %}
+
+  <div class="chatbox">
+             <div class="chatbox-messages" id="chatboxMessages">
+              {% for message in project_messages %}
+                  <div class="message">{{ message.message }}</div>
+              {% endfor %}
+              </div>
+
+    <div class="chatbox-input">
+        <input type="text" id="chatInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+  
 
   <div class="container" id="formPopup">
     <h2>Add Milestone</h2>
@@ -77,6 +109,7 @@
 <script>
   let proid = "{{project_details.proid}}";
 </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{% static 'js/userStage.js' %}"></script>
   <script src="{% static 'js/base.js' %}"></script>
 {% endblock %}

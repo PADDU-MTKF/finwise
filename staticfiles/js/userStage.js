@@ -81,6 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTimeline();
 });
 
+ // Function to get CSRF token from meta tag
+function getCSRFToken() {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+
 document.getElementById('add-button').addEventListener('click', function () {
     const date = document.getElementById('date-input').value;
     const title = document.getElementById('title-input').value;
@@ -100,10 +105,7 @@ document.getElementById('add-button').addEventListener('click', function () {
         // background data transfer using ajax
 
 
-        // Function to get CSRF token from meta tag
-        function getCSRFToken() {
-            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        }
+       
         const csrftoken = getCSRFToken();
 
 
@@ -115,7 +117,7 @@ document.getElementById('add-button').addEventListener('click', function () {
         };
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/mobile', true);
+        xhr.open('POST', '/saveStage', true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
         xhr.onreadystatechange = function () {
@@ -216,3 +218,66 @@ infobox.addEventListener("mouseleave", () => {
     infobox.scrollTop = 0;
     // document.querySelector("hr").style.display="none";
 })
+
+
+// $(document).ready(function() {
+//     // loadMessages();
+
+//     $('#chatInput').keypress(function(event) {
+//         if (event.which == 13) {
+//             sendMessage();
+//         }
+//     });
+// });
+
+function sendMessage() {
+    const input = $('#chatInput');
+    const message = input.val().trim();
+
+    if (message) {
+        appendMessage(message);
+
+        input.val('');
+        const messagesContainer = $('#chatboxMessages');
+        messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+
+        // background data transfer using ajax
+
+
+        const csrftoken = getCSRFToken();
+
+        console.log("Aaaya");
+
+        const formData = {
+            projectId: proid,
+            msg: message
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/saveMsg', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+        xhr.onreadystatechange = function () {
+            // if (xhr.readyState === 4 && xhr.status === 200) {
+            //     alert('data sent successfully... ');
+            // }
+        };
+        xhr.send(JSON.stringify(formData));
+
+    }
+}
+
+function appendMessage(message) {
+    const messageBubble = $('<div class="message"></div>').text(message);
+    const messagesContainer = $('#chatboxMessages');
+    messagesContainer.append(messageBubble);
+}
+
+
+
+
+function onloadlocal(){
+// sara stage local mai dal do
+}
+
+onloadlocal()

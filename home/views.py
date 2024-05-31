@@ -36,10 +36,10 @@ MULTI_DATA={"project":["project","project_setting"],
             "details":["project_messages","project_stages"]}
 USERS_PAGE={'project':'creator','analytics':'username'}
 
-def getPageData(page,refresh=False,query = None,username=""):
+def getPageData(page,refresh=False,query = None,username="",proid=""):
     latest_data = {}
     try:
-        latest_data=cache.get(page+username) if not refresh else None
+        latest_data=cache.get(page+username+proid) if not refresh else None
         if latest_data is None:
             try:
                 # Initialize the base query list
@@ -61,7 +61,7 @@ def getPageData(page,refresh=False,query = None,username=""):
 
                 
             # print(latest_data)
-            cache.set(page+username,latest_data)
+            cache.set(page+username+proid,latest_data)
             # print("cacheed:",page)
             
     except Exception as e:
@@ -300,17 +300,23 @@ def details(request):
               "clientNum":request.POST.get("clientNum"),
               "clientPlace":request.POST.get("clientPlace"),
               }
-        latest_data={"project_details":project_details}
+        
+        latest_data={}
+        latest_data["project_details"]=project_details
+       
         for each in MULTI_DATA['details']:
-                latest_data[each]=getPageData(each,False,query=[
-                                    Query.equal("projectId", [request.POST.get("proid")])])
-
+                print("here")
+                latest_data[each]=getPageData(each,False,proid=request.POST.get("proid"),query=[
+                                    Query.equal("projectId", [request.POST.get("proid")]),Query.order_desc("$createdAt"),Query.limit(100)])
+        
+        # print(latest_data)
+        latest_data["page"]="details"
+                
     
         # print(request.POST.get("proid"))
-        return render(request, USER_ENDPOINTS["details"],{"page":"details","project_details":project_details})
+        return render(request, USER_ENDPOINTS["details"],latest_data)
     
-    data={"page":"details"}
-    return render(request, 'login.html',data)
+    return redirect("project")
 
 def saveStage(request):
     # Your view logic here
@@ -329,5 +335,39 @@ def saveStage(request):
             # Respond with a success message
             return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
         except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+
+
+def saveMsg(request):
+    # Your view logic here
+    # return render(request, 'mobile.html')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            project_id = data.get('projectId')
+            msg = data.get('msg')
+            
+            # Process the data here
+            print(f"Project ID: {project_id}")
+            print(f"Msg: {msg}")
+
+            newData={"projectId":project_id,
+                     "message":msg}
+          
+            
+            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["project_messages"],newData)
+
+            if res:
+                # Respond with a success message
+                getPageData("project_messages",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+                return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+        
+        except json.JSONDecodeError:
+           
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
