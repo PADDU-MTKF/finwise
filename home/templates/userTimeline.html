@@ -36,6 +36,7 @@
         <div class="container">
             <h1>Project Timeline</h1>
             <div id="timeline">
+                <h1 id="nostage">No Stages Yet</h1>
                 <div id="timeline-line"></div>
                 <div class="navigation-buttons">
                     <button id="prev-button">Previous</button>
@@ -107,9 +108,45 @@
 
 {% block extraScript %}
 <script>
-  let proid = "{{project_details.proid}}";
+  // Global variable declarations
+  let proid = "{{ project_details.proid }}";
+  let stageDocId;
+  let currentStage;
+
+  // Initialize variables based on project_current_stage
+  {% if project_current_stage %}
+    console.log({{ project_current_stage|safe }});  // Use |safe to correctly log the object
+    stageDocId = "{{ project_current_stage.0.id|escapejs }}";
+    currentStage = {{ project_current_stage.0.stage|escapejs }};
+  {% else %}
+    stageDocId = " ";
+    currentStage = 0;
+  {% endif %}
 </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="{% static 'js/userStage.js' %}"></script>
-  <script src="{% static 'js/base.js' %}"></script>
+
+<!-- Load jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Load custom scripts -->
+<script src="{% static 'js/userStage.js' %}"></script>
+
+<script>
+  // Add timeline cards
+  {% for stage in project_stages %}
+    addTimelineCard({
+      date: "{{ stage.date|escapejs }}",
+      title: "{{ stage.title|escapejs }}",
+      description: "{{ stage.description|escapejs }}"
+    });
+  {% endfor %}
+
+  // Call trackerLine after a delay to ensure the DOM is ready
+  setTimeout(() => {
+    trackerLine(currentStage);
+  }, 500);
+</script>
+
+<!-- Load base.js after custom scripts to ensure dependencies are loaded first -->
+<script src="{% static 'js/base.js' %}"></script>
 {% endblock %}
+

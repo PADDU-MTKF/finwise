@@ -32,29 +32,71 @@ function toggleTools() {
 }
 
 
-// New script for timeline navigation
-let currentCardIndex = 0;
+ // Function to get CSRF token from meta tag
+function getCSRFToken() {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
 
-function focusOnCard(index) {
-    const timelineCards = document.querySelectorAll('.timeline-card');
-    if (timelineCards[index]) {
-        timelineCards[index].scrollIntoView({ behavior: 'smooth' });
-    }
+
+// New script for timeline navigation
+
+function updateCurrentStage(index) {
+
+     // background data transfer using ajax
+
+     const csrftoken = getCSRFToken();
+
+     const formData = {
+        docId:stageDocId,
+         projectId: proid,
+         currentStage: index,
+     };
+
+     const xhr = new XMLHttpRequest();
+     xhr.open('POST', '/saveCurrentStage', true);
+     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+     xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+     xhr.onreadystatechange = function () {
+         // if (xhr.readyState === 4 && xhr.status === 200) {
+         //     alert('data sent successfully... ');
+         // }
+     };
+     xhr.send(JSON.stringify(formData));
+
+
+    
 }
 
 document.getElementById('next-button').addEventListener('click', () => {
-    const timelineCards = document.querySelectorAll('.timeline-card');
-    if (currentCardIndex < timelineCards.length - 1) {
-        currentCardIndex++;
-        focusOnCard(currentCardIndex);
-    }
+    if (currentStage < document.querySelectorAll('.timeline-card').length - 1) {
+    const userConfirmed = confirm('Are you sure you want to proceed to the next stage?');
+    
+    if (userConfirmed) {
+        currentStage++;
+        setTimeout(() => {
+                trackerLine(currentStage);
+            }, 400);
+        updateCurrentStage(currentStage)
+   
+       
+    } 
+}
 });
 
 document.getElementById('prev-button').addEventListener('click', () => {
-    if (currentCardIndex > 0) {
-        currentCardIndex--;
-        focusOnCard(currentCardIndex);
+    if (currentStage > 0) {
+    const userConfirmed = confirm('Are you sure you want to Move Back to the Previous stage?');
+    
+    if (userConfirmed) {
+        currentStage--;
+        setTimeout(() => {
+                trackerLine(currentStage);
+            }, 400);
+        updateCurrentStage(currentStage)
+
     }
+    
+}
 });
 
 
@@ -77,14 +119,11 @@ function closeForm() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    loadTimeline();
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     loadTimeline();
+// });
 
- // Function to get CSRF token from meta tag
-function getCSRFToken() {
-    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-}
+
 
 document.getElementById('add-button').addEventListener('click', function () {
     const date = document.getElementById('date-input').value;
@@ -93,7 +132,7 @@ document.getElementById('add-button').addEventListener('click', function () {
 
     if (date && title && description) {
         const entry = { date, title, description };
-        saveToLocalStorage(entry);
+        // saveToLocalStorage(entry);
         addTimelineCard(entry);
 
         // Clear input fields after adding
@@ -111,9 +150,16 @@ document.getElementById('add-button').addEventListener('click', function () {
 
         console.log("Aaaya");
 
+        // const formData = {
+        //     projectId: proid,
+        //     timeldatine: localStorage.getItem("timelineData")
+        // };
+
         const formData = {
             projectId: proid,
-            timeline: localStorage.getItem("timelineData")
+            date: date,
+            title: title,
+            description: description,
         };
 
         const xhr = new XMLHttpRequest();
@@ -121,9 +167,9 @@ document.getElementById('add-button').addEventListener('click', function () {
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                alert('data sent successfully... ');
-            }
+            // if (xhr.readyState === 4 && xhr.status === 200) {
+            //     alert('data sent successfully... ');
+            // }
         };
         xhr.send(JSON.stringify(formData));
 
@@ -146,6 +192,11 @@ function loadTimeline() {
 }
 
 function addTimelineCard(entry) {
+    // console.log("entry");
+
+    const nostage = document.getElementById('nostage');
+    nostage.classList.add("hide")
+    
     const timeline = document.getElementById('timeline');
     const card = document.createElement('div');
     card.classList.add("card")
@@ -156,30 +207,40 @@ function addTimelineCard(entry) {
     card.append(circle);
     timeline.appendChild(card);
 
-    // Update the timeline line height
-    const line = document.getElementById('timeline-line');
-    setTimeout(() => {
-        line.style.height = timeline.scrollHeight + 'px';
-    }, 10); // Delay to ensure DOM update
+    if (currentStage==0){
+        trackerLine(0)
+    }
 
-    // Add click event listener to toggle the expanded class
-    card.addEventListener('click', function () {
-        // Collapse any expanded cards
-        const expandedCards = document.querySelectorAll('.timeline-card.expanded');
-        expandedCards.forEach(expCard => {
-            expCard.classList.remove('expanded');
-        });
+    
+}
 
-        // Expand the clicked card
-        card.classList.toggle('expanded');
 
-        // Update the timeline line height to the clicked card
-        if (card.classList.contains('expanded')) {
-            line.style.height = card.offsetTop + card.offsetHeight + 'px';
-        } else {
-            line.style.height = timeline.scrollHeight + 'px';
-        }
+function trackerLine(index) {
+    // Collapse any expanded cards
+    // console.log(index);
+    const expandedCards = document.querySelectorAll('.timeline-card.expanded');
+    expandedCards.forEach(expCard => {
+        expCard.classList.remove('expanded');
     });
+
+    if(index<document.querySelectorAll('.timeline-card').length){
+        let i=index;
+    }
+    else{
+        let i=0;
+    }
+    const card=document.querySelectorAll('.timeline-card')[i];
+    const line = document.getElementById('timeline-line');
+    
+    // Expand the clicked card
+    card.classList.toggle('expanded');
+
+    // Update the timeline line height to the clicked card
+    if (card.classList.contains('expanded')) {
+        line.style.height = card.offsetTop + card.offsetHeight + 'px';
+    } else {
+        line.style.height = timeline.scrollHeight + 'px';
+    }
 }
 
 
