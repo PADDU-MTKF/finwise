@@ -58,8 +58,7 @@
                   <input type="text" class="prodestext transparent" name="cphone" value="{{project_details.clientNum}}" readonly>
                   <h3>Place </h3>
                   <input type="text" class="prodestext transparent" name="cplace" value="{{project_details.clientPlace}}" readonly>
-                  <button type="button" id="editButton" onclick="enableFields()">Edit</button>
-                  <button type="submit" id="saveButton" style="display:none;">Save</button>
+                  
               </div>           
         </div> 
       </aside>
@@ -147,7 +146,8 @@ function disableFields() {
     addTimelineCard({
       date: "{{ stage.date|escapejs }}",
       title: "{{ stage.title|escapejs }}",
-      description: "{{ stage.description|escapejs }}"
+      description: "{{ stage.description|escapejs }}",
+      cardId:"{{ stage.id|escapejs }}"
     });
   {% endfor %}
 

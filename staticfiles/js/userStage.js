@@ -38,6 +38,7 @@ function getCSRFToken() {
 }
 
 
+
 // New script for timeline navigation
 
 function updateCurrentStage(index) {
@@ -131,7 +132,8 @@ document.getElementById('add-button').addEventListener('click', function () {
     const description = document.getElementById('description-input').value;
 
     if (date && title && description) {
-        const entry = { date, title, description };
+        let cardId="";
+        const entry = { date, title, description ,cardId };
         // saveToLocalStorage(entry);
         addTimelineCard(entry);
 
@@ -191,29 +193,6 @@ function loadTimeline() {
     });
 }
 
-function addTimelineCard(entry) {
-    // console.log("entry");
-
-    const nostage = document.getElementById('nostage');
-    nostage.classList.add("hide")
-    
-    const timeline = document.getElementById('timeline');
-    const card = document.createElement('div');
-    card.classList.add("card")
-    const circle = document.createElement('div');
-    circle.classList.add("circle");
-    card.className = 'timeline-card';
-    card.innerHTML = `<h3>${entry.date}</h3><h4>${entry.title}</h4><p>${entry.description}</p>`;
-    card.append(circle);
-    timeline.appendChild(card);
-
-    if (currentStage==0){
-        trackerLine(0)
-    }
-
-    
-}
-
 
 function trackerLine(index) {
     // Collapse any expanded cards
@@ -246,6 +225,182 @@ function trackerLine(index) {
 
 
 
+let stageEdit = false;
+let initialValues = {};
+
+function addTimelineCard(entry) {
+    const nostage = document.getElementById('nostage');
+    nostage.classList.add("hide");
+    
+    const timeline = document.getElementById('timeline');
+    const card = document.createElement('div');
+    card.classList.add("card");
+    card.id = entry.cardId;
+
+    const circle = document.createElement('div');
+    circle.classList.add("circle");
+    card.className = 'timeline-card';
+
+    card.innerHTML = `
+        <input type="text" value="${entry.date}" class="transparent stage-text-color stageInp" style="font-size: 1.17em; font-weight: bold;" readonly>
+        <input type="text" value="${entry.title}" class="transparent stage-text-color stageInp" style="font-size: 1.00em; font-weight: bold;" readonly>
+        <textarea class="transparent stage-text-color stagedes stageInp" style="font-size: 1.00em; resize: none;" readonly>${entry.description}</textarea>
+        <button class="hide deleteBtn" onclick="deleteCard('${entry.cardId}')">Delete</button>
+    `;
+
+    card.append(circle);
+    timeline.appendChild(card);
+
+    if (currentStage == 0) {
+        trackerLine(0);
+    }
+}
+
+function toggleButtonsExcept(callerButtonId, disable = true) {
+    var buttons = document.querySelectorAll('button');
+    buttons.forEach(function (button) {
+        if (button.id !== callerButtonId && !button.classList.contains('nav-link') && !button.classList.contains('deleteBtn')) {
+            button.disabled = disable;
+            if (disable) {
+                button.classList.add('buttons-disabled');
+            } else {
+                button.classList.remove('buttons-disabled');
+            }
+        }
+    });
+}
+
+function getCardValues() {
+    let values = {};
+    document.querySelectorAll('.timeline-card').forEach(card => {
+        let cardId = card.id;
+        values[cardId] = {
+            date: card.querySelector('input[type="text"]:nth-child(1)').value,
+            title: card.querySelector('input[type="text"]:nth-child(2)').value,
+            description: card.querySelector('textarea').value
+        };
+    });
+    return values;
+}
+
+function deleteCard(cardId) {
+    const card = document.getElementById(cardId);
+    const deleteBtn = card.querySelector('.deleteBtn');
+    deleteBtn.disabled = true; // Disable the delete button
+    deleteBtn.classList.add("buttons-disabled") 
+
+    const csrftoken = getCSRFToken();
+    const formData = {
+        projectId: proid,
+        docId: cardId
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/deleteStage', true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            deleteBtn.disabled = false; // Enable the delete button
+            deleteBtn.classList.remove("buttons-disabled") 
+
+
+            if (xhr.status === 200) {
+                card.remove();
+                alert('Card deleted successfully.');
+            } else {
+                alert('Failed to delete card.');
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(formData));
+}
+
+
+document.getElementById('stageEdit').addEventListener('click', function () {
+    var stageInp = document.querySelectorAll('.stageInp');
+    var deleteBtns = document.querySelectorAll('.deleteBtn');
+
+    if (!stageEdit) {
+        initialValues = getCardValues();
+
+        stageInp.forEach(function (element) {
+            element.removeAttribute('readonly');
+            element.classList.remove('transparent');
+            element.classList.remove('stage-text-color');
+        });
+
+        deleteBtns.forEach(function (button) {
+            button.classList.remove('hide');
+        });
+
+        toggleButtonsExcept('stageEdit', true);
+        trackerLine(currentStage);
+    } else {
+        let newValues = getCardValues();
+
+        stageInp.forEach(function (element) {
+            element.setAttribute('readonly', 'readonly');
+            element.classList.add('transparent');
+            element.classList.add('stage-text-color');
+        });
+        deleteBtns.forEach(function (button) {
+            button.classList.add('hide');
+        });
+
+        toggleButtonsExcept('stageEdit', false);
+        trackerLine(currentStage);
+
+        let changedValues = {};
+        for (let id in initialValues) {
+            // Check if the element exists before processing its data
+            let newElement = document.getElementById(id);
+            if (newElement) {
+                if (JSON.stringify(initialValues[id]) !== JSON.stringify(newValues[id])) {
+                    changedValues[id] = newValues[id];
+                }
+            }
+        }
+
+        if (Object.keys(changedValues).length > 0) {
+
+        console.log('Changed values:', changedValues);
+
+        // Prepare data to send
+        const csrftoken = getCSRFToken();
+        const formData = {
+            projectId: proid,
+            changedValues: changedValues // Include changed values
+        };
+
+        // Send data via AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/updateStageDetails', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    alert('Data sent successfully...');
+                } else {
+                    alert('Failed to send data.');
+                }
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+        }
+    }
+
+    stageEdit = !stageEdit;
+});
+
+
+
+
+
+
 // Function to adjust the height of the textarea
 function adjustHeight(textarea) {
     textarea.style.height = 'auto'; // Reset height
@@ -262,6 +417,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    var textareas = document.querySelectorAll('.stagedes');
+    textareas.forEach(function (textarea) {
+        adjustHeight(textarea);
+        textarea.addEventListener('input', function () {
+            adjustHeight(textarea);
+        });
+    });
+});
 
 
 
@@ -346,11 +510,7 @@ function scrollToBottom() {
 
 
 
-function onloadlocal(){
-// sara stage local mai dal do
-}
 
-onloadlocal()
 
 
 //info box enabling fields
@@ -369,7 +529,8 @@ document.getElementById('toggleHover').addEventListener('click', function() {
         }
     else{
             let data={};
-            data["proid"]=proid;
+            data["projectId"]=proid;
+            data["creator"]=localStorage.getItem("username");
             prodetailElements.forEach(function(element) {
                 element.setAttribute('readonly','readonly');
                 element.classList.add('transparent');
@@ -387,7 +548,7 @@ document.getElementById('toggleHover').addEventListener('click', function() {
 
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/saveMsg', true);
+        xhr.open('POST', '/updateProDet', true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
         xhr.onreadystatechange = function () {

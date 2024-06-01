@@ -274,7 +274,7 @@
         text-align: center;
         position: sticky;
         top: 0;
-        background: #251550;
+        background: #25155000;
         z-index: 999;
     }
 
@@ -660,4 +660,18 @@ aside:nth-child(1)::-webkit-scrollbar{
     color: #fff;
     border-radius: 20px;
     cursor: pointer;
+}
+
+
+
+.stage-text-color{
+    color: #fff;
+    margin-bottom: 0px !important;
+        padding: 0px !important;
+        border: none !important;
+        
+}
+
+.buttons-disabled{
+    background-color: #00000038 !important;
 }

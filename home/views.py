@@ -303,22 +303,6 @@ def details(request):
               "clientPlace":request.POST.get("clientPlace"),
               }
         
-        # if "edit" in request.post:
-        #     update_details={
-        #       "pdead":request.POST.get("pdead"),
-        #       "pdes":request.POST.get("pdes"),
-              
-        #       "clientName":request.POST.get("clientName"),
-        #       "clientNum":request.POST.get("clientNum"),
-        #       "clientPlace":request.POST.get("clientPlace"),
-        #       }
-        #     res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project"],request.POST.get('docID'),project_details)
-
-        #     if res:
-        #             messages.success(request, 'Data Edited Sucessfuly')
-        #     else:
-        #             messages.error(request,"Somthing Went Wrong Try Again...")
-        
         latest_data={}
         latest_data["project_details"]=project_details
        
@@ -335,6 +319,9 @@ def details(request):
         return render(request, USER_ENDPOINTS["details"],latest_data)
     
     return redirect("project")
+
+
+# AJAX response methods below ****************************************************************
 
 def saveStage(request):
     # Your view logic here
@@ -404,7 +391,6 @@ def saveMsg(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
-
 def saveCurrentStage(request):
     # Your view logic here
     # return render(request, 'mobile.html')
@@ -447,3 +433,96 @@ def saveCurrentStage(request):
            
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def updateProDet(request):
+    # Your view logic here
+    # return render(request, 'mobile.html')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            creator = data.get('creator')
+            project_id = data.get('projectId')
+            prodes = data.get('prodes')
+            prodead = data.get('prodead')
+            cname = data.get('cname')
+            cphone = data.get('cphone')
+            cplace = data.get('cplace')
+            
+            
+            # Process the data here
+            print(f"Project ID: {project_id}")
+           
+
+            newData={"deadLine":prodead,
+                     "description":prodes,
+                     "clientName":cname,
+                     "clientNum":cphone,
+                     "clientPlace":cplace,
+                     }    
+          
+            
+            res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project"],project_id,newData)
+            
+            print(creator)
+                
+            if res:
+                # Respond with a success message
+                getPageData("project",True,query=[
+                                      Query.equal("creator", [creator])],username=creator)
+                
+                return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+        
+        except json.JSONDecodeError:
+           
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def updateStageDetails(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            changed_values = data.get('changedValues')
+            project_id = data.get('projectId')
+
+            # Process and update each document
+            for doc_id, new_data in changed_values.items():
+                res = db.updateDocument(os.getenv("DB_ID"), COLLECTION["project_stages"], doc_id, new_data)
+
+                if not res:
+                    return JsonResponse({'status': 'error', 'message': f'Failed to update document {doc_id}'}, status=400)
+                
+                
+            getPageData("project_stages",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+            
+            return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def deleteStage(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            doc_id = data.get('docId')
+            project_id = data.get('projectId')
+            
+
+            # Delete the document
+            res = db.deleteDocument(os.getenv("DB_ID"), COLLECTION["project_stages"], doc_id)
+
+            if res:
+                getPageData("project_stages",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+                return JsonResponse({'status': 'success'})
+            else:
+                return JsonResponse({'status': 'error'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error'}, status=400)
+
+    return JsonResponse({'status': 'error'}, status=405)

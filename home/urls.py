@@ -11,7 +11,11 @@ urlpatterns = [
     path('login', views.login,name="login"),
     path('logout', views.logout,name="logout"),
     path('details', views.details,name="details"),
+    
     path('saveStage', views.saveStage,name="saveStage"),
     path('saveMsg', views.saveMsg,name="saveMsg"),
     path('saveCurrentStage', views.saveCurrentStage,name="saveCurrentStage"),
+    path('updateProDet', views.updateProDet,name="updateProDet"),
+    path('updateStageDetails', views.updateStageDetails,name="updateStageDetails"),
+    path('deleteStage', views.deleteStage,name="deleteStage"),
 ]
