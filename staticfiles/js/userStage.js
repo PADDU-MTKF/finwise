@@ -354,4 +354,49 @@ onloadlocal()
 
 
 //info box enabling fields
+let infoOpen=false;
 
+document.getElementById('toggleHover').addEventListener('click', function() {
+    document.getElementById('infobox').classList.toggle('hover');
+     var prodetailElements = document.querySelectorAll('.prodestext');
+  
+    // Iterate over each element and remove the 'readonly' attribute
+    if(!infoOpen){
+            prodetailElements.forEach(function(element) {
+                element.removeAttribute('readonly');
+                element.classList.remove('transparent');
+            });
+        }
+    else{
+            let data={};
+            data["proid"]=proid;
+            prodetailElements.forEach(function(element) {
+                element.setAttribute('readonly','readonly');
+                element.classList.add('transparent');
+
+                var name = element.getAttribute('name');
+                var value = element.value;
+                data[name]=value;
+
+            });
+
+            
+        const csrftoken = getCSRFToken();
+
+        console.log("Aaaya");
+
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/saveMsg', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+        xhr.onreadystatechange = function () {
+            // if (xhr.readyState === 4 && xhr.status === 200) {
+            //     alert('data sent successfully... ');
+            // }
+        };
+        xhr.send(JSON.stringify(data));
+            console.log(data);
+    }
+    infoOpen=!infoOpen;
+  });

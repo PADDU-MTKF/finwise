@@ -222,13 +222,12 @@
     }
 
 
-    .infobox:hover {
+    .infobox:hover{
         background-color: rgba(50, 17, 95, 0.498);
         box-shadow: 
         0 0 5px #9400D3,
         0 0 20px #9400D3,
         0 0 40px #9400D3;
-;
         height: 25em;
         /* width: 18em; */
         /* top: 8em; */
@@ -238,6 +237,19 @@
 
         
     }
+
+    .infobox.hover {
+        background-color: rgba(50, 17, 95, 0.498);
+        box-shadow: 
+            0 0 5px #9400D3,
+            0 0 20px #9400D3,
+            0 0 40px #9400D3;
+        height: 25em;
+        overflow-y: auto;
+        scrollbar-width: thin; /* For Firefox */
+        scrollbar-color: transparent transparent; /* For Firefox */
+    }
+    
 .infobox:hover hr{
     height: 1px;
     margin-top: 1em;
