@@ -29,11 +29,13 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "project_setting":os.getenv('PROJECT_SETTINGS_ID'),
             "project_stages":os.getenv('PROJECT_STAGES'),
             "project_messages":os.getenv('PROJECT_MESSAGES'),
+            "project_current_stage":os.getenv('PROJECT_CURRENT_STAGE'),
 
             }
 
 MULTI_DATA={"project":["project","project_setting"],
-            "details":["project_messages","project_stages"]}
+            "details":["project_messages","project_stages","project_current_stage"]}
+
 USERS_PAGE={'project':'creator','analytics':'username'}
 
 def getPageData(page,refresh=False,query = None,username="",proid=""):
@@ -341,20 +343,34 @@ def saveStage(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             project_id = data.get('projectId')
-            timeline = data.get('timeline')
+            date = data.get('date')
+            title = data.get('title')
+            description = data.get('description')
             
             # Process the data here
             print(f"Project ID: {project_id}")
-            print(f"Timeline: {timeline}")
             
+            
+            newData={"projectId":project_id,
+                     "description":description,
+                     "title":title,
+                     "date":date}
+          
+            
+            res=db.addDocument(os.getenv("DB_ID"),COLLECTION["project_stages"],newData)
 
-            # Respond with a success message
-            return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            if res:
+                # Respond with a success message
+                getPageData("project_stages",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+                return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            
+            
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
-
-
 
 def saveMsg(request):
     # Your view logic here
@@ -381,6 +397,50 @@ def saveMsg(request):
                                     Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
                 
                 return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+        
+        except json.JSONDecodeError:
+           
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+
+def saveCurrentStage(request):
+    # Your view logic here
+    # return render(request, 'mobile.html')
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            project_id = data.get('projectId')
+            current_stage = data.get('currentStage')
+            docId = data.get('docId')
+            
+            # Process the data here
+            print(f"Project ID: {project_id}")
+            print(f"current_stage: {current_stage}")
+            print(f"docId: {docId}")
+
+            newData={"projectId":project_id,
+                     "stage":int(current_stage)}    
+          
+            
+            res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project_current_stage"],docId,newData)
+            
+            if res:
+                getPageData("project_current_stage",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+                return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            else:
+                res=db.addDocument(os.getenv("DB_ID"),COLLECTION["project_current_stage"],newData)
+
+                if res:
+                    # Respond with a success message
+                    getPageData("project_current_stage",True,proid=project_id,query=[
+                                        Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                    
+                    return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+            
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
         
         except json.JSONDecodeError:

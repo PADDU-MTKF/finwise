@@ -13,4 +13,5 @@ urlpatterns = [
     path('details', views.details,name="details"),
     path('saveStage', views.saveStage,name="saveStage"),
     path('saveMsg', views.saveMsg,name="saveMsg"),
+    path('saveCurrentStage', views.saveCurrentStage,name="saveCurrentStage"),
 ]

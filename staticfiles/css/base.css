@@ -185,3 +185,7 @@ body{
             -moz-appearance: none;
             appearance: none;
 }
+
+.hide{
+  display: none !important;
+}
