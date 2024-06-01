@@ -18,7 +18,7 @@
   </div>
   <div class="tool">
     <button class="button" onclick="openForm()">+</button>
-    <button id="button" class="button">*</button>
+    <button id="toggleHover" class="button"></button>
   </div>
 
   <button class="button1" onclick="toggleTools()">💦</button>
@@ -30,7 +30,6 @@
                      {% comment %} {{project_details.pcreator}}  {% endcomment %}
                      {% comment %} {{project_details.pcomp}} {% endcomment %}
 </h2>
-
   <div class="aside">
     <aside>
         <div class="container">
@@ -44,28 +43,24 @@
                 </div>
             </div>
         </div>
-        <div class="infobox container infoactive">
+        <div class="infobox container infoactive" id="infobox">
             <h2>Project Information</h2><hr>
             <br>
-            <form action="{% url 'details'%}" method="post">
-              {% csrf_token %}
-                <div class="prodetail">
-                    <h3>Description</h3>
-                    <textarea class="prodestext transparent" name="prodes" id="prodes" readonly>{{project_details.pdes}}</textarea>
-                    <h3>DeadLine</h3>
-                    <input type="date" class="prodestext transparent" name="prodead" value="{{project_details.pdead}}" readonly>
-                    <h2 style="text-align: center;">Client Details</h2><hr>
-                    <h3>Name</h3>
-                    <input type="text" class="prodestext transparent" name="cname" value="{{project_details.clientName}}" readonly>
-                    <h3>Contact </h3>
-                    <input type="text" class="prodestext transparent" name="cphone" value="{{project_details.clientNum}}" readonly>
-                    <h3>Place </h3>
-                    <input type="text" class="prodestext transparent" name="cplace" value="{{project_details.clientPlace}}" readonly>
-                    <button type="button" id="editButton" onclick="enableFields()">Edit</button>
-                    <button type="submit" id="saveButton" style="display:none;">Save</button>
-                </div>           
-            </form>
-
+              <div class="prodetail" id="prodetail">
+                  <h3>Description</h3>
+                  <textarea class="prodestext transparent" name="prodes" id="prodes" readonly>{{project_details.pdes}}</textarea>
+                  <h3>DeadLine</h3>
+                  <input type="date" class="prodestext transparent" name="prodead" value="{{project_details.pdead}}" readonly>
+                  <h2 style="text-align: center;">Client Details</h2><hr>
+                  <h3>Name</h3>
+                  <input type="text" class="prodestext transparent" name="cname" value="{{project_details.clientName}}" readonly>
+                  <h3>Contact </h3>
+                  <input type="text" class="prodestext transparent" name="cphone" value="{{project_details.clientNum}}" readonly>
+                  <h3>Place </h3>
+                  <input type="text" class="prodestext transparent" name="cplace" value="{{project_details.clientPlace}}" readonly>
+                  <button type="button" id="editButton" onclick="enableFields()">Edit</button>
+                  <button type="submit" id="saveButton" style="display:none;">Save</button>
+              </div>           
         </div> 
       </aside>
       <div class="chatbox-container">
@@ -100,11 +95,15 @@
 
 {% block extraScript %}
 <script>
+ 
   // Global variable declarations
+
   let proid = "{{ project_details.proid }}";
   let stageDocId;
   let currentStage;
 
+
+  
   // Initialize variables based on project_current_stage
   {% if project_current_stage %}
     console.log({{ project_current_stage|safe }});  // Use |safe to correctly log the object
@@ -132,6 +131,7 @@ function disableFields() {
     document.getElementById('editButton').style.display = 'inline-block';
     document.getElementById('saveButton').style.display = 'none';
 }
+
 
 </script>
 
