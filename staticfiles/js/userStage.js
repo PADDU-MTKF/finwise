@@ -222,12 +222,12 @@ function trackerLine(index) {
     expandedCards.forEach(expCard => {
         expCard.classList.remove('expanded');
     });
-
+    let i;
     if(index<document.querySelectorAll('.timeline-card').length){
-        let i=index;
+        i=index;
     }
     else{
-        let i=0;
+        i=0;
     }
     const card=document.querySelectorAll('.timeline-card')[i];
     const line = document.getElementById('timeline-line');
