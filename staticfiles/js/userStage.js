@@ -229,6 +229,9 @@ infobox.addEventListener("mouseleave", () => {
 //         }
 //     });
 // });
+$(document).ready(function() {
+    scrollToBottom();
+});
 
 function sendMessage() {
     const input = $('#chatInput');
@@ -273,6 +276,12 @@ function appendMessage(message) {
     messagesContainer.append(messageBubble);
 }
 
+function scrollToBottom() {
+    const messagesContainer = $('#chatboxMessages');
+    setTimeout(() => {
+        messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+    }, 0);
+}
 
 
 
@@ -281,3 +290,7 @@ function onloadlocal(){
 }
 
 onloadlocal()
+
+
+//info box enabling fields
+

@@ -301,6 +301,22 @@ def details(request):
               "clientPlace":request.POST.get("clientPlace"),
               }
         
+        # if "edit" in request.post:
+        #     update_details={
+        #       "pdead":request.POST.get("pdead"),
+        #       "pdes":request.POST.get("pdes"),
+              
+        #       "clientName":request.POST.get("clientName"),
+        #       "clientNum":request.POST.get("clientNum"),
+        #       "clientPlace":request.POST.get("clientPlace"),
+        #       }
+        #     res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project"],request.POST.get('docID'),project_details)
+
+        #     if res:
+        #             messages.success(request, 'Data Edited Sucessfuly')
+        #     else:
+        #             messages.error(request,"Somthing Went Wrong Try Again...")
+        
         latest_data={}
         latest_data["project_details"]=project_details
        
