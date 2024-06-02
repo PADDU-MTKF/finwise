@@ -517,6 +517,7 @@ function scrollToBottom() {
 let infoOpen=false;
 
 document.getElementById('toggleHover').addEventListener('click', function() {
+    console.log("yes");
     document.getElementById('infobox').classList.toggle('hover');
      var prodetailElements = document.querySelectorAll('.prodestext');
   

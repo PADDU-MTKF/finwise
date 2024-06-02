@@ -132,18 +132,26 @@
         /* transform: rotateX(-90deg); */
         opacity: 0;
         position: absolute;
-        bottom: 4em;
-        right: 10em;
+        bottom: 3em;
+        right: 53.3%;
+        z-index: 10;
     }
 
     .tool{
         display: none;
         transition: transform 0.5s ease-in-out, opacity 0.1s ease-in-out;
-        transform: rotate(-90deg);
         opacity: 0;
         position: absolute;
-        bottom: 11em;
-        right: 2em;
+        bottom: 3em;
+        right: 39.7%;
+        z-index: 10;
+    }
+
+    .tool.button{
+        width: 75px;
+    }
+    .tools.button{
+        width: 75px;
     }
 
     .tools.show {
@@ -528,10 +536,12 @@ button:hover {
 }
 
 .button1 {
+    width: 75px;
     position: absolute;
-    bottom: 4em;
-    right: 4em;
+    bottom: 3em;
+    right: 48%;
     display: block;
+    z-index: 10;
     /* or 'none' to start hidden */
 }
 
@@ -604,23 +614,24 @@ aside:nth-child(1)::-webkit-scrollbar{
     align-items: flex-end;
     width: 100%;
     height: 100%;
+    transform: translate(5px, 147px);
 }
 
 
 .chatbox {
-    width: 600px;
+    width: 350px;
     height: 400px;
     margin: 60px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    background-color: #b251fd34;
-    box-shadow: 0 2px 10px rgba(44, 153, 255, 0.1);
+    background-color: none;
+    box-shadow: 0 -12px 10px -12px rgba(167, 167, 167, 0.1);
 }
 
 .chatbox-messages {
     flex: 1;
-    padding: 10px;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
