@@ -13,97 +13,96 @@
 
 {% block mainContent %}
   <div class="tools">
-    <button class="button" onclick="openForm()">+</button>
-    <button id="stageEdit" class="button">✏️</button>
+    <button class="button" onclick="openForm()">+<span>label</span></button>
+    <button id="stageEdit" class="button">✏️<span>label</span></button>
   </div>
   <div class="tool">
-    <button class="button" onclick="openForm()">✏️</button>
-    <button id="toggleHover" class="button">+</button>
+    <button class="button" onclick="openForm()">✏️<span>label</span></button>
+    <button id="toggleHover" class="button">+<span>label</span></button>
   </div>
 
   <button class="button1" onclick="toggleTools()">💦</button>
 
   <div id="overlay" onclick="closeForm()"></div>
 
-<h2 class="protitle">{{project_details.pname}} Project
-                      {{project_messages.message}}
-                     {% comment %} {{project_details.pcreator}}  {% endcomment %}
-                     {% comment %} {{project_details.pcomp}} {% endcomment %}
-</h2>
+  <h2 class="protitle">
+    {{ project_details.pname }} Project
+    {{ project_messages.message }}
+    {% comment %} {{ project_details.pcreator }} {% endcomment %}
+    {% comment %} {{ project_details.pcomp }} {% endcomment %}
+  </h2>
   <div class="aside">
-    <aside>
-        <div class="container">
-            <h1>Project Timeline</h1>
-            <div id="timeline">
-                <h1 id="nostage">No Stages Yet</h1>
-                <div id="timeline-line"></div>
-                <div class="navigation-buttons">
-                    <button id="prev-button">Previous</button>
-                    <button id="next-button">Next</button>
-                </div>
-            </div>
-        </div>
-        <div class="infobox container infoactive" id="infobox">
-            <h2>Project Information</h2><hr>
-            <br>
-              <div class="prodetail" id="prodetail">
-                  <h3>Description</h3>
-                  <textarea class="prodestext transparent" name="prodes" id="prodes" readonly>{{project_details.pdes}}</textarea>
-                  <h3>DeadLine</h3>
-                  <input type="date" class="prodestext transparent" name="prodead" value="{{project_details.pdead}}" readonly>
-                  <h2 style="text-align: center;">Client Details</h2><hr>
-                  <h3>Name</h3>
-                  <input type="text" class="prodestext transparent" name="cname" value="{{project_details.clientName}}" readonly>
-                  <h3>Contact </h3>
-                  <input type="text" class="prodestext transparent" name="cphone" value="{{project_details.clientNum}}" readonly>
-                  <h3>Place </h3>
-                  <input type="text" class="prodestext transparent" name="cplace" value="{{project_details.clientPlace}}" readonly>
-                  
-              </div>           
-        </div> 
-      </aside>
-
-      <div class="team-container">
-        <h1 class="team-header">Project Members</h1>
-        <table class="team-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Job Title</th>
-                    <th>Admission</th>
-                </tr>
-            </thead>
-            <tbody id="team-table">
-                {% for student in students %}
-                <tr>
-                    <td>{{ student.roll_no }}</td>
-                    <td>{{ student.name }}</td>
-                    <td><button class="team-button add" onclick="toggleTeam(this)">Add</button></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button id="save-button">Save</button>
-    </div>
-
-
-      <div class="chatbox-container">
-      <div class="chatbox">
-          <div class="chatbox-messages" id="chatboxMessages">
-          {% for message in project_messages %}
-              <div class="message">{{ message.message }}</div>
-          {% endfor %}
-          </div>
-      
-          <div class="chatbox-input">
-              <input type="text" id="chatInput" placeholder="Type a message...">
-              <button onclick="sendMessage()">Send</button>
+    <aside class="item1">
+      <div class="container">
+        <h1>Project Timeline</h1>
+        <div id="timeline">
+          <h1 id="nostage">No Stages Yet</h1>
+          <div id="timeline-line"></div>
+          <div class="navigation-buttons">
+            <button id="prev-button">Previous</button>
+            <button id="next-button">Next</button>
           </div>
         </div>
       </div>
+      <div class="infobox container infoactive" id="infobox">
+        <h2>Project Information</h2><hr />
+        <br />
+        <div class="prodetail" id="prodetail">
+          <h3>Description</h3>
+          <textarea class="prodestext transparent" name="prodes" id="prodes" readonly>{{ project_details.pdes }}</textarea>
+          <h3>DeadLine</h3>
+          <input type="date" class="prodestext transparent" name="prodead" value="{{ project_details.pdead }}" readonly />
+          <h2 style="text-align: center;">Client Details</h2><hr />
+          <h3>Name</h3>
+          <input type="text" class="prodestext transparent" name="cname" value="{{ project_details.clientName }}" readonly />
+          <h3>Contact</h3>
+          <input type="text" class="prodestext transparent" name="cphone" value="{{ project_details.clientNum }}" readonly />
+          <h3>Place</h3>
+          <input type="text" class="prodestext transparent" name="cplace" value="{{ project_details.clientPlace }}" readonly />
+        </div>
+      </div>
+    </aside>
+
+    <div class="item2 team-container">
+      <h1 class="team-header">Project Members</h1>
+      <table class="team-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Job Title</th>
+            <th>Admission</th>
+          </tr>
+        </thead>
+        <tbody id="team-table">
+          {% for student in students %}
+            <tr>
+              <td>{{ student.roll_no }}</td>
+              <td>{{ student.name }}</td>
+              <td>
+                <button class="team-button add" onclick="toggleTeam(this)">Add</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button id="save-button">Save</button>
     </div>
 
-  
+    <div class="chatbox-container item3">
+      <div class="chatbox">
+        <div class="chatbox-messages" id="chatboxMessages">
+          {% for message in project_messages %}
+            <div class="message">{{ message.message }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="chatbox-input">
+          <input type="text" id="chatInput" placeholder="Type a message..." />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="container" id="formPopup">
     <h2>Add Milestone</h2>
@@ -118,7 +117,7 @@
 {% endblock %}
 
 {% block extraScript %}
-<script>
+  <script>
  
   // Global variable declarations
 
@@ -172,13 +171,13 @@ function toggleTeam(button) {
 
 </script>
 
-<!-- Load jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Load custom scripts -->
-<script src="{% static 'js/userStage.js' %}"></script>
+  <!-- Load custom scripts -->
+  <script src="{% static 'js/userStage.js' %}"></script>
 
-<script>
+  <script>
   // Add timeline cards
   {% for stage in project_stages %}
     addTimelineCard({
@@ -195,7 +194,6 @@ function toggleTeam(button) {
   }, 500);
 </script>
 
-<!-- Load base.js after custom scripts to ensure dependencies are loaded first -->
-<script src="{% static 'js/base.js' %}"></script>
+  <!-- Load base.js after custom scripts to ensure dependencies are loaded first -->
+  <script src="{% static 'js/base.js' %}"></script>
 {% endblock %}
-

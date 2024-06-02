@@ -168,6 +168,14 @@
 
     .button {
         display: none;
+        position: relative;
+    }
+    .button span{
+        position: absolute;
+        bottom: -20px;
+        left: 8px;
+        font-size: 12px;
+        color: white;
     }
 
     .tools.show .button {
@@ -210,8 +218,9 @@
         cursor: pointer;
         transition: all .2s linear;
         position: absolute;
-        right: 4%;
-        top: 4em;
+        /* right: 4%; */
+        top: 1em;
+        left: 34em;
         
 
 
@@ -276,7 +285,7 @@
 
     .container {
         width: 80%;
-        max-width: 600px;
+        max-width: 456px;
     }
 
     h1 {
@@ -395,7 +404,7 @@
     }
 
     .navigation-buttons button {
-        padding: 10px 20px;
+        padding: 5px 11px;
         border: none;
         background-color: #1066bce8;
         color: white;
@@ -583,6 +592,15 @@ button:hover {
     align-items: center;
     
 }
+.item1{
+    order: 2;
+}
+.item2{
+    order: 1;
+}
+.item3{
+    order: 3;
+}
 aside{
     background: #ef00ff12;
     width: 100px;
@@ -591,10 +609,10 @@ aside{
     border-radius: 20px;
 }
 aside:nth-child(1){
-    width: 100%;
-    padding:0 1em 0;
-    height: 77vh;
-    margin:4%;
+    width: 100vw;
+    padding:0 0 0;
+    height: 65vh;
+    margin:7% 0;
 }
 
 aside:nth-child(1)::-webkit-scrollbar{
@@ -615,7 +633,9 @@ aside:nth-child(1)::-webkit-scrollbar{
     align-items: flex-end;
     width: 100%;
     height: 100%;
-    transform: translate(128px, 279px);
+    position: relative;
+    top: 8em;
+
 }
 
 
@@ -701,6 +721,8 @@ aside:nth-child(1)::-webkit-scrollbar{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     text-align: center;
+    position: relative;
+    bottom: -13em;
 }
 
 .team-header {
