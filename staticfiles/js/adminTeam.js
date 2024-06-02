@@ -91,27 +91,27 @@ document.querySelectorAll('.box').forEach(function(box) {
     return true;
 }
 
-function togglePayLabelAndValidation() {
-  var isPercentCheckbox = document.getElementById("isPercent");
-  var payLabel = document.getElementById("payLabel");
-  var payInput = document.getElementById("pay");
+// function togglePayLabelAndValidation() {
+//   var isPercentCheckbox = document.getElementById("isPercent");
+//   var payLabel = document.getElementById("payLabel");
+//   var payInput = document.getElementById("pay");
 
-  if (isPercentCheckbox.checked) {
-      payLabel.innerText = "Pay in Percentage:";
-      payInput.placeholder = "Enter percentage (0.1 - 100)";
-      payInput.removeAttribute("max");
-      payInput.removeAttribute("step");
-      payInput.setAttribute("min", "0.1");
-      payInput.setAttribute("max", "100");
-      payInput.setAttribute("step", "0.1");
-  } else {
-      payLabel.innerText = "Pay in Amount:";
-      payInput.placeholder = "Enter amount";
-      payInput.removeAttribute("min");
-      payInput.removeAttribute("max");
-      payInput.removeAttribute("step");
-  }
-}
+//   if (isPercentCheckbox.checked) {
+//       payLabel.innerText = "Pay in Percentage:";
+//       payInput.placeholder = "Enter percentage (0.1 - 100)";
+//       payInput.removeAttribute("max");
+//       payInput.removeAttribute("step");
+//       payInput.setAttribute("min", "0.1");
+//       payInput.setAttribute("max", "100");
+//       payInput.setAttribute("step", "0.1");
+//   } else {
+//       payLabel.innerText = "Pay in Amount:";
+//       payInput.placeholder = "Enter amount";
+//       payInput.removeAttribute("min");
+//       payInput.removeAttribute("max");
+//       payInput.removeAttribute("step");
+//   }
+// }
 
 
   document.getElementById('add_float').addEventListener('click', function() {

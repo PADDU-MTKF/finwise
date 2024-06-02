@@ -1,4 +1,6 @@
-
+body{
+  overflow-y: hidden;
+}
 
 .set_float {
   position: fixed;

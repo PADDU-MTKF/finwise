@@ -125,7 +125,7 @@
     <div id="step3" style="display: none;">
         <label for="isPercent">Is the user a Partner?</label>
         <label>Yes</label>
-        <input type="checkbox" id="isPercent" name="isPercent" onchange="togglePayLabelAndValidation()" disabled>
+        <input type="checkbox" id="isPercent" name="isPercent" disabled>
         <!-- Android-like toggle button here -->
 
         <label for="pay" id="payLabel">Pay in Amount:</label>
@@ -139,32 +139,7 @@
     </div>
 </form>
   </div>
-  
-    {% comment %} {% if data %}
-        {% for member in data %}
-        <div class="box" id="{{member.id}}">
-            <h2>{{member.name}}</h2>
-            <p>{{member.userName}} | {{member.jobTitle}}</p>
 
-            <input type="hidden" id="nameHidden_{{member.id}}" value="{{member.name}}">
-            <input type="hidden" id="userNameHidden_{{member.id}}" value="{{member.userName}}">
-            <input type="hidden" id="jobTitleHidden_{{member.id}}" value="{{member.jobTitle}}">
-            <input type="hidden" id="phoneNumberHidden_{{member.id}}" value="{{member.phoneNumber}}">
-            <input type="hidden" id="isPercentHidden_{{member.id}}" value="{{member.isPercent}}">
-            <input type="hidden" id="payHidden_{{member.id}}" value="{{member.pay}}">
-            <input type="hidden" id="IDHidden_{{member.id}}" value="{{member.id}}">
-
-
-        </div>
-        {% endfor %}
-    {% else %}
-    <div class="box">
-        <h2>No Team Members</h2>
-        <p>Add Members to manage your team</p>
-    </div>
-    {% endif %} {% endcomment %}    
-
-    
     <button id="add_float" class="add_float">+</button>
     
 {% endblock  %}

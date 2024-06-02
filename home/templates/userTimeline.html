@@ -62,6 +62,31 @@
               </div>           
         </div> 
       </aside>
+
+      <div class="team-container">
+        <h1 class="team-header">Project Members</h1>
+        <table class="team-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Job Title</th>
+                    <th>Admission</th>
+                </tr>
+            </thead>
+            <tbody id="team-table">
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.roll_no }}</td>
+                    <td>{{ student.name }}</td>
+                    <td><button class="team-button add" onclick="toggleTeam(this)">Add</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button id="save-button">Save</button>
+    </div>
+
+
       <div class="chatbox-container">
       <div class="chatbox">
           <div class="chatbox-messages" id="chatboxMessages">
@@ -129,6 +154,19 @@ function disableFields() {
     });
     document.getElementById('editButton').style.display = 'inline-block';
     document.getElementById('saveButton').style.display = 'none';
+}
+
+
+function toggleTeam(button) {
+  if (button.classList.contains("remove")) {
+      button.classList.remove("remove");
+      button.classList.add("add");
+      button.textContent = "Add";
+  } else {
+      button.classList.remove("add");
+      button.classList.add("remove");
+      button.textContent = "Remove";
+  }
 }
 
 
