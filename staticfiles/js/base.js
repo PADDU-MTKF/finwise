@@ -67,41 +67,41 @@ initBlobs();
 
 
 function confirmLogOut() {
-    // Prompt the user for confirmation
-    var result = confirm("Are you sure you want to Log Out?");
+  // Prompt the user for confirmation
+  var result = confirm("Are you sure you want to Log Out?");
 
-    // If user confirms, proceed with form submission
-    if (result) {
-      navigateToUrl("logout");
-    } else {
-      // If user cancels, prevent the form submission
-      return false;
-    }
+  // If user confirms, proceed with form submission
+  if (result) {
+    navigateToUrl("logout");
+  } else {
+    // If user cancels, prevent the form submission
+    return false;
   }
+}
 
 
-  function navigateToUrl(url) {
-    window.location.href = url;
+function navigateToUrl(url) {
+  window.location.href = url;
 }
 
 const search = document.querySelector('.input-group input'),
-table_rows = document.querySelectorAll('tbody tr'),
-table_headings = document.querySelectorAll('thead th');
+  table_rows = document.querySelectorAll('tbody tr'),
+  table_headings = document.querySelectorAll('thead th');
 
 // 1. Searching for specific data of HTML table
 search.addEventListener('input', searchTable);
 
 function searchTable() {
   table_rows.forEach((row, i) => {
-      let table_data = row.textContent.toLowerCase(),
-          search_data = search.value.toLowerCase();
+    let table_data = row.textContent.toLowerCase(),
+      search_data = search.value.toLowerCase();
 
-      row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-      row.style.setProperty('--delay', i / 25 + 's');
+    row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+    row.style.setProperty('--delay', i / 25 + 's');
   })
 
   document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-      visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+    visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
   });
 }
 
@@ -110,63 +110,70 @@ function searchTable() {
 table_headings.forEach((head, i) => {
   let sort_asc = true;
   head.onclick = () => {
-      table_headings.forEach(head => head.classList.remove('active'));
-      head.classList.add('active');
+    table_headings.forEach(head => head.classList.remove('active'));
+    head.classList.add('active');
 
-      document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
-      table_rows.forEach(row => {
-          row.querySelectorAll('td')[i].classList.add('active');
-      })
+    document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
+    table_rows.forEach(row => {
+      row.querySelectorAll('td')[i].classList.add('active');
+    })
 
-      head.classList.toggle('asc', sort_asc);
-      sort_asc = head.classList.contains('asc') ? false : true;
+    head.classList.toggle('asc', sort_asc);
+    sort_asc = head.classList.contains('asc') ? false : true;
 
-      sortTable(i, sort_asc);
+    sortTable(i, sort_asc);
   }
 })
 
 
 function sortTable(column, sort_asc) {
   [...table_rows].sort((a, b) => {
-      let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
-          second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
+    let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
+      second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-      return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+    return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
   })
-      .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+    .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
 }
 
 
 
-        // Define the mobile breakpoint
-        const mobileBreakpoint = 768;
+// Define the mobile breakpoint
+const mobileBreakpoint = 768;
 
-        // Create a media query list
-        const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
+// Create a media query list
+const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`);
 
-        // Define the task to perform when the breakpoint is hit
-        function handleMobileBreakpoint(event) {
-            const helloWorldMessage = document.getElementById('helloWorldMessage');
-            const bodyChildren = Array.from(document.body.children).filter(el => el.id !== 'helloWorldMessage');
+// Define the task to perform when the breakpoint is hit
+function handleMobileBreakpoint(event) {
+  const helloWorldMessage = document.getElementById('helloWorldMessage');
+  const bodyChildren = Array.from(document.body.children).filter(el => el.id !== 'helloWorldMessage');
 
-            if (event.matches) {
-                // The viewport width is 768px or less
-                console.log('Mobile breakpoint hit');
-                // Hide all elements except the Hello World message
-                
-                localStorage.setItem('previousEndpoint', window.location.href);
+  if (event.matches) {
+    // The viewport width is 768px or less
+    console.log('Mobile breakpoint hit');
+    // Hide all elements except the Hello World message
 
-                window.location.href = "/mobile";
+    localStorage.setItem('previousEndpoint', window.location.href);
 
-            } else {
-              const previousEndpoint = localStorage.getItem('previousEndpoint');
-              
-              if (previousEndpoint) {
-                // You can use the previous endpoint as needed
-                console.log('Previous endpoint:', previousEndpoint);
+    window.location.href = "/mobile";
 
-                window.location.href = previousEndpoint;
-               
-            }
-        }
+  } else {
+    const previousEndpoint = localStorage.getItem('previousEndpoint');
+
+    if (previousEndpoint) {
+      // You can use the previous endpoint as needed
+      console.log('Previous endpoint:', previousEndpoint);
+
+      window.location.href = previousEndpoint;
+
+    }
+  }
+}
+
+
+
+
+if (window.matchMedia("(max-width: 600px)").matches) {
+  alert("no access on mobile")
 }
