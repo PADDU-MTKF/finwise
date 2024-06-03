@@ -634,7 +634,7 @@ aside:nth-child(1)::-webkit-scrollbar{
     width: 100%;
     height: 100%;
     position: relative;
-    top: 8em;
+    top: 14em;
 
 }
 
@@ -709,9 +709,6 @@ aside:nth-child(1)::-webkit-scrollbar{
 }
 
 
-
-
-
 .team-container {
     width: 90%;
     max-width: 600px;
@@ -722,30 +719,48 @@ aside:nth-child(1)::-webkit-scrollbar{
     border-radius: 8px;
     text-align: center;
     position: relative;
-    bottom: -13em;
+    bottom: -11em;
 }
 
-.team-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
 
 .team-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
-.team-table th,
+
 .team-table td {
-    border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
+    
 }
 
-.team-table th {
-    background-color: #f2f2f2;
+
+/* .team-checkbox {
+    display: none;
+} */
+
+.table-body-container {
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: auto;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    scrollbar-width: none;
 }
+
+.team-checkbox{
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    margin-top: 7px;
+}
+
+
 
 .team-button {
     padding: 6px 12px;

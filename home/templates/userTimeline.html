@@ -64,29 +64,29 @@
     </aside>
 
     <div class="item2 team-container">
-      <h1 class="team-header">Project Members</h1>
+      <h1 class="team-header">Collaborators</h1>
       <table class="team-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Job Title</th>
-            <th>Admission</th>
-          </tr>
-        </thead>
-        <tbody id="team-table">
-          {% for student in students %}
+      </table>
+      <div class="table-body-container">
+        <table class="team-table">
+          <tbody id="team-table">
+            
+            {% for student in students %}
             <tr>
-              <td>{{ student.roll_no }}</td>
-              <td>{{ student.name }}</td>
-              <td>
-                <button class="team-button add" onclick="toggleTeam(this)">Add</button>
+              <td>Name1</td>
+              <td>skill1</td>
+              <td style="text-align: center;  vertical-align: middle; ">
+                <label>Add</label>
+                <input type="checkbox" name="add" class="team-checkbox" id="check">
               </td>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       <button id="save-button">Save</button>
     </div>
+    
 
     <div class="chatbox-container item3">
       <div class="chatbox">
@@ -155,18 +155,6 @@ function disableFields() {
     document.getElementById('saveButton').style.display = 'none';
 }
 
-
-function toggleTeam(button) {
-  if (button.classList.contains("remove")) {
-      button.classList.remove("remove");
-      button.classList.add("add");
-      button.textContent = "Add";
-  } else {
-      button.classList.remove("add");
-      button.classList.add("remove");
-      button.textContent = "Remove";
-  }
-}
 
 
 </script>
