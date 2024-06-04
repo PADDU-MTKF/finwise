@@ -13,15 +13,15 @@
 
 {% block mainContent %}
   <div class="tools">
-    <button class="button" onclick="openForm()">+<span>label</span></button>
-    <button id="stageEdit" class="button">✏️<span>label</span></button>
+    <button class="button" onclick="openForm()">+<span>Manage</span></button>
+    <button id="stageEdit" class="button">✏️<span>Timeline</span></button>
   </div>
   <div class="tool">
-    <button class="button" onclick="openForm()">✏️<span>label</span></button>
-    <button id="toggleHover" class="button">+<span>label</span></button>
+    <button class="button" onclick="openForm()">✏️<span>Manage</span></button>
+    <button id="toggleHover" class="button">+<span>Information</span></button>
   </div>
 
-  <button class="button1" onclick="toggleTools()">💦</button>
+  <button class="button1" onclick="toggleTools()">Set</button>
 
   <div id="overlay" onclick="closeForm()"></div>
 
@@ -71,10 +71,10 @@
         <table class="team-table">
           <tbody id="team-table">
             
-            {% for student in students %}
+            {% for member in team %}
             <tr>
-              <td>Name1</td>
-              <td>skill1</td>
+              <td>{{member.name}}</td>
+              <td>{{member.jobTitle}}</td>
               <td style="text-align: center;  vertical-align: middle; ">
                 <label>Add</label>
                 <input type="checkbox" name="add" class="team-checkbox" id="check">
@@ -86,6 +86,7 @@
       </div>
       <button id="save-button">Save</button>
     </div>
+    
     
 
     <div class="chatbox-container item3">

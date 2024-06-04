@@ -30,11 +30,14 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "project_stages":os.getenv('PROJECT_STAGES'),
             "project_messages":os.getenv('PROJECT_MESSAGES'),
             "project_current_stage":os.getenv('PROJECT_CURRENT_STAGE'),
+            "project_workers":os.getenv('PROJECT_WORKERS'),
+
 
             }
 
 MULTI_DATA={"project":["project","project_setting"],
-            "details":["project_messages","project_stages","project_current_stage"]}
+            "details":["project_messages","project_stages","project_current_stage"],
+            "team":["team","project_wor"]}
 
 USERS_PAGE={'project':'creator','analytics':'username'}
 
@@ -207,12 +210,7 @@ def project(request):
 
 def team(request):
     if request.method == 'POST':
-        # can have basic display of all users,add request,edit request,delete request
-        '''
-        = add mai pop up hoga fir save dabathe he isi end point mai aayega fir db mai save hoga fir naya data ko leke firse adminTeam mai jayega
-        = remove mai be same as add
-        = edit mai be same as add
-        '''
+
         
         if "add" in request.POST:
             # check for integer and try also make sure sum of all percent pay is <100
@@ -310,6 +308,9 @@ def details(request):
                 print("here")
                 latest_data[each]=getPageData(each,False,proid=request.POST.get("proid"),query=[
                                     Query.equal("projectId", [request.POST.get("proid")]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+        for each in MULTI_DATA['team']:
+            latest_data[each] = getPageData(each,False,query=None)
         
         # print(latest_data)
         latest_data["page"]="details"
@@ -526,3 +527,4 @@ def deleteStage(request):
             return JsonResponse({'status': 'error'}, status=400)
 
     return JsonResponse({'status': 'error'}, status=405)
+
