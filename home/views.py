@@ -7,20 +7,22 @@ from django.core.cache import cache
 import json 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from pprint import pprint
 
 
 MASTER_ADMIN_USERNAME="admin"
-ADMIN_DEFAULT_PAGE="team"
-USER_DEFAULT_PAGE="team"
+ADMIN_DEFAULT_PAGE="analysis"
+USER_DEFAULT_PAGE="analysis"
 
 ADMIN_ENDPOINTS={"project":"adminProject.html",
                  "team":"adminTeam.html",
-                 "analysis":"adminAnalysis.html",
+                 "analysis":"analysis.html",
                  }
 
 USER_ENDPOINTS={"team":"userTeam.html",
                 "project":"userProject.html",
-                "details":"userTimeline.html"
+                "details":"userTimeline.html",
+                "analysis":"analysis.html",
                 }
 
 COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
@@ -31,6 +33,7 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             "project_messages":os.getenv('PROJECT_MESSAGES'),
             "project_current_stage":os.getenv('PROJECT_CURRENT_STAGE'),
             "project_workers":os.getenv('PROJECT_WORKERS'),
+            "analysis":os.getenv('PROJECTS_ID')
 
 
             }
@@ -39,7 +42,7 @@ MULTI_DATA={"project":["project","project_setting"],
             "details":["project_messages","project_stages","project_current_stage","project_workers"],
 }
 
-USERS_PAGE={'project':'creator','analytics':'username'}
+USERS_PAGE={'project':'creator','analysis':'creator'}
 
 def getPageData(page,refresh=False,query = None,username="",proid=""):
     latest_data = {}
@@ -56,13 +59,19 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 # print(f"1 {page}",base_query)
 
                 latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,base_query)
+                print("ann 1")
+                
             except Exception as e:
                 # print("2",e)
                 # print("3",query)
                 try:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page],query)
+                    print("ann 2",query)
+                    
                 except:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+                    print("ann 3")
+                    
 
                 
             # print(latest_data)
@@ -128,9 +137,11 @@ def login(request):
                 else:
 
                     try:
+                        print("ann try",page)
                         latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE,query=[
-                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE else None,username=username)
+                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE or page is "" else None,username=username)
                     except:
+                        print("ann exp")
                         latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
 
                     data["data"]=latest_data
@@ -280,9 +291,7 @@ def team(request):
 
 
 def analysis(request):
-    if request.method == 'POST':
-        return render(request, 'adminAnalysis.html')
-    
+
     data={"page":"analysis"}
     return render(request, 'login.html',data)
 
@@ -312,6 +321,21 @@ def details(request):
                 
         
         latest_data["team"] =getPageData("team",refresh=False)
+        
+        # Extract user names from list latest_data["team"]
+        b_usernames = {user['userName'] for user in latest_data["team"]}
+
+        # Create the new list c
+        latest_data["team"] = [
+            {'name': user['name'], 'userName': user['userName'], 'isColab': user['userName'] in b_usernames}
+            for user in latest_data["team"]
+        ]
+
+        
+        # pprint(latest_data["team"])
+        # print("\n\n")
+        # pprint(latest_data["project_workers"])
+        
         
         # print(latest_data)
         latest_data["page"]="details"
