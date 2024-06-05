@@ -740,6 +740,9 @@ aside:nth-child(1)::-webkit-scrollbar{
     left: -85px;
 }
 
+.hidden {
+    display: none;
+}
 
 .team-table {
     width: 100%;
@@ -762,7 +765,7 @@ aside:nth-child(1)::-webkit-scrollbar{
 .table-body-container {
     max-height: 300px;
     overflow-y: auto;
-    border-bottom: 1px solid #dddddd;
+    /* border-bottom: 1px solid #dddddd; */
     /* border-radius: 20px; */
     scrollbar-width: none;
 }
@@ -814,6 +817,23 @@ aside:nth-child(1)::-webkit-scrollbar{
 }
 
 #save-button:hover {
+    background-color: #53bae3;
+
+}
+#add-team {
+    padding: 10px 20px;
+    margin-top: 10px;
+
+    border: none;
+    background-color: #ffffff08;;
+    box-shadow: 10px #00b7ff, 20px #00b7ff93;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+
+}
+
+#add-team:hover {
     background-color: #53bae3;
 
 }
