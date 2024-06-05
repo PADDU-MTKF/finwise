@@ -66,7 +66,7 @@
       <div class="table-body-container">
         <table class="team-table">
           <tbody id="team-table">
-            {% for member in team %}
+            {% for member in project_workers %}
               <tr>
                 <td>{{ member.name }}</td>
                 <td>{{ member.jobTitle }}</td>
@@ -93,7 +93,7 @@
 
                 <td style="text-align: center;  vertical-align: middle;  ">
                   <label>Add</label>
-                  <input type="checkbox" name="add" class="team-checkbox" id="check" />
+                  <input type="checkbox" name="add" class="team-checkbox" id="check" {% if member.isColab %}checked{% endif %} />
                 </td>
               </tr>
             {% endfor %}
@@ -171,21 +171,7 @@ function disableFields() {
     document.getElementById('saveButton').style.display = 'none';
 }
 
-document.getElementById('add-team').addEventListener('click', function() {
-  document.getElementById('view-collaborators').classList.add('hidden');
-  document.getElementById('add-collaborators').classList.remove('hidden');
-});
 
-document.getElementById('save-button').addEventListener('click', function() {
-  document.getElementById('view-collaborators').classList.remove('hidden');
-  document.getElementById('add-collaborators').classList.add('hidden');
-});
-
-// Ensure that only one div is visible on page load
-window.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('view-collaborators').classList.remove('hidden');
-  document.getElementById('add-collaborators').classList.add('hidden');
-});
 
 </script>
 
@@ -210,6 +196,88 @@ window.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     trackerLine(currentStage);
   }, 500);
+</script>
+
+<script>
+
+  function retrieveTeamData() {
+    const teamData = [];
+    const rows = document.querySelectorAll('#team-table tr');
+
+    rows.forEach(row => {
+        const name = row.querySelector('td:nth-child(1)').textContent.trim();
+        const jobTitle = row.querySelector('td:nth-child(2)').textContent.trim();
+        const userName = row.querySelector('td:nth-child(3)').textContent.trim();
+        const isColab = row.querySelector('input[type="checkbox"]').checked;
+
+        teamData.push({
+            name: name,
+            userName: userName,
+            jobTitle: jobTitle,
+            isColab: isColab
+        });
+    });
+
+    return teamData;
+}
+
+function compareTeamData(oldData, newData) {
+    const changes = [];
+
+    newData.forEach((newMember, index) => {
+        const oldMember = oldData[index];
+
+        // Compare each field
+        const changesForMember = {};
+        let hasChanges = false;
+
+        if (newMember.name !== oldMember.name) {
+            changesForMember.name = newMember.name;
+            hasChanges = true;
+        }
+        if (newMember.jobTitle !== oldMember.jobTitle) {
+            changesForMember.jobTitle = newMember.jobTitle;
+            hasChanges = true;
+        }
+        if (newMember.userName !== oldMember.userName) {
+            changesForMember.userName = newMember.userName;
+            hasChanges = true;
+        }
+        if (newMember.isColab !== oldMember.isColab) {
+            changesForMember.isColab = newMember.isColab;
+            hasChanges = true;
+        }
+
+        if (hasChanges) {
+            changes.push({
+                old: oldMember,
+                new: newMember
+            });
+        }
+    });
+
+    return changes;
+}
+
+
+document.getElementById('add-team').addEventListener('click', function() {
+  document.getElementById('view-collaborators').classList.add('hidden');
+  document.getElementById('add-collaborators').classList.remove('hidden');
+});
+
+document.getElementById('save-button').addEventListener('click', function() {
+  document.getElementById('view-collaborators').classList.remove('hidden');
+  document.getElementById('add-collaborators').classList.add('hidden');
+});
+
+// Ensure that only one div is visible on page load
+window.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('view-collaborators').classList.remove('hidden');
+  document.getElementById('add-collaborators').classList.add('hidden');
+});
+
+
+
 </script>
 
   <!-- Load base.js after custom scripts to ensure dependencies are loaded first -->

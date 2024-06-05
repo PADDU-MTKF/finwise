@@ -315,24 +315,38 @@ def details(request):
                 
                 latest_data[each]=getPageData(each,False,proid=request.POST.get("proid"),query=[
                                     Query.equal("projectId", [request.POST.get("proid")]),Query.order_desc("$createdAt"),Query.limit(100)])
-                print("here")
+                # print("here")
                 
         
         latest_data["team"] =getPageData("team",refresh=False)
         
-        # Extract user names from list latest_data["team"]
-        b_usernames = {user['userName'] for user in latest_data["team"]}
+        # Extract user names from list latest_data["project_workers"]
+        b_usernames = {user['userName'] for user in latest_data["project_workers"]}
+        print(b_usernames)
 
         # Create the new list c
-        latest_data["team"] = [
-            {'name': user['name'], 'userName': user['userName'], 'isColab': user['userName'] in b_usernames}
-            for user in latest_data["team"]
-        ]
+        new_team = []
+        new_workers=[]
+
+        for user in latest_data["team"]:
+            user_info = {
+                'name': user['name'],
+                'userName': user['userName'],
+                'jobTitle': user['jobTitle'],
+                'isColab': user['userName'] in b_usernames
+            }
+            new_team.append(user_info)
+            if user['userName'] in b_usernames:
+                new_workers.append(user_info) 
+            
+
+        latest_data["team"] = new_team
+        latest_data["project_workers"] = new_workers
 
         
         # pprint(latest_data["team"])
         # print("\n\n")
-        # pprint(latest_data["project_workers"])
+        pprint(latest_data["project_workers"])
         
         
         # print(latest_data)
