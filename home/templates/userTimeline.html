@@ -27,7 +27,8 @@
 
   <h2 class="protitle">
     {{ project_details.pname }} Project
-    {{ project_messages.message }}
+
+
     {% comment %} {{ project_details.pcreator }} {% endcomment %}
     {% comment %} {{ project_details.pcomp }} {% endcomment %}
   </h2>
@@ -64,7 +65,7 @@
     </aside>
 
     <div class="item2 team-container">
-      <h1 class="team-header">Collaborators</h1>
+      
       <table class="team-table">
       </table>
       <div class="table-body-container">
@@ -75,6 +76,8 @@
             <tr>
               <td>{{member.name}}</td>
               <td>{{member.jobTitle}}</td>
+              <td class="hide">{{member.userName}}</td>
+              
               <td style="text-align: center;  vertical-align: middle; ">
                 <label>Add</label>
                 <input type="checkbox" name="add" class="team-checkbox" id="check">
@@ -84,7 +87,8 @@
           </tbody>
         </table>
       </div>
-      <button id="save-button">Save</button>
+      {% comment %} <h1 class="team-header">Collaborators</h1> {% endcomment %}
+      <button id="save-button">Add Collaborators</button>
     </div>
     
     

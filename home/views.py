@@ -36,8 +36,8 @@ COLLECTION={"login":os.getenv('EMPDETAILS_ID'),
             }
 
 MULTI_DATA={"project":["project","project_setting"],
-            "details":["project_messages","project_stages","project_current_stage"],
-            "team":["team","project_wor"]}
+            "details":["project_messages","project_stages","project_current_stage","project_workers"],
+}
 
 USERS_PAGE={'project':'creator','analytics':'username'}
 
@@ -305,12 +305,13 @@ def details(request):
         latest_data["project_details"]=project_details
        
         for each in MULTI_DATA['details']:
-                print("here")
+                
                 latest_data[each]=getPageData(each,False,proid=request.POST.get("proid"),query=[
                                     Query.equal("projectId", [request.POST.get("proid")]),Query.order_desc("$createdAt"),Query.limit(100)])
+                print("here")
                 
-        for each in MULTI_DATA['team']:
-            latest_data[each] = getPageData(each,False,query=None)
+        
+        latest_data["team"] =getPageData("team",refresh=False)
         
         # print(latest_data)
         latest_data["page"]="details"
