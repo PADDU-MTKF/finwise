@@ -15,6 +15,7 @@ urlpatterns = [
     path('saveStage', views.saveStage,name="saveStage"),
     path('saveMsg', views.saveMsg,name="saveMsg"),
     path('saveCurrentStage', views.saveCurrentStage,name="saveCurrentStage"),
+    path('saveCurrentWorkers', views.saveCurrentWorkers,name="saveCurrentWorkers"),
     path('updateProDet', views.updateProDet,name="updateProDet"),
     path('updateStageDetails', views.updateStageDetails,name="updateStageDetails"),
     path('deleteStage', views.deleteStage,name="deleteStage"),

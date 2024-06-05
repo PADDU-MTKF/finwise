@@ -65,13 +65,15 @@
       <table class="team-table"></table>
       <div class="table-body-container">
         <table class="team-table">
-          <tbody id="team-table">
+          <tbody>
             {% for member in project_workers %}
-              <tr>
-                <td>{{ member.name }}</td>
-                <td>{{ member.jobTitle }}</td>
-                <td class="hide">{{ member.userName }}</td>
-              </tr>
+           
+            <tr>
+              <td>{{ member.name }}</td>
+              <td>{{ member.jobTitle }}</td>
+              <td class="hide">{{ member.userName }}</td>
+            </tr>
+            
             {% endfor %}
           </tbody>
         </table>
@@ -86,16 +88,19 @@
         <table class="team-table">
           <tbody id="team-table">
             {% for member in team %}
+            {% if member.userName != project_details.pcreator %}
               <tr>
                 <td>{{ member.name }}</td>
                 <td>{{ member.jobTitle }}</td>
                 <td class="hide">{{ member.userName }}</td>
+                <input type="hidden" name="id" value="{{ member.id }}">
 
                 <td style="text-align: center;  vertical-align: middle;  ">
                   <label>Add</label>
                   <input type="checkbox" name="add" class="team-checkbox" id="check" {% if member.isColab %}checked{% endif %} />
                 </td>
               </tr>
+              {% endif %}
             {% endfor %}
           </tbody>
         </table>
@@ -209,12 +214,14 @@ function disableFields() {
         const jobTitle = row.querySelector('td:nth-child(2)').textContent.trim();
         const userName = row.querySelector('td:nth-child(3)').textContent.trim();
         const isColab = row.querySelector('input[type="checkbox"]').checked;
+        const id = row.querySelector('input[type="hidden"]').value;
 
         teamData.push({
             name: name,
             userName: userName,
             jobTitle: jobTitle,
-            isColab: isColab
+            isColab: isColab,
+            id: id
         });
     });
 
@@ -249,25 +256,53 @@ function compareTeamData(oldData, newData) {
         }
 
         if (hasChanges) {
-            changes.push({
-                old: oldMember,
-                new: newMember
-            });
+            changes.push( newMember);
         }
     });
 
     return changes;
 }
 
+let oldWorker=[]
+let newWorkers=[]
+let compare
 
 document.getElementById('add-team').addEventListener('click', function() {
   document.getElementById('view-collaborators').classList.add('hidden');
   document.getElementById('add-collaborators').classList.remove('hidden');
+  oldWorker=[]
+  oldWorker=retrieveTeamData()
 });
 
 document.getElementById('save-button').addEventListener('click', function() {
   document.getElementById('view-collaborators').classList.remove('hidden');
   document.getElementById('add-collaborators').classList.add('hidden');
+  newWorkers=[]
+  newWorkers=retrieveTeamData()
+
+  changes=compareTeamData(oldWorker,newWorkers)
+
+  const csrftoken = getCSRFToken();
+
+     const formData = {
+         projectId: proid,
+         workers: changes,
+     };
+
+     const xhr = new XMLHttpRequest();
+     xhr.open('POST', '/saveCurrentWorkers', true);
+     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+     xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+     xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+             window.location.reload();
+          }
+     };
+     xhr.send(JSON.stringify(formData));
+
+  console.log("Changes:", JSON.stringify(changes, null, 2));
+
+  
 });
 
 // Ensure that only one div is visible on page load

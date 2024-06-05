@@ -5,8 +5,6 @@ stage naya add hothe he uska doc id return karke card mau dal do
 
 
 
-colaborator ka part ( list karna select karna add karna rmove karna display karna )
-
 
 top mai ek project on progress ya complete status with change button
     if complete then remove all buttons no modifications except reopen the project

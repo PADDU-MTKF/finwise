@@ -71,10 +71,26 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 except:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
 
-
+            
                 
             # print(latest_data)
             cache.set(page+username+proid,latest_data)
+            
+        if page=="project" or page=="analysis":
+            # pprint(latest_data)
+            try:
+                additional_id,_=db.getDocument(os.getenv("DB_ID"),COLLECTION['project_workers'],[Query.equal("userName", [username])])
+                id_list=[]
+                for each in additional_id:
+                    id_list.append(each['projectId'])
+                print(id_list)
+                
+                additional_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION['project'],[Query.equal("$id", id_list)])
+                print(additional_data)
+                latest_data+=additional_data
+            except Exception as e:
+                print("Could not find",e)
+                   
             # print("cacheed:",page)
             
     except Exception as e:
@@ -320,33 +336,35 @@ def details(request):
         
         latest_data["team"] =getPageData("team",refresh=False)
         
-        # Extract user names from list latest_data["project_workers"]
-        b_usernames = {user['userName'] for user in latest_data["project_workers"]}
-        print(b_usernames)
+        # Extract user names and ids from the list latest_data["project_workers"]
+        b_user_info = {user['userName']: user['id'] for user in latest_data["project_workers"]}
+        # print(b_user_info)
 
         # Create the new list c
         new_team = []
-        new_workers=[]
+        new_workers = []
 
         for user in latest_data["team"]:
             user_info = {
                 'name': user['name'],
                 'userName': user['userName'],
                 'jobTitle': user['jobTitle'],
-                'isColab': user['userName'] in b_usernames
+                'isColab': user['userName'] in b_user_info ,
+                'id': b_user_info[user['userName']] if user['userName'] in b_user_info else ""
             }
             new_team.append(user_info)
-            if user['userName'] in b_usernames:
-                new_workers.append(user_info) 
             
+            if user['userName'] in b_user_info:
+                worker_info = user_info.copy()
+                worker_info['id'] = b_user_info[user['userName']]
+                new_workers.append(worker_info)
 
         latest_data["team"] = new_team
         latest_data["project_workers"] = new_workers
-
         
         # pprint(latest_data["team"])
         # print("\n\n")
-        pprint(latest_data["project_workers"])
+        # pprint(latest_data["project_workers"])
         
         
         # print(latest_data)
@@ -559,6 +577,48 @@ def deleteStage(request):
                 return JsonResponse({'status': 'success'})
             else:
                 return JsonResponse({'status': 'error'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error'}, status=400)
+
+    return JsonResponse({'status': 'error'}, status=405)
+
+
+
+
+def saveCurrentWorkers(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            project_id = data.get('projectId')
+            workers = data.get('workers')
+            
+            pprint(workers)
+            for emp in workers:
+                if emp['isColab']:
+                    newData={
+                        'userName':emp['userName'],
+                        'projectId':project_id,
+                    }
+                    res=db.addDocument(os.getenv("DB_ID"),COLLECTION["project_workers"],newData)
+                    if not res:
+                        return JsonResponse({'status': 'error'}, status=400)
+                else:
+                    doc_id=emp['id']
+
+                    # Delete the document
+                    res = db.deleteDocument(os.getenv("DB_ID"), COLLECTION["project_workers"], doc_id)
+                    if not res:
+                        return JsonResponse({'status': 'error'}, status=400)
+
+       
+            getPageData("project_workers",True,proid=project_id,query=[
+                                    Query.equal("projectId", [project_id]),Query.order_desc("$createdAt"),Query.limit(100)])
+                
+            #     return JsonResponse({'status': 'success'})
+            # else:
+            #     return JsonResponse({'status': 'error'}, status=400)
+            return JsonResponse({'status': 'success'})
 
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error'}, status=400)
