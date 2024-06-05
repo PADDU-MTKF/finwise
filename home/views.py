@@ -42,7 +42,7 @@ MULTI_DATA={"project":["project","project_setting"],
             "details":["project_messages","project_stages","project_current_stage","project_workers"],
 }
 
-USERS_PAGE={'project':'creator','analysis':'creator'}
+USERS_PAGE={'project':'creator','analysis':'creator',"":'creator'}
 
 def getPageData(page,refresh=False,query = None,username="",proid=""):
     latest_data = {}
@@ -59,19 +59,18 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 # print(f"1 {page}",base_query)
 
                 latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,base_query)
-                print("ann 1")
+
                 
             except Exception as e:
                 # print("2",e)
                 # print("3",query)
                 try:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page],query)
-                    print("ann 2",query)
+
                     
                 except:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
-                    print("ann 3")
-                    
+
 
                 
             # print(latest_data)
@@ -137,11 +136,10 @@ def login(request):
                 else:
 
                     try:
-                        print("ann try",page)
+ 
                         latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE,query=[
-                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE or page is "" else None,username=username)
-                    except:
-                        print("ann exp")
+                                      Query.equal(USERS_PAGE[page], [username])] if page in USERS_PAGE else None,username=username)
+                    except Exception as e:
                         latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
 
                     data["data"]=latest_data
