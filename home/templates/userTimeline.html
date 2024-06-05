@@ -13,15 +13,16 @@
 
 {% block mainContent %}
   <div class="tools">
-    <button class="button" onclick="openForm()">+<span>Manage</span></button>
-    <button id="stageEdit" class="button">✏️<span>Timeline</span></button>
+    <button class="button mgbtn" onclick="openForm()"><i class='bx bx-add-to-queue' ></i></button>
   </div>
   <div class="tool">
-    <button class="button" onclick="openForm()">✏️<span>Manage</span></button>
-    <button id="toggleHover" class="button">+<span>Information</span></button>
+    <button id="stageEdit" class="button mgbtn"><i class='bx bxs-edit'></i></button>
+  </div>
+  <div class="toolss">
+    <button id="toggleHover" class="button mgbtn" ><i class='bx bx-info-circle' ></i></button>
   </div>
 
-  <button class="button1" onclick="toggleTools()">Set</button>
+  <button class="button1 mgbtn" onclick="toggleTools()"><i class='bx bx-cog' ></i></button>
 
   <div id="overlay" onclick="closeForm()"></div>
 

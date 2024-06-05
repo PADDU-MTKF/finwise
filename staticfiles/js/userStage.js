@@ -29,6 +29,21 @@ function toggleTools() {
             }, 10); // slight delay to trigger the animation
         }
     })
+    var toolssDiv = document.querySelectorAll('.toolss');
+    toolssDiv.forEach((e) => {
+
+        if (e.classList.contains('show')) {
+            e.classList.remove('show');
+            setTimeout(() => {
+                e.style.display = 'none';
+            }, 500); // match the transition duration
+        } else {
+            e.style.display = 'block';
+            setTimeout(() => {
+                e.classList.add('show');
+            }, 10); // slight delay to trigger the animation
+        }
+    })
 }
 
 

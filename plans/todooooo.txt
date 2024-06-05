@@ -10,4 +10,18 @@ top mai ek project on progress ya complete status with change button
     if complete then remove all buttons no modifications except reopen the project
 
 
-aur project value ka kya hua 
+aur project value ka kya hua  ( if value is enabled show it in info box else hide )
+
+
+remove is percent while creating emp
+
+add phone no. validation
+
+stage wala page mai 
+    add stage karthe wakth pop up background
+    buttons position
+
+
+ann page mai data aaraha hai display karo
+
+admin  side details page mai buttons disable karke ek delete button
