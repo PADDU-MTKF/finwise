@@ -37,8 +37,10 @@
 {% block extraScript %}
 
 {% if not messages %}
+    <script>showLoadingSpinner()</script>
     <script src="{% static 'js/checkLogin.js' %}"></script>
 {% else %}
+    <script>hideLoadingSpinner()</script>
     <script>document.querySelector('.hide').classList.remove('hide');</script>
 {% endif %}
 

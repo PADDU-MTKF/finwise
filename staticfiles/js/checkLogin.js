@@ -14,5 +14,7 @@ if (savedUsername && savedPassword) {
 }
 else{
     document.querySelector('.hide').classList.remove('hide');
+    hideLoadingSpinner()
+
 }
 

@@ -177,3 +177,29 @@ function handleMobileBreakpoint(event) {
 if (window.matchMedia("(max-width: 600px)").matches) {
   alert("no access on mobile")
 }
+
+
+
+// Show loading spinner
+function showLoadingSpinner() {
+  document.getElementById('loading-spinner').classList.remove('shide');
+  document.querySelectorAll('button, a').forEach(element => {
+      element.classList.add('disabled-on-load');
+  });
+}
+
+// Hide loading spinner and enable all buttons and anchor tags
+function hideLoadingSpinner() {
+  document.getElementById('loading-spinner').classList.add('shide');
+  document.querySelectorAll('button, a').forEach(element => {
+      element.classList.remove('disabled-on-load');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+          showLoadingSpinner();
+      });
+  });
+});
