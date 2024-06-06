@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/teamtable.css" %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static "resources/finfevicon.png" %}" type="image/x-icon">
 
 
 
@@ -34,6 +35,8 @@
           <div class="bouncing-blob bouncing-blob--pink"></div>
         </div>
     </div>
+    <div id="loading-spinner" class="loading-spinner shide"></div> 
+
     {% if saveLogin %}
     <script>
           // Ensure username and password are properly quoted and escaped
@@ -50,7 +53,10 @@
         // Remove an item from local storage
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        hideLoadingSpinner()
     </script>
+
+    
     {% endif %}
 
 
@@ -64,9 +70,9 @@
 
     {% block nav %}
     <div class="bottom-nav">
+        <button class="nav-link {% block activeAnalysis %}{% endblock %}" onclick="navigateToUrl('{% url "analysis" %}')">Analysis</button>
         <button class="nav-link {% block activeTeam %}{% endblock %}" onclick="navigateToUrl('{% url "team" %}')">Team</button>
         <button class="nav-link {% block activeProject %}{% endblock %}" onclick="navigateToUrl('{% url "project" %}')">Project</button>
-        <button class="nav-link {% block activeAnalysis %}{% endblock %}" onclick="navigateToUrl('{% url "analysis" %}')">Analysis</button>
         <button class="nav-link" onclick="confirmLogOut()">Logout</button>
     </div>
     {% endblock %}
