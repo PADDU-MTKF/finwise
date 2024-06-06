@@ -75,7 +75,7 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
             
                 
             # print(latest_data)
-            if(page is not "" and page is not "analysis"):
+            if(page != "" and page != "analysis"):
                 print("caching")
                 cache.set(page+username+proid,latest_data)
             

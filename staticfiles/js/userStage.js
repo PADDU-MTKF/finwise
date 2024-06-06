@@ -304,6 +304,8 @@ function deleteCard(cardId) {
     deleteBtn.disabled = true; // Disable the delete button
     deleteBtn.classList.add("buttons-disabled") 
 
+    showLoadingSpinner()
+
     const csrftoken = getCSRFToken();
     const formData = {
         projectId: proid,
@@ -324,8 +326,12 @@ function deleteCard(cardId) {
             if (xhr.status === 200) {
                 card.remove();
                 alert('Card deleted successfully.');
+                hideLoadingSpinner()
+
             } else {
                 alert('Failed to delete card.');
+                hideLoadingSpinner()
+
             }
         }
     };
@@ -389,6 +395,7 @@ document.getElementById('stageEdit').addEventListener('click', function () {
             projectId: proid,
             changedValues: changedValues // Include changed values
         };
+        showLoadingSpinner()
 
         // Send data via AJAX
         const xhr = new XMLHttpRequest();
@@ -399,8 +406,11 @@ document.getElementById('stageEdit').addEventListener('click', function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     alert('Data sent successfully...');
+                    hideLoadingSpinner()
                 } else {
                     alert('Failed to send data.');
+                    hideLoadingSpinner()
+
                 }
             }
         };

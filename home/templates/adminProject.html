@@ -96,9 +96,9 @@
             <label>Yes</label>
             <input type="checkbox" id="isPercent" name="askValue" {% if project_setting.0.askValue %}checked{% endif %}>
             
-            <label for="isPercent">Multiple Level Users?</label>
-            <label>Yes</label>
-            <input type="checkbox" id="isPercent" name="userLevels" {% if project_setting.0.userLevels %}checked{% endif %}>
+            {% comment %} <label for="isPercent">Multiple Level Users?</label>
+            <label>Yes</label> {% endcomment %}
+            <input type="hidden" id="isPercent" name="userLevels" {% if project_setting.0.userLevels %}checked{% endif %}>
 
             <button type="submit" id="saveButton" class="bxbtn" name="adminSave">Save</button>
         
