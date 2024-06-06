@@ -1,10 +1,88 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extraStyle %}
-    <link rel="stylesheet" href="{% static "css/adminproject.css" %}">
+    <link rel="stylesheet" href="{% static "css/analysis.css" %}">
 {% endblock  %}
 {% block activeAnalysis %}active{% endblock %}
 {% block mainContent %}
+<h1 class="dash">Hello {{username}}, Let's begin</h1>
+    <div class="dashboard-container">
+        <div class="projects-container">
+            <h2>Projects Nearing DeadLine</h2>
+            <div class="container-items">
+                {% for project in data %}
+                <div class="project-card">
+                    <div>
+                        <p>{{project.name}}</p>
+                        <p>Stage <span class="stage">5 of 7</span> reached</p>
+                    </div>
+                    <div>
+                        <p class="due-date">Due date: </p><br><p>{{project.deadLine}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+            </div>
+        </div>
+        <div class="right">
+
+            <div class="info-container">
+                <div class="info-box">
+                    <p>Total Projects</p>
+                    <p class="info-number">{{ data|length }}</p>
+                </div>
+                <div class="info-box">
+                    <p>Projects as Creator</p>
+                    <p class="info-number">4</p>
+                </div>
+                <div class="info-box">
+                    <p>Pending Projects</p>
+                    <p class="info-number" style="color: rgba(224, 31, 31, 0.875);">5</p>
+                </div>
+                <div class="info-box">
+                    <p>xyz</p>
+                    <p class="info-number" style="color: greenyellow;">3</p>
+                </div>
+            </div>
+            <div class="personal-details flex">
+                <div>
+                    <h2>Personal Details</h2>
+                    <table>
+                        <tr>
+                            <td>Name:</td>
+                            <td>Abhishek B Marathe</td>
+                        </tr>
+                        <tr>
+                            <td>Job Title:</td>
+                            <td>MERN Stack</td>
+                        </tr>
+                        <tr>
+                            <td>Username:</td>
+                            <td>abhi_sheik</td>
+                        </tr>
+                        <tr>
+                            <td>Pay:</td>
+                            <td>25,000</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number:</td>
+                            <td>63603 29431</td>
+                        </tr>
+                    </table>
+                    
+
+                </div>
+                <div class="adm-Change">
+                    <p>**Contact admin to change personal details</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {{username}} <br>
+<br><br>
 {{data}}
+{% endblock  %}
+
+{% block extraScript %}
+
 {% endblock  %}
