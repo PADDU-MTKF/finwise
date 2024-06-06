@@ -89,8 +89,8 @@
                 <input type="text" id="name" name="name" required>
 
                 {% if project_setting.0.askValue %}
-                    <label for="value">Value</label>
-                    <input type="text" id="value" name="value" required>
+                    {% comment %} <label for="value">Value</label> {% endcomment %}
+                    <input type="hidden" id="value" name="value" required>
                 {% endif %}
                 
                 
