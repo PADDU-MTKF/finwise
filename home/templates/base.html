@@ -35,6 +35,8 @@
           <div class="bouncing-blob bouncing-blob--pink"></div>
         </div>
     </div>
+    <div id="loading-spinner" class="loading-spinner shide"></div> 
+
     {% if saveLogin %}
     <script>
           // Ensure username and password are properly quoted and escaped
@@ -51,7 +53,10 @@
         // Remove an item from local storage
         localStorage.removeItem("username");
         localStorage.removeItem("password");
+        hideLoadingSpinner()
     </script>
+
+    
     {% endif %}
 
 
