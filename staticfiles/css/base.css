@@ -176,6 +176,9 @@ body{
   filter: blur(10px);
 }
 
+.capital{
+  text-transform: uppercase;
+}
 
 .transparent{
   background: none !important;

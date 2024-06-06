@@ -36,7 +36,20 @@
                         {% csrf_token %}
                         <td>{{forloop.counter}}</td>
                         <td>{{project.name}}</td>
+
                         <input type="hidden" name="proid" value="{{project.id}}">
+                        <input type="hidden" name="username" value="{{username}}">
+                        <input type="hidden" name="pname" value="{{project.name}}">
+                        <input type="hidden" name="pdead" value="{{project.deadLine}}">
+                        <input type="hidden" name="pdes" value="{{project.description}}">
+                        <input type="hidden" name="pcreator" value="{{project.creator}}">
+                        <input type="hidden" name="pcomp" value="{{project.isComplete}}">
+
+                        <input type="hidden" name="clientName" value="{{project.clientName}}">
+                        <input type="hidden" name="clientNum" value="{{project.clientNum}}">
+                        <input type="hidden" name="clientPlace" value="{{project.clientPlace}}">
+
+
                         <td>{{project.deadLine}}</td>
                         <td> <strong>{{project.creator}}</strong></td>
                         <td>

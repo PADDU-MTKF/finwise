@@ -5,7 +5,7 @@
 {% endblock  %}
 {% block activeAnalysis %}active{% endblock %}
 {% block mainContent %}
-<h1 class="dash">Hello {{username}}, Let's begin</h1>
+<h1 class="dash">Hello <span class="capital">{{userDetails.0.name}}</span>, Let's begin</h1>
     <div class="dashboard-container">
         <div class="projects-container">
             <h2>Projects Nearing DeadLine</h2>

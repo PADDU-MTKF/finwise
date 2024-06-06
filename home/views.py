@@ -16,6 +16,7 @@ USER_DEFAULT_PAGE="analysis"
 
 ADMIN_ENDPOINTS={"project":"adminProject.html",
                  "team":"adminTeam.html",
+                 "details":"userTimeline.html",
                  "analysis":"analysis.html",
                  }
 
@@ -359,6 +360,7 @@ def details(request):
         
         latest_data={}
         latest_data["project_details"]=project_details
+        latest_data["username"]=request.POST.get("username")
        
         for each in MULTI_DATA['details']:
                 
