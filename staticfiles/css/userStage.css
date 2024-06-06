@@ -817,6 +817,16 @@ aside:nth-child(1)::-webkit-scrollbar{
 }
 
 
+.reopen{
+    background-color: green;
+}
+.comp{
+    background-color: red;
+}
+.adminDelete{
+    background-color: red;
+
+}
 
 .team-button {
     padding: 6px 12px;

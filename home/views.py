@@ -104,7 +104,12 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
 # function to handle user logout
 def logout(request):
     data = {'logOut': True}
+    cache.clear()
     return render(request, 'login.html', data)
+
+def clear_cache(request):
+    cache.clear()
+    return redirect("logout")
 
 # function to handle user login
 def login(request):
@@ -620,6 +625,32 @@ def deleteStage(request):
 
 
 
+def deleteProject(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            doc_id = data.get('projectId')
+            
+
+            # Delete the document
+            res = db.deleteDocument(os.getenv("DB_ID"), COLLECTION["project"], doc_id)
+
+            if res:
+                getPageData("project",True)
+                
+                
+                
+                return JsonResponse({'status': 'success'})
+            else:
+                return JsonResponse({'status': 'error'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error'}, status=400)
+
+    return JsonResponse({'status': 'error'}, status=405)
+
+
+
 
 def saveCurrentWorkers(request):
     if request.method == 'POST':
@@ -660,3 +691,34 @@ def saveCurrentWorkers(request):
 
     return JsonResponse({'status': 'error'}, status=405)
 
+def saveComplete(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            comp = data.get('complete')
+            project_id = data.get('projectId')
+            username = data.get('username')
+            
+            print("Project status : ",type(comp))
+            
+            new_data={
+                "isComplete":comp
+            }
+
+            # Process and update each document
+           
+            res = db.updateDocument(os.getenv("DB_ID"), COLLECTION["project"], project_id, new_data)
+
+            if not res:
+                return JsonResponse({'status': 'error', 'message': f'Failed to update document {res}'}, status=400)
+            
+            getPageData("project",True,query=[
+                                      Query.equal("creator", [username])],username=username)
+                
+                
+           
+            return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)

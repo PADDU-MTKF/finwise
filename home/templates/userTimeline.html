@@ -12,6 +12,8 @@
 {% endblock %}
 
 {% block mainContent %}
+<button onclick="togalComplete()" class="deleteBtn">{% if project_details.pcomp == "True" %}Re-Open {% else %}Mark As Complete{% endif %}</button>
+
   <div class="tools">
     <button class="button mgbtn" onclick="openForm()"><i class='bx bx-add-to-queue' ></i></button>
   </div>
@@ -27,7 +29,7 @@
   <div id="overlay" onclick="closeForm()"></div>
 
   <h2 class="protitle">
-    {{ project_details.pname }} Project{% comment %} {{ project_details.pcreator }} {% endcomment %}
+    {{ project_details.pname }} Project  {% comment %} {{ project_details.pcreator }} {% endcomment %}
     {% comment %} {{ project_details.pcomp }} {% endcomment %}
   </h2>
   <div class="aside">
@@ -313,7 +315,81 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 
-{% if username == "admin" %}toggleButtonsExcept("ADMINPAGEDISABLE"){% endif %}
+function togalComplete()
+{
+  let newComp= ("{{project_details.pcomp}}" == "True")? false:true;
+  const csrftoken = getCSRFToken();
+
+     const formData = {
+         projectId: proid,
+         username: "{{username}}",
+         complete: newComp,
+     };
+
+     const xhr = new XMLHttpRequest();
+     xhr.open('POST', '/saveComplete', true);
+     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+     xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+     xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+             window.location.reload();
+          }
+     };
+     xhr.send(JSON.stringify(formData));
+
+}
+
+function deletePro()
+{
+  const csrftoken = getCSRFToken();
+
+     const formData = {
+         projectId: proid,
+         username: "{{username}}"
+     };
+
+     const xhr = new XMLHttpRequest();
+     xhr.open('POST', '/deleteProject', true);
+     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+     xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+     xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+             window.location.reload();
+          }
+     };
+     xhr.send(JSON.stringify(formData));
+}
+
+function masterButton()
+{
+  {% if username == 'admin' %}
+  deletePro()
+  {% else %}
+  togalComplete()
+  {% endif %}
+}
+
+
+
+let comp=document.querySelector(".deleteBtn")
+{% if username == "admin" %}
+  toggleButtonsExcept("ADMINPAGEDISABLE")
+  comp.textContent="Delete Project"
+  comp.classList.add("adminDelete")
+
+{% else %}
+  
+  // Change the button color based on its text content
+  if (comp.textContent.trim() === 'Re-Open') {
+    comp.classList.add("reopen");
+    comp.classList.remove("comp");
+  } else {
+    comp.classList.add("comp");
+    comp.classList.remove("reopen");
+  }
+
+{% endif %}
+{% if project_details.pcomp == "True"  %}toggleButtonsExcept("PROJECTISCOMPLETE"){% endif %}
 
 </script>
 
