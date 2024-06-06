@@ -8,7 +8,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from pprint import pprint
-
+from datetime import datetime
 
 MASTER_ADMIN_USERNAME="admin"
 ADMIN_DEFAULT_PAGE="analysis"
@@ -74,7 +74,9 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
             
                 
             # print(latest_data)
-            cache.set(page+username+proid,latest_data)
+            if(page is not "" and page is not "analysis"):
+                print("caching")
+                cache.set(page+username+proid,latest_data)
             
         if page=="project" or page=="analysis":
             # pprint(latest_data)
@@ -131,6 +133,21 @@ def login(request):
                 else:
                     latest_data=getPageData(page if page is not "" else ADMIN_DEFAULT_PAGE)
                     data["data"]=latest_data
+                    
+                    if page=="" or page=="analysis":
+                        totalPro=len(latest_data)
+                        
+                        data["totalAsCreator"]=0
+                        data["totalPro"]=totalPro
+                        data["totalPending"]=sum(1 for item in latest_data if not item['isComplete'] )
+                        data["totalCompleted"]=totalPro-data["totalPending"]
+                        
+                        data["nearToDead"]=sorted(latest_data, key=lambda x: datetime.strptime(x['deadLine'], '%Y-%m-%d'))[:5]
+                        
+                        addon=getPageData("team",username=username,query=[
+                                      Query.equal("userName", [username])])
+                        data["userDetails"]=addon
+                        
                 
                 data["page"]=page if page is not "" else ADMIN_DEFAULT_PAGE
                 
@@ -160,7 +177,17 @@ def login(request):
 
                     data["data"]=latest_data
                     
+                    
                     if page=="" or page=="analysis":
+                        totalPro=len(latest_data)
+                        
+                        data["totalAsCreator"]=sum(1 for item in latest_data if item['creator'] == username)
+                        data["totalPro"]=totalPro
+                        data["totalPending"]=sum(1 for item in latest_data if not item['isComplete'] )
+                        data["totalCompleted"]=totalPro-data["totalPending"]
+                        
+                        data["nearToDead"]=sorted(latest_data, key=lambda x: datetime.strptime(x['deadLine'], '%Y-%m-%d'))[:5]
+                        
                         addon=getPageData("team",username=username,query=[
                                       Query.equal("userName", [username])])
                         data["userDetails"]=addon

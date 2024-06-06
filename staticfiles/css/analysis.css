@@ -38,10 +38,11 @@ h1 {
 }
 
 .container-items {
-    height: 70vh;
-    border: 1px solid white;
+    height: 41em;
+    /* border: 1px solid white; */
     border-radius: 1em;
     padding: 30px 20px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 58%);
     overflow: auto;
     width: 40vw;
 
@@ -55,8 +56,9 @@ h1 {
     background-color: hsl(245.45deg 31.79% 33.92%);
     padding: 10px 20px;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 58%);
     margin-bottom: 10px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     height: 8.1em;
 
 }
@@ -85,8 +87,8 @@ h1 {
 }
 
 .info-box {
-    background-color: hsl(245.45deg 31.79% 33.92%);
-    border: 1px solid white;
+    background-color: hsl(245.45deg 31.79% 33.92% / 29%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 58%);
     padding: 20px;
     border-radius: 10px;
     width: 22em;
@@ -105,10 +107,11 @@ h1 {
 }
 
 .personal-details {
-    background-color: hsl(245.45deg 31.79% 33.92%);
-    border: 1px solid rgba(255, 255, 255, 0.832);
+    background-color: hsl(245.45deg 31.79% 33.92% / 29%);
+    box-shadow: 0 0 10px rgb(0 0 0 / 58%);
     padding: 20px;
     border-radius: 10px;
+    scrollbar-width: none;
     width: 90%;
     position: relative;
     height: 18em;
@@ -141,7 +144,7 @@ h1 {
     margin: 10px;
 }
 td{
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.2em;
     width: 12em;
 }
@@ -158,6 +161,10 @@ td:nth-child(1){
    justify-content: space-between;
    flex-direction: column;
 }   
+tbody tr:hover {
+    background-color: transparent !important;
+}
+
 .project-card div:nth-child(2){
    /* border: 2px solid red;  */
    display: flex;

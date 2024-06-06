@@ -22,6 +22,16 @@ stage wala page mai
     buttons position
 
 
-ann page mai data aaraha hai display karo
 
 admin  side details page mai buttons disable karke ek delete button
+
+
+add colab ka div ko min height do
+
+loadingggggggg
+user - complete btn
+
+color
+interface
+
+admiin= validation 

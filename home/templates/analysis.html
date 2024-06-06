@@ -10,11 +10,11 @@
         <div class="projects-container">
             <h2>Projects Nearing DeadLine</h2>
             <div class="container-items">
-                {% for project in data %}
+                {% for project in nearToDead %}
                 <div class="project-card">
                     <div>
                         <p>{{project.name}}</p>
-                        <p>Stage <span class="stage">5 of 7</span> reached</p>
+                        <p>Client <span class="stage">{% if project.clientName %}{{project.clientName}} {% else %}Not Set{% endif %}</span></p>
                     </div>
                     <div>
                         <p class="due-date">Due date: </p><br><p>{{project.deadLine}}</p>
@@ -29,44 +29,44 @@
             <div class="info-container">
                 <div class="info-box">
                     <p>Total Projects</p>
-                    <p class="info-number">{{ data|length }}</p>
+                    <p class="info-number">{{ totalPro }}</p>
                 </div>
                 <div class="info-box">
                     <p>Projects as Creator</p>
-                    <p class="info-number">4</p>
+                    <p class="info-number">{{totalAsCreator}}</p>
                 </div>
                 <div class="info-box">
                     <p>Pending Projects</p>
-                    <p class="info-number" style="color: rgba(224, 31, 31, 0.875);">5</p>
+                    <p class="info-number" style="color: rgba(224, 31, 31, 0.875);">{{totalPending}}</p>
                 </div>
                 <div class="info-box">
-                    <p>xyz</p>
-                    <p class="info-number" style="color: greenyellow;">3</p>
+                    <p>Completed Project</p>
+                    <p class="info-number" style="color: greenyellow;">{{totalCompleted}}</p>
                 </div>
             </div>
-            <div class="personal-details flex">
+            <div class="personal-details flex {% if username == "admin" %}hide{% endif %}"> 
                 <div>
                     <h2>Personal Details</h2>
                     <table>
                         <tr>
                             <td>Name:</td>
-                            <td>Abhishek B Marathe</td>
+                            <td>{{userDetails.0.name}}</td>
                         </tr>
                         <tr>
                             <td>Job Title:</td>
-                            <td>MERN Stack</td>
+                            <td>{{userDetails.0.jobTitle}}</td>
                         </tr>
                         <tr>
                             <td>Username:</td>
-                            <td>abhi_sheik</td>
+                            <td>{{userDetails.0.userName}}</td>
                         </tr>
                         <tr>
                             <td>Pay:</td>
-                            <td>25,000</td>
+                            <td>{{userDetails.0.pay}}</td>
                         </tr>
                         <tr>
                             <td>Phone Number:</td>
-                            <td>63603 29431</td>
+                            <td>{{userDetails.0.phoneNumber}}</td>
                         </tr>
                     </table>
                     
@@ -78,12 +78,24 @@
             </div>
         </div>
     </div>
-{{username}} <br>
-<br><br>
-{{data}}
-{{userDetails}}
+
 {% endblock  %}
 
 {% block extraScript %}
+<script>
+    let a=[]
+    let ldata={}
+    
+    {% for ad in data %}
+     ldata={
+        name: "{{ad.name}}",
+        deadLine:"{{ad.deadLine}}",
+        creator:"{{ad.creator}}",
+        isComplete:{% if ad.isComplete%}true {% else %} false{% endif %} ,
+    }
+    a.push(ldata);
+    {% endfor %}
+    console.log(a)
+</script>
 
 {% endblock  %}
