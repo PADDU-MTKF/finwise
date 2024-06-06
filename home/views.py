@@ -83,10 +83,10 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 id_list=[]
                 for each in additional_id:
                     id_list.append(each['projectId'])
-                print(id_list)
+                # print(id_list)
                 
                 additional_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION['project'],[Query.equal("$id", id_list)])
-                print(additional_data)
+                # print(additional_data)
                 latest_data+=additional_data
             except Exception as e:
                 print("Could not find",e)
@@ -159,6 +159,12 @@ def login(request):
                         latest_data=getPageData(page if page is not "" else USER_DEFAULT_PAGE)
 
                     data["data"]=latest_data
+                    
+                    if page=="" or page=="analysis":
+                        addon=getPageData("team",username=username,query=[
+                                      Query.equal("userName", [username])])
+                        data["userDetails"]=addon
+                        
 
 
                 data["page"]=page if page is not "" else ADMIN_DEFAULT_PAGE
@@ -391,7 +397,7 @@ def saveStage(request):
             description = data.get('description')
             
             # Process the data here
-            print(f"Project ID: {project_id}")
+            # print(f"Project ID: {project_id}")
             
             
             newData={"projectId":project_id,
@@ -425,8 +431,8 @@ def saveMsg(request):
             msg = data.get('msg')
             
             # Process the data here
-            print(f"Project ID: {project_id}")
-            print(f"Msg: {msg}")
+            # print(f"Project ID: {project_id}")
+            # print(f"Msg: {msg}")
 
             newData={"projectId":project_id,
                      "message":msg}
@@ -458,9 +464,9 @@ def saveCurrentStage(request):
             docId = data.get('docId')
             
             # Process the data here
-            print(f"Project ID: {project_id}")
-            print(f"current_stage: {current_stage}")
-            print(f"docId: {docId}")
+            # print(f"Project ID: {project_id}")
+            # print(f"current_stage: {current_stage}")
+            # print(f"docId: {docId}")
 
             newData={"projectId":project_id,
                      "stage":int(current_stage)}    
@@ -506,7 +512,7 @@ def updateProDet(request):
             
             
             # Process the data here
-            print(f"Project ID: {project_id}")
+            # print(f"Project ID: {project_id}")
            
 
             newData={"deadLine":prodead,
@@ -519,7 +525,7 @@ def updateProDet(request):
             
             res=db.updateDocument(os.getenv("DB_ID"),COLLECTION["project"],project_id,newData)
             
-            print(creator)
+            # print(creator)
                 
             if res:
                 # Respond with a success message
@@ -593,7 +599,7 @@ def saveCurrentWorkers(request):
             project_id = data.get('projectId')
             workers = data.get('workers')
             
-            pprint(workers)
+            # pprint(workers)
             for emp in workers:
                 if emp['isColab']:
                     newData={
