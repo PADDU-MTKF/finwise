@@ -1,38 +1,29 @@
-url wala comment hatavo base html se
-
-
 stage naya add hothe he uska doc id return karke card mau dal do
+multi level user ka option be hataaa add projects mai (hide and value=false)  ======> will say kept for future implimentation as its there in documentation ER diag
+
+
+
+PADDU
+
+    aur project value ka kya hua  ( if value is enabled show it in info box else hide )
+    loadingggggggg
 
 
 
 
-top mai ek project on progress ya complete status with change button
-    if complete then remove all buttons no modifications except reopen the project
+SAGAR
+    remove is percent while creating emp
+    add phone no. validation
 
+    stage wala page mai 
+        add stage karthe wakth pop up background
+        buttons position
 
-aur project value ka kya hua  ( if value is enabled show it in info box else hide )
-
-
-remove is percent while creating emp
-
-add phone no. validation
-
-stage wala page mai 
-    add stage karthe wakth pop up background
-    buttons position
+    add colab ka div ko min height do
 
 
 
-admin  side details page mai buttons disable karke ek delete button
-
-
-add colab ka div ko min height do
-
-multi level user ka option be hataaa add projects mai (hide and value=false)
-loadingggggggg
-user - complete btn
-
-color
-interface
+    color
+    interface
 
 admiin= validation 
