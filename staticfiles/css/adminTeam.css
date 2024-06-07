@@ -24,25 +24,22 @@ body {
 }
 
 .popup {
-  /* display: none; */
-  position: fixed;
-  width: 80%;
-  max-width: 800px;
-  min-height: 500px;
-  padding: 30px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #5a5a5a67;
-  /* padding: 1px 10px; */
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  overflow: auto;
-  /* or overflow: scroll; */
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+     /* display: none; */
+     position: fixed;
+     width: 80%;
+     max-width: 777px;
+     min-height: 500px;
+     padding: 28px;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     background-color: #9d9d9d12;
+     /* padding: 1px 10px; */
+     border-radius: 35px;
+     box-shadow: 0 0 10px rgb(0 0 0 / 41%);
+     overflow: auto;
+     -ms-overflow-style: none;
+     scrollbar-width: none;
 }
 
 .cls{

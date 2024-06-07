@@ -113,7 +113,7 @@
         <input type="text" id="jobTitle" name="jobTitle" disabled required>
 
         <label for="phoneNumber">Phone Number</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" disabled pattern="[0-9]{10}" placeholder="Enter a 10 digit Number" required>
+        <input type="tel" id="phoneNumber" name="phoneNumber" disabled pattern="[0-9]{10}" placeholder="Enter a 10 digit Number" minlength="10" maxlength="10" required>
         
         <button type="button" class="bxbtn" onclick="previousStep('step2', 'step1')">Back</button>
         <button type="button" class="bxbtn" onclick="nextStep('step2', 'step3')">Next</button>
@@ -123,13 +123,13 @@
     
     <!-- Step 3 -->
     <div id="step3" style="display: none;">
-        <label for="isPercent">Is the user a Partner?</label>
+        {% comment %} <label for="isPercent">Is the user a Partner?</label> {% endcomment %}
         {% comment %} <label>Yes</label> {% endcomment %}
         <input type="hidden" id="isPercent" name="isPercent" disabled>
         <!-- Android-like toggle button here -->
 
         <label for="pay" id="payLabel">Pay in Amount:</label>
-        <input type="number" id="pay" name="pay" maxlength="10" minlength="10" disabled required>
+        <input type="number" id="pay" name="pay" disabled required>
 
         <input type="hidden" id="ID" name="docID" value="">
     

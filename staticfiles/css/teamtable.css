@@ -34,12 +34,16 @@ body {
     align-items: center;
 }
 
+.table__header h1{
+    color: white;
+}
+
 main.table {
 
     margin-top: 3em;
     width: 82vw;
     height: 78vh;
-    background-color: rgba(255, 255, 255, 0.128);
+    background-color: none;
 
     backdrop-filter: blur(7px);
     box-shadow: 0 .4rem .8rem #0005;
@@ -51,7 +55,7 @@ main.table {
 .table__header {
     width: 100%;
     height: 10%;
-    background-color: #fff4;
+    background-color: #ffffff24;
     padding: .8rem 1rem;
 
     display: flex;
@@ -62,7 +66,7 @@ main.table {
 .table__header .input-group {
     width: 35%;
     height: 100%;
-    background-color: #fff5;
+    background-color: white;
     padding: 0 .8rem;
     border-radius: 2rem;
 
@@ -107,14 +111,13 @@ main.table {
 
 
 .table__body::-webkit-scrollbar{
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0rem;
+    height: 0rem;
 }
 
 .table__body::-webkit-scrollbar-thumb{
     border-radius: .5rem;
-    background-color: #0004;
-    visibility: hidden;
+    scrollbar-width: none;
 }
 
 .table__body:hover::-webkit-scrollbar-thumb{ 
@@ -152,6 +155,7 @@ thead th {
 
 tbody tr:nth-child(even) {
     background-color: #0000000b;
+    margin: 2px;
 }
 
 tbody tr {
@@ -202,13 +206,13 @@ tbody td{
     color: #006b21;
 }
 .status.employee {
-    background-color: #6fcaea;
+    background: linear-gradient(to right, #3c6c7c, #6fcaea);
 }
 .status.activate {
-    background-color: #eadc6f;
+    background: linear-gradient(to right, #7c8c00, #fff308);
 }
 .status.complete {
-    background-color: #69ff64;
+    background: linear-gradient(to right, #009200, #08ff31);
 }
 .status.cancelled {
     background-color: #f76241;

@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block mainContent %}
-<button onclick="togalComplete()" class="deleteBtn">{% if project_details.pcomp == "True" %}Re-Open {% else %}Mark As Complete{% endif %}</button>
+
 
   <div class="tools">
     <button class="button mgbtn" onclick="openForm()"><i class='bx bx-add-to-queue' ></i></button>
@@ -22,9 +22,9 @@
   </div>
   <div class="toolss">
     <button id="toggleHover" class="button mgbtn" ><i class='bx bx-info-circle' ></i></button>
-  </div>
-
-  <button class="button1 mgbtn" onclick="toggleTools()"><i class='bx bx-cog' ></i></button>
+    </div>
+    
+    <button class="button1 mgbtn" onclick="toggleTools()"><i class='bx bx-cog' ></i></button>
 
   <div id="overlay" onclick="closeForm()"></div>
 
@@ -61,6 +61,8 @@
           <h3>Place</h3>
           <input type="text" class="prodestext transparent" name="cplace" value="{{ project_details.clientPlace }}" readonly />
         </div>
+        <br><br>
+        <button onclick="togalComplete()" class="deleteBtn">{% if project_details.pcomp == "True" %}Re-Open {% else %}Mark As Complete{% endif %}</button>
       </div>
     </aside>
 
