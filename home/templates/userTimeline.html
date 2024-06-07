@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block mainContent %}
-<button onclick="togalComplete()" class="deleteBtn">{% if project_details.pcomp == "True" %}Re-Open {% else %}Mark As Complete{% endif %}</button>
+<button onclick="masterButton()" class="deleteBtn">{% if project_details.pcomp == "True" %}Re-Open {% else %}Mark As Complete{% endif %}</button>
 
   <div class="tools">
     <button class="button mgbtn" onclick="openForm()"><i class='bx bx-add-to-queue' ></i></button>
@@ -292,6 +292,9 @@ document.getElementById('save-button').addEventListener('click', function() {
          workers: changes,
      };
 
+    showLoadingSpinner()
+
+
      const xhr = new XMLHttpRequest();
      xhr.open('POST', '/saveCurrentWorkers', true);
      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -362,11 +365,22 @@ function deletePro()
 
 function masterButton()
 {
-  {% if username == 'admin' %}
-  deletePro()
-  {% else %}
-  togalComplete()
-  {% endif %}
+  var result = confirm("Are you sure you want to Proceed?");
+
+  // If user confirms, proceed with form submission
+  if (result) {
+    showLoadingSpinner()
+    {% if username == 'admin' %}
+      deletePro()
+    {% else %}
+      togalComplete()
+    {% endif %}
+  } else {
+    // If user cancels, prevent the form submission
+    return false;
+  }
+
+  
 }
 
 

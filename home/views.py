@@ -60,6 +60,8 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 # print(f"1 {page}",base_query)
 
                 latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page] ,base_query)
+                # print(page,"0")
+                
 
                 
             except Exception as e:
@@ -67,23 +69,27 @@ def getPageData(page,refresh=False,query = None,username="",proid=""):
                 # print("3",query)
                 try:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page],query)
+                    # print(page,"1")
 
                     
                 except:
                     latest_data,_=db.getDocument(os.getenv("DB_ID"),COLLECTION[page])
+                    # print(page,"1")
+                    
 
             
                 
             # print(latest_data)
-            if(page != "" and page != "analysis"):
-                print("caching")
+            if(page != "" and page != "analysis" and page!="project" and page!="team"):
+                # print("caching")
                 cache.set(page+username+proid,latest_data)
             
         if page=="project" or page=="analysis":
             # pprint(latest_data)
             try:
+                # print("collectio nmore")
                 additional_id,_=db.getDocument(os.getenv("DB_ID"),COLLECTION['project_workers'],[Query.equal("userName", [username])])
-                id_list=[]
+                id_list=[""]
                 for each in additional_id:
                     id_list.append(each['projectId'])
                 # print(id_list)
@@ -267,7 +273,7 @@ def project(request):
             latest_data['page']=page   
             return render(request, USER_ENDPOINTS[page],latest_data)
 
-        
+    
     data={"page":"project"}
     return render(request, 'login.html',data)
 
@@ -339,6 +345,7 @@ def team(request):
         latest_data=getPageData("team",refresh=True)
         return render(request, ADMIN_ENDPOINTS['team'],{"data":latest_data,"page":"team"})
     
+    # print("pro hear")   
     data={"page":"team"}
     return render(request, 'login.html',data)
 
@@ -699,13 +706,14 @@ def saveComplete(request):
             project_id = data.get('projectId')
             username = data.get('username')
             
-            print("Project status : ",type(comp))
+            # print("Project status : ",type(comp))
             
             new_data={
                 "isComplete":comp
             }
 
             # Process and update each document
+            # print(username)
            
             res = db.updateDocument(os.getenv("DB_ID"), COLLECTION["project"], project_id, new_data)
 
